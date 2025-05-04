@@ -1,6 +1,8 @@
 # SpecStory explanation file
 .specstory/.what-is-this.md
 
+# fvm
+
 # Miscellaneous
 *.class
 *.log
@@ -56,3 +58,9 @@ firebase-debug.log
 
 # Coverage
 coverage/
+
+# Web related
+lib/generated_plugin_registrant.dart
+
+# FVM Version Cache
+.fvm/

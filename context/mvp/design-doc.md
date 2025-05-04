@@ -29,6 +29,39 @@
 
 ## 🛠 実装方針
 
+### 開発環境設定
+
+**Flutter Version Management (FVM)**
+- プロジェクトのFlutterバージョンを固定（3.19.0）
+- チーム間での開発環境の統一
+- 複数のFlutterバージョンを管理
+- CIでの再現性の確保
+
+**セットアップ手順**
+1. fvmのインストール
+   ```bash
+   brew tap leoafarias/fvm
+   brew install fvm
+   ```
+
+2. プロジェクトのFlutterバージョン設定
+   ```bash
+   fvm install 3.19.0
+   fvm use 3.19.0
+   ```
+
+3. VSCode設定（.vscode/settings.json）
+   ```json
+   {
+     "dart.flutterSdkPath": ".fvm/flutter_sdk"
+   }
+   ```
+
+4. GitIgnore設定
+   ```
+   .fvm/flutter_sdk
+   ```
+
 ### アーキテクチャ選択
 
 **クライアントサイド（Flutter Web）**

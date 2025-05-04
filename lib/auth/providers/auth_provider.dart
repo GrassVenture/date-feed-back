@@ -1,15 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../models/auth_state.dart';
 
-part 'auth_provider.g.dart';
+final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
+  return AuthNotifier();
+});
 
-@riverpod
-class Auth extends _$Auth {
-  @override
-  AuthState build() {
-    return const AuthState();
-  }
+class AuthNotifier extends StateNotifier<AuthState> {
+  AuthNotifier() : super(const AuthState());
 
   Future<void> signInWithGoogle() async {
     state = state.copyWith(isLoading: true, errorMessage: null);
