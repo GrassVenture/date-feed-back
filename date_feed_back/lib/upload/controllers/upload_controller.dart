@@ -11,16 +11,27 @@ class UploadState {
   final String? error;
   final double progress;
 
-  UploadState({
+  const UploadState({
     this.isUploading = false,
     this.error,
     this.progress = 0.0,
   });
+
+  UploadState copyWith({
+    bool? isUploading,
+    String? error,
+    double? progress,
+  }) =>
+      UploadState(
+        isUploading: isUploading ?? this.isUploading,
+        error: error ?? this.error,
+        progress: progress ?? this.progress,
+      );
 }
 
 class UploadController extends Notifier<UploadState> {
   @override
-  UploadState build() => UploadState();
+  UploadState build() => const UploadState();
 
   Future<void> handleDroppedFile(html.File file) async {
     final fileName = file.name.toLowerCase();
