@@ -225,7 +225,7 @@ HooksRiverpod を採用することで、以下の利点を活かした実装を
 
 #### 実装方針
 
-1. **StateNotifierProvider の活用**
+1. **NotifierProvider の活用**
 
    ```dart
    // 状態の定義
@@ -238,9 +238,12 @@ HooksRiverpod を採用することで、以下の利点を活かした実装を
      // ...
    }
 
-   // StateNotifierの実装
-   class AnalysisNotifier extends StateNotifier<AnalysisState> {
-     AnalysisNotifier() : super(AnalysisState());
+   // Notifierの実装
+   class AnalysisNotifier extends Notifier<AnalysisState> {
+     @override
+     AnalysisState build() {
+       return AnalysisState();
+     }
 
      Future<void> fetchAnalysis(String sessionId) async {
        // Firestoreから直接データを取得
@@ -258,7 +261,7 @@ HooksRiverpod を採用することで、以下の利点を活かした実装を
    }
 
    // Providerの定義
-   final analysisProvider = StateNotifierProvider<AnalysisNotifier, AnalysisState>((ref) {
+   final analysisProvider = NotifierProvider<AnalysisNotifier, AnalysisState>(() {
      return AnalysisNotifier();
    });
    ```
