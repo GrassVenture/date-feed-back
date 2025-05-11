@@ -1,4 +1,5 @@
 import 'dart:html' as html;
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final uploadControllerProvider =
@@ -83,15 +84,19 @@ class UploadController extends Notifier<UploadState> {
       request.upload.onProgress.listen((event) {
         if (event.lengthComputable) {
           final progress = event.loaded! / event.total!;
+          debugPrint('アップロード進捗: $progress');
           state = UploadState(
             isUploading: true,
             progress: progress,
           );
+        } else {
+          debugPrint('lengthComputableがfalseです');
         }
       });
 
       request.onLoadEnd.listen((event) {
         if (request.status == 200) {
+          debugPrint('アップロード完了: status=${request.status}');
           state =
               const UploadState(isUploading: false, progress: 1.0, error: null);
         } else {
@@ -101,13 +106,13 @@ class UploadController extends Notifier<UploadState> {
       });
 
       request.onError.listen((event) {
+        debugPrint('アップロードエラー発生');
         state = const UploadState(
             isUploading: false, progress: 0.0, error: 'アップロード中にエラーが発生しました');
       });
 
       request.setRequestHeader('Content-Type', file.type);
       request.send(file);
-      state = const UploadState(isUploading: true, progress: 0.0);
     } catch (e) {
       state = UploadState(isUploading: false, error: 'アップロード中にエラーが発生しました: $e');
     }
