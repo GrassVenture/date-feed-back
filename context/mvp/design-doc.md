@@ -9,16 +9,19 @@
 主要な実装ポイントは以下の通りです：
 
 1. **音声アップロード**
-   - 最大15分の音声ファイル（MP3/WAV）
-   - 16kHz monoを推奨
+
+   - 最大 15 分の音声ファイル（MP3/WAV）
+   - 16kHz mono を推奨
    - アップロード進捗の表示
 
 2. **音声分析パイプライン**
+
    - 文字起こし（話者分離含む）
    - 非言語情報の抽出
-   - AIフィードバック生成
+   - AI フィードバック生成
 
-3. **UI表示**
+3. **UI 表示**
+
    - 音声プレイヤー
    - 文字起こし表示
    - 非言語情報グラフ
@@ -32,32 +35,36 @@
 ### 開発環境設定
 
 **Flutter Version Management (FVM)**
-- プロジェクトのFlutterバージョンを固定（3.19.0）
+
+- プロジェクトの Flutter バージョンを固定（stable）
 - チーム間での開発環境の統一
-- 複数のFlutterバージョンを管理
-- CIでの再現性の確保
+- CI での再現性の確保
 
 **セットアップ手順**
-1. fvmのインストール
+
+1. fvm のインストール
+
    ```bash
    brew tap leoafarias/fvm
    brew install fvm
    ```
 
-2. プロジェクトのFlutterバージョン設定
+2. プロジェクトの Flutter バージョン設定
+
    ```bash
-   fvm install 3.19.0
-   fvm use 3.19.0
+   fvm install stable
+   fvm use stable
    ```
 
-3. VSCode設定（.vscode/settings.json）
+3. VSCode 設定（.vscode/settings.json）
+
    ```json
    {
      "dart.flutterSdkPath": ".fvm/flutter_sdk"
    }
    ```
 
-4. GitIgnore設定
+4. GitIgnore 設定
    ```
    .fvm/flutter_sdk
    ```
@@ -65,25 +72,28 @@
 ### アーキテクチャ選択
 
 **クライアントサイド（Flutter Web）**
-- MVCパターンを採用
+
+- MVC パターンを採用
   - Model: ビジネスロジックとデータ構造
-  - View: UIコンポーネント（HookConsumerWidget）
-  - Controller: ModelとViewの橋渡し
-- HooksRiverpodによる状態管理
+  - View: UI コンポーネント（HookConsumerWidget）
+  - Controller: Model と View の橋渡し
+- HooksRiverpod による状態管理
   - Provider Pattern
-  - Flutter Hooks（useState, useEffect等）
+  - Flutter Hooks（useState, useEffect 等）
   - 依存性注入
   - 自動的なメモ化
   - ステート管理の簡素化
 
 **サーバーサイド（Firebase/GCP）**
+
 - サーバーレスアーキテクチャを採用
 - イベント駆動型の処理フロー
-- マイクロサービス的なCloud Run実装
+- マイクロサービス的な Cloud Run 実装
 
 ### コンポーネント設計
 
 1. **認証モジュール**
+
    ```
    auth/
    ├── models/
@@ -97,6 +107,7 @@
    ```
 
 2. **音声アップロードモジュール**
+
    ```
    upload/
    ├── models/
@@ -134,6 +145,7 @@
 ### データフロー
 
 1. **音声アップロードと分析フロー**
+
    ```mermaid
    sequenceDiagram
        participant U as User (Browser)
@@ -152,7 +164,12 @@
        C->>P: uploadProvider.upload()
        P->>GCS: 署名付きURLでアップロード
        P->>CR: 分析リクエスト
-       CR-->>FS: 結果保存
+       CR->>FS: 文字起こしデータ保存
+       CR->>FS: ステータス更新
+       CR->>FS: 非言語分析データ保存
+       CR->>FS: ステータス更新
+       CR->>FS: フィードバックデータ保存
+       CR->>FS: ステータス更新
        P->>M: モデル更新
        M-->>V: UI更新（HooksRiverpod経由）
    ```
@@ -171,38 +188,33 @@
 
 ### 音声アップロード
 
-#### 選択肢1: Cloud Storage Direct Upload + Cloud Run API
-- 署名付きURLを使用して直接GCSにアップロード
-- Cloud Runで分析APIを提供
-- シンプルで理解しやすい構成
+#### Cloud Storage Direct Upload + Cloud Run API
 
-#### 選択肢2: Vertex AI Files API + Eventarc
-- Files APIに直接アップロード
-- Eventarcでトリガー
-- より密なGemini連携
-
-#### 決定: Cloud Storage Direct Upload + Cloud Run API
-- MVPではシンプルな構成を優先
-- 既存のGCSインフラを活用
-- Cloud Run APIによる柔軟な処理制御
+- MVP ではシンプルな構成を優先
+- 既存の GCS インフラを活用
+- Cloud Run API による柔軟な処理制御
 
 ### 状態管理
 
 #### 採用技術: HooksRiverpod
-HooksRiverpodを採用することで、以下の利点を活かした実装を行います：
+
+HooksRiverpod を採用することで、以下の利点を活かした実装を行います：
 
 - **関数型プログラミングの恩恵**
-  - useStateやuseEffectによる直感的なステート管理
+
+  - useState や useEffect による直感的なステート管理
   - カスタムフックによるロジックの再利用
   - 副作用の制御が容易
 
 - **型安全性**
+
   - コンパイル時の型チェック
-  - IDEのサポートが充実
+  - IDE のサポートが充実
   - リファクタリングが容易
 
 - **テスタビリティ**
-  - Providerの依存関係が明確
+
+  - Provider の依存関係が明確
   - モック作成が容易
   - ユニットテストが書きやすい
 
@@ -213,112 +225,139 @@ HooksRiverpodを採用することで、以下の利点を活かした実装を�
 
 #### 実装方針
 
-1. **StateNotifierProviderの活用**
+1. **StateNotifierProvider の活用**
+
    ```dart
    // 状態の定義
-   class UploadState {
-     final bool isUploading;
-     final double progress;
+   class AnalysisState {
+     final bool isProcessing;
+     final TranscriptModel? transcript;
+     final NonVerbalAnalysisModel? nonVerbalAnalysis;
+     final FeedbackModel? feedback;
      final String? error;
      // ...
    }
 
    // StateNotifierの実装
-   class UploadNotifier extends StateNotifier<UploadState> {
-     UploadNotifier() : super(UploadState());
-     
-     Future<void> upload(File file) async {
-       // 状態更新とロジック実装
+   class AnalysisNotifier extends StateNotifier<AnalysisState> {
+     AnalysisNotifier() : super(AnalysisState());
+
+     Future<void> fetchAnalysis(String sessionId) async {
+       // Firestoreから直接データを取得
+       final doc = await _firestore.collection('sessions').doc(sessionId).get();
+       final data = doc.data();
+
+       if (data != null) {
+         state = state.copyWith(
+           transcript: TranscriptModel.fromJson(data['transcript']),
+           nonVerbalAnalysis: NonVerbalAnalysisModel.fromJson(data['nonVerbalAnalysis']),
+           feedback: FeedbackModel.fromJson(data['feedback']),
+         );
+       }
      }
    }
 
    // Providerの定義
-   final uploadProvider = StateNotifierProvider<UploadNotifier, UploadState>((ref) {
-     return UploadNotifier();
+   final analysisProvider = StateNotifierProvider<AnalysisNotifier, AnalysisState>((ref) {
+     return AnalysisNotifier();
    });
    ```
 
-2. **Hooksの活用**
+2. **Hooks の活用**
+
    ```dart
-   class UploadPage extends HookConsumerWidget {
+   class AnalysisPage extends HookConsumerWidget {
      @override
      Widget build(BuildContext context, WidgetRef ref) {
        // ローカルステート
-       final file = useState<File?>(null);
-       
+       final sessionId = useState<String?>(null);
+
        // 副作用の制御
        useEffect(() {
-         // マウント/アンマウント時の処理
+         if (sessionId.value != null) {
+           ref.read(analysisProvider.notifier).fetchAnalysis(sessionId.value!);
+         }
          return () => cleanup();
-       }, []);
-       
+       }, [sessionId.value]);
+
        // Providerの監視
-       final uploadState = ref.watch(uploadProvider);
-       
+       final analysisState = ref.watch(analysisProvider);
+
        // ...
      }
    }
    ```
 
-3. **カスタムHooksの作成**
+3. **カスタム Hooks の作成**
+
    ```dart
    // 再利用可能なロジックをカスタムHookとして実装
-   File? useFileUpload({
-     required void Function(File) onSelect,
-     List<String> allowedExtensions = const ['mp3', 'wav'],
-   }) {
-     final file = useState<File?>(null);
-     final isHovering = useState(false);
-     
-     // ドラッグ&ドロップとファイル選択のロジック
-     // ...
-     
-     return file.value;
+   Stream<DocumentSnapshot> useSessionStream(String sessionId) {
+     final stream = useState<Stream<DocumentSnapshot>?>(null);
+
+     useEffect(() {
+       stream.value = _firestore
+           .collection('sessions')
+           .doc(sessionId)
+           .snapshots();
+       return null;
+     }, [sessionId]);
+
+     return stream.value!;
    }
    ```
 
-### UI実装
+### UI 実装
 
-#### 選択肢1: Material Design
-- Flutterの標準デザイン
+#### 選択肢 1: Material Design
+
+- Flutter の標準デザイン
 - 実装が容易
 
-#### 選択肢2: カスタムデザイン
-- ユニークなUI/UX
+#### 選択肢 2: カスタムデザイン
+
+- ユニークな UI/UX
 - 実装コストが高い
 
 #### 決定: Material Design + カスタムウィジェット
-- 基本はMaterial Designを踏襲
+
+- 基本は Material Design を踏襲
 - フィードバックカードなど特徴的な部分のみカスタム実装
 
 ## 📊 技術的制約と考慮事項
 
 1. **音声ファイル制約**
-   - サイズ: 最大15分（約28MB@16kHz mono）
+
+   - サイズ: 最大 15 分（約 28MB@16kHz mono）
    - 形式: MP3/WAV
    - 保存先: Google Cloud Storage
 
-2. **APIエンドポイント**
+2. **API エンドポイント**
+
    - Cloud Run API: `/analyzeAudio`
      - Method: POST
      - Parameters: file_uri, user_id
      - Response: { session_id: string }
 
-3. **レスポンス制約**
-   - 文字起こし: JSON形式強制
-   - 非言語情報: Markdown形式
-   - フィードバック: Markdown形式
+3. **Firestore 制約**
+   - ドキュメントサイズ: 最大 1MB
+   - 文字起こし、非言語分析、フィードバックデータは 3 つのドキュメントに保存
+   - リアルタイム更新のための`onSnapshot`リスナーを使用
 
 ## ❓ 解決すべき技術的課題
 
 1. **音声分析精度**
-   - Gemini APIの音声認識精度の検証
+
+   - Gemini API の音声認識精度の検証
    - 話者分離の正確性の確認
 
 2. **パフォーマンス**
+
    - 大きな音声ファイルのアップロード時の挙動
+   - Firestore ドキュメントサイズの最適化
    - 分析結果表示時のレンダリング最適化
 
 3. **エラーハンドリング**
    - 各処理ステップでのエラー検出と通知
-   - リカバリー方法の確立 
+   - リカバリー方法の確立
+   - Firestore のクォータ制限への対応
