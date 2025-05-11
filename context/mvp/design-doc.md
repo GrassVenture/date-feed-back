@@ -103,7 +103,7 @@
    ├── controllers/
    │   └── auth_controller.dart
    └── providers/
-       └── auth_provider.dart  // StateNotifierProvider
+       └── auth_provider.dart  // NotifierProvider
    ```
 
 2. **音声アップロードモジュール**
@@ -118,7 +118,7 @@
    │   └── upload_controller.dart
    └── providers/
        ├── upload_state.dart
-       └── upload_provider.dart  // StateNotifierProvider
+       └── upload_provider.dart  // NotifierProvider
    ```
 
 3. **分析結果表示モジュール**
@@ -137,9 +137,9 @@
    ├── controllers/
    │   └── analysis_controller.dart
    └── providers/
-       ├── transcript_provider.dart  // StateNotifierProvider
-       ├── feedback_provider.dart  // StateNotifierProvider
-       └── analysis_provider.dart  // StateNotifierProvider
+       ├── transcript_provider.dart  // NotifierProvider
+       ├── feedback_provider.dart  // NotifierProvider
+       └── analysis_provider.dart  // NotifierProvider
    ```
 
 ### データフロー
@@ -179,7 +179,7 @@
    graph LR
    A[User Action] --> B[Hooks]
    B --> C[Controller]
-   C --> D[StateNotifierProvider]
+   C --> D[NotifierProvider]
    D --> E[Model]
    E --> F[HookConsumerWidget]
    ```
