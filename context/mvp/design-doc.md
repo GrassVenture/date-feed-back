@@ -291,26 +291,7 @@ HooksRiverpod を採用することで、以下の利点を活かした実装を
    }
    ```
 
-3. **カスタム Hooks の作成**
-
-   ```dart
-   // 再利用可能なロジックをカスタムHookとして実装
-   Stream<DocumentSnapshot> useSessionStream(String sessionId) {
-     final stream = useState<Stream<DocumentSnapshot>?>(null);
-
-     useEffect(() {
-       stream.value = _firestore
-           .collection('sessions')
-           .doc(sessionId)
-           .snapshots();
-       return null;
-     }, [sessionId]);
-
-     return stream.value!;
-   }
-   ```
-
-### UI 実装
+3. **UI 実装**
 
 #### 選択肢 1: Material Design
 
