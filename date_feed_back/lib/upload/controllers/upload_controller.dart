@@ -36,7 +36,7 @@ class UploadController extends Notifier<UploadState> {
   Future<void> handleDroppedFile(html.File file) async {
     final fileName = file.name.toLowerCase();
     if (!(fileName.endsWith('.mp3') || fileName.endsWith('.wav'))) {
-      state = UploadState(error: 'MP3またはWAVファイルのみ対応しています');
+      state = const UploadState(error: 'MP3またはWAVファイルのみ対応しています');
       return;
     }
 
@@ -47,7 +47,7 @@ class UploadController extends Notifier<UploadState> {
     try {
       await audio.onLoadedMetadata.first;
     } catch (e) {
-      state = UploadState(error: '音声ファイルのメタデータ取得に失敗しました');
+      state = const UploadState(error: '音声ファイルのメタデータ取得に失敗しました');
       return;
     }
 
@@ -57,16 +57,16 @@ class UploadController extends Notifier<UploadState> {
       final maxBytes = (file.size * (maxDurationSec / audio.duration)).floor();
       final sliced = file.slice(0, maxBytes, file.type);
 
-      state = UploadState(isUploading: true);
+      state = const UploadState(isUploading: true);
       uploadFile(sliced);
-      state = UploadState(isUploading: false);
+      state = const UploadState(isUploading: false);
       return;
     }
 
     // 15分以内ならそのままアップロード
-    state = UploadState(isUploading: true);
+    state = const UploadState(isUploading: true);
     uploadFile(file);
-    state = UploadState(isUploading: false);
+    state = const UploadState(isUploading: false);
   }
 
   Future<void> uploadFile(html.Blob file) async {
@@ -92,21 +92,22 @@ class UploadController extends Notifier<UploadState> {
 
       request.onLoadEnd.listen((event) {
         if (request.status == 200) {
-          state = UploadState(isUploading: false, progress: 1.0, error: null);
+          state =
+              const UploadState(isUploading: false, progress: 1.0, error: null);
         } else {
-          state = UploadState(
+          state = const UploadState(
               isUploading: false, progress: 0.0, error: 'アップロードに失敗しました');
         }
       });
 
       request.onError.listen((event) {
-        state = UploadState(
+        state = const UploadState(
             isUploading: false, progress: 0.0, error: 'アップロード中にエラーが発生しました');
       });
 
       request.setRequestHeader('Content-Type', file.type);
       request.send(file);
-      state = UploadState(isUploading: true, progress: 0.0);
+      state = const UploadState(isUploading: true, progress: 0.0);
     } catch (e) {
       state = UploadState(isUploading: false, error: 'アップロード中にエラーが発生しました: $e');
     }
