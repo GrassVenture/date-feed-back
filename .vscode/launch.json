@@ -6,6 +6,7 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "debug",
+            "program": "date_feed_back/lib/main.dart",
         },
     ]
 }
