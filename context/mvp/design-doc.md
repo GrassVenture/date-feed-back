@@ -229,13 +229,15 @@ HooksRiverpod を採用することで、以下の利点を活かした実装を
 
    ```dart
    // 状態の定義
-   class AnalysisState {
-     final bool isProcessing;
-     final TranscriptModel? transcript;
-     final NonVerbalAnalysisModel? nonVerbalAnalysis;
-     final FeedbackModel? feedback;
-     final String? error;
-     // ...
+   @freezed
+   class AnalysisState with _$AnalysisState {
+     const factory AnalysisState({
+       @Default(false) bool isProcessing,
+       TranscriptModel? transcript,
+       NonVerbalAnalysisModel? nonVerbalAnalysis,
+       FeedbackModel? feedback,
+       String? error,
+     }) = _AnalysisState;
    }
 
    // Notifierの実装
