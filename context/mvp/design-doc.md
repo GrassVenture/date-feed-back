@@ -153,7 +153,7 @@
        participant V as View (HookConsumerWidget)
        participant H as Hooks (useState/useEffect)
        participant C as Controller
-       participant P as Provider (StateNotifier)
+       participant P as Provider (Notifier)
        participant M as Model
        participant GCS as Google Cloud Storage
        participant CR as Cloud Run
