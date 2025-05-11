@@ -9,8 +9,13 @@ final uploadControllerProvider =
 class UploadState {
   final bool isUploading;
   final String? error;
-  // ...他の状態
-  UploadState({this.isUploading = false, this.error});
+  final double progress;
+
+  UploadState({
+    this.isUploading = false,
+    this.error,
+    this.progress = 0.0,
+  });
 }
 
 class UploadController extends Notifier<UploadState> {
