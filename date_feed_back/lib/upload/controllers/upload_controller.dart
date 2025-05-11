@@ -58,14 +58,14 @@ class UploadController extends Notifier<UploadState> {
       final sliced = file.slice(0, maxBytes, file.type);
 
       state = const UploadState(isUploading: true);
-      uploadFile(sliced);
+      await uploadFile(sliced);
       state = const UploadState(isUploading: false);
       return;
     }
 
     // 15分以内ならそのままアップロード
     state = const UploadState(isUploading: true);
-    uploadFile(file);
+    await uploadFile(file);
     state = const UploadState(isUploading: false);
   }
 
