@@ -1,3 +1,5 @@
+import 'dart:html' as html;
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -33,9 +35,19 @@ class UploadPage extends HookConsumerWidget {
                 isDragging.value = true;
                 return true;
               },
-              onAcceptWithDetails: (data) {
+              onAcceptWithDetails: (details) async {
                 isDragging.value = false;
-                // TODO: ドロップされたファイルの処理
+                // ドロップされたファイルの処理
+                final files = details.data is List<html.File>
+                    ? details.data as List<html.File>
+                    : details.data is html.File
+                        ? [details.data as html.File]
+                        : <html.File>[];
+                if (files.isNotEmpty) {
+                  await ref
+                      .read(uploadControllerProvider.notifier)
+                      .handleDroppedFile(files.first);
+                }
               },
               onLeave: (data) {
                 isDragging.value = false;
@@ -72,8 +84,19 @@ class UploadPage extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 16),
                         ElevatedButton(
-                          onPressed: () {
-                            // TODO: ファイル選択処理の実装
+                          onPressed: () async {
+                            // ファイル選択処理の実装
+                            final uploadInput = html.FileUploadInputElement();
+                            uploadInput.accept = '.mp3,.wav';
+                            uploadInput.click();
+                            uploadInput.onChange.listen((event) async {
+                              final files = uploadInput.files;
+                              if (files != null && files.isNotEmpty) {
+                                await ref
+                                    .read(uploadControllerProvider.notifier)
+                                    .handleDroppedFile(files.first);
+                              }
+                            });
                           },
                           child: const Text('ファイルを選択'),
                         ),
