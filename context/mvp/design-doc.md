@@ -103,7 +103,7 @@
    ├── controllers/
    │   └── auth_controller.dart
    └── providers/
-       └── auth_provider.dart  // StateNotifierProvider
+       └── auth_provider.dart  // NotifierProvider
    ```
 
 2. **音声アップロードモジュール**
@@ -118,7 +118,7 @@
    │   └── upload_controller.dart
    └── providers/
        ├── upload_state.dart
-       └── upload_provider.dart  // StateNotifierProvider
+       └── upload_provider.dart  // NotifierProvider
    ```
 
 3. **分析結果表示モジュール**
@@ -137,9 +137,9 @@
    ├── controllers/
    │   └── analysis_controller.dart
    └── providers/
-       ├── transcript_provider.dart  // StateNotifierProvider
-       ├── feedback_provider.dart  // StateNotifierProvider
-       └── analysis_provider.dart  // StateNotifierProvider
+       ├── transcript_provider.dart  // NotifierProvider
+       ├── feedback_provider.dart  // NotifierProvider
+       └── analysis_provider.dart  // NotifierProvider
    ```
 
 ### データフロー
@@ -179,7 +179,7 @@
    graph LR
    A[User Action] --> B[Hooks]
    B --> C[Controller]
-   C --> D[StateNotifierProvider]
+   C --> D[NotifierProvider]
    D --> E[Model]
    E --> F[HookConsumerWidget]
    ```
@@ -225,22 +225,27 @@ HooksRiverpod を採用することで、以下の利点を活かした実装を
 
 #### 実装方針
 
-1. **StateNotifierProvider の活用**
+1. **NotifierProvider の活用**
 
    ```dart
    // 状態の定義
-   class AnalysisState {
-     final bool isProcessing;
-     final TranscriptModel? transcript;
-     final NonVerbalAnalysisModel? nonVerbalAnalysis;
-     final FeedbackModel? feedback;
-     final String? error;
-     // ...
+   @freezed
+   class AnalysisState with _$AnalysisState {
+     const factory AnalysisState({
+       @Default(false) bool isProcessing,
+       TranscriptModel? transcript,
+       NonVerbalAnalysisModel? nonVerbalAnalysis,
+       FeedbackModel? feedback,
+       String? error,
+     }) = _AnalysisState;
    }
 
-   // StateNotifierの実装
-   class AnalysisNotifier extends StateNotifier<AnalysisState> {
-     AnalysisNotifier() : super(AnalysisState());
+   // Notifierの実装
+   class AnalysisNotifier extends Notifier<AnalysisState> {
+     @override
+     AnalysisState build() {
+       return AnalysisState();
+     }
 
      Future<void> fetchAnalysis(String sessionId) async {
        // Firestoreから直接データを取得
@@ -258,7 +263,7 @@ HooksRiverpod を採用することで、以下の利点を活かした実装を
    }
 
    // Providerの定義
-   final analysisProvider = StateNotifierProvider<AnalysisNotifier, AnalysisState>((ref) {
+   final analysisProvider = NotifierProvider<AnalysisNotifier, AnalysisState>(() {
      return AnalysisNotifier();
    });
    ```
@@ -288,26 +293,7 @@ HooksRiverpod を採用することで、以下の利点を活かした実装を
    }
    ```
 
-3. **カスタム Hooks の作成**
-
-   ```dart
-   // 再利用可能なロジックをカスタムHookとして実装
-   Stream<DocumentSnapshot> useSessionStream(String sessionId) {
-     final stream = useState<Stream<DocumentSnapshot>?>(null);
-
-     useEffect(() {
-       stream.value = _firestore
-           .collection('sessions')
-           .doc(sessionId)
-           .snapshots();
-       return null;
-     }, [sessionId]);
-
-     return stream.value!;
-   }
-   ```
-
-### UI 実装
+3. **UI 実装**
 
 #### 選択肢 1: Material Design
 
