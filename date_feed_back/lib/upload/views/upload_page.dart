@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+import '../controllers/upload_controller.dart';
+
 class UploadPage extends HookConsumerWidget {
   const UploadPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDragging = useState(false);
+    final uploadState = ref.watch(uploadControllerProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -80,6 +83,22 @@ class UploadPage extends HookConsumerWidget {
                 );
               },
             ),
+            const SizedBox(height: 24),
+            if (uploadState.isUploading)
+              Column(
+                children: [
+                  LinearProgressIndicator(
+                    value:
+                        uploadState.progress > 0 ? uploadState.progress : null,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    uploadState.progress > 0
+                        ? 'アップロード中... ${(uploadState.progress * 100).toStringAsFixed(0)}%'
+                        : 'アップロード準備中...',
+                  ),
+                ],
+              ),
           ],
         ),
       ),
