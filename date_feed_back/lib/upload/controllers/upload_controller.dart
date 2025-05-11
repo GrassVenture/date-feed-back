@@ -41,18 +41,57 @@ class UploadController extends Notifier<UploadState> {
       final maxBytes = (file.size * (maxDurationSec / audio.duration)).floor();
       final sliced = file.slice(0, maxBytes, file.type);
 
-      // ここでslicedをアップロード対象にする
-      // 例: await uploadFile(sliced);
-
       state = UploadState(isUploading: true);
-      // ...アップロード処理
+      uploadFile(sliced);
       state = UploadState(isUploading: false);
       return;
     }
 
     // 15分以内ならそのままアップロード
     state = UploadState(isUploading: true);
-    // ...アップロード処理
+    uploadFile(file);
     state = UploadState(isUploading: false);
+  }
+
+  Future<void> uploadFile(html.Blob file) async {
+    try {
+      // 1. 署名付きURLをバックエンドから取得
+      final fileName =
+          'audio_${DateTime.now().millisecondsSinceEpoch}.wav'; // 拡張子は動的に
+      final signedUrl = await fetchSignedUrl(fileName);
+
+      // 2. 署名付きURLにPUTでアップロード
+      final request = await html.HttpRequest.request(
+        signedUrl,
+        method: 'PUT',
+        sendData: file,
+        requestHeaders: {
+          'Content-Type': file.type,
+        },
+      );
+
+      if (request.status == 200) {
+        // アップロード成功
+        state = UploadState(isUploading: false, error: null);
+      } else {
+        // アップロード失敗
+        state = UploadState(isUploading: false, error: 'アップロードに失敗しました');
+      }
+    } catch (e) {
+      state = UploadState(isUploading: false, error: 'アップロード中にエラーが発生しました: $e');
+    }
+  }
+
+// 署名付きURLを取得する関数（例: REST API経由）
+  Future<String> fetchSignedUrl(String fileName) async {
+    final response = await html.HttpRequest.request(
+      '/api/gcs-signed-url?filename=$fileName', // ←ここはバックエンドのAPI仕様に合わせて修正
+      method: 'GET',
+    );
+    if (response.status == 200) {
+      return response.responseText!;
+    } else {
+      throw Exception('署名付きURLの取得に失敗しました');
+    }
   }
 }
