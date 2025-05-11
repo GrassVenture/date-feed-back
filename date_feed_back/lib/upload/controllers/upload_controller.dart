@@ -66,22 +66,36 @@ class UploadController extends Notifier<UploadState> {
       final signedUrl = await fetchSignedUrl(fileName);
 
       // 2. 署名付きURLにPUTでアップロード
-      final request = await html.HttpRequest.request(
-        signedUrl,
-        method: 'PUT',
-        sendData: file,
-        requestHeaders: {
-          'Content-Type': file.type,
-        },
-      );
+      final request = html.HttpRequest();
+      request.open('PUT', signedUrl);
 
-      if (request.status == 200) {
-        // アップロード成功
-        state = UploadState(isUploading: false, error: null);
-      } else {
-        // アップロード失敗
-        state = UploadState(isUploading: false, error: 'アップロードに失敗しました');
-      }
+      request.upload.onProgress.listen((event) {
+        if (event.lengthComputable) {
+          final progress = event.loaded! / event.total!;
+          state = UploadState(
+            isUploading: true,
+            progress: progress,
+          );
+        }
+      });
+
+      request.onLoadEnd.listen((event) {
+        if (request.status == 200) {
+          state = UploadState(isUploading: false, progress: 1.0, error: null);
+        } else {
+          state = UploadState(
+              isUploading: false, progress: 0.0, error: 'アップロードに失敗しました');
+        }
+      });
+
+      request.onError.listen((event) {
+        state = UploadState(
+            isUploading: false, progress: 0.0, error: 'アップロード中にエラーが発生しました');
+      });
+
+      request.setRequestHeader('Content-Type', file.type);
+      request.send(file);
+      state = UploadState(isUploading: true, progress: 0.0);
     } catch (e) {
       state = UploadState(isUploading: false, error: 'アップロード中にエラーが発生しました: $e');
     }
