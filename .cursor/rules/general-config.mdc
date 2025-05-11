@@ -1,0 +1,17 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+## Response Header
+
+In the beginning of your answer, say these:
+
+- ✅  User Rules
+- Accuracy Estimate: X% 
+- Model: X
+
+Note:
+
+- Accuracy Estimate is an estimate percentage based on your knowledge.
+- Model is AI model currently used.
