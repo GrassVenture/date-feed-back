@@ -36,9 +36,8 @@
 
 **Flutter Version Management (FVM)**
 
-- プロジェクトの Flutter バージョンを固定（3.19.0）
+- プロジェクトの Flutter バージョンを固定（stable）
 - チーム間での開発環境の統一
-- 複数の Flutter バージョンを管理
 - CI での再現性の確保
 
 **セットアップ手順**
@@ -53,8 +52,8 @@
 2. プロジェクトの Flutter バージョン設定
 
    ```bash
-   fvm install 3.19.0
-   fvm use 3.19.0
+   fvm install stable
+   fvm use stable
    ```
 
 3. VSCode 設定（.vscode/settings.json）
