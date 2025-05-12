@@ -2,33 +2,12 @@ import 'dart:html' as html;
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../models/upload_state.dart';
+
 final uploadControllerProvider =
     NotifierProvider<UploadController, UploadState>(
   UploadController.new,
 );
-
-class UploadState {
-  final bool isUploading;
-  final String? error;
-  final double progress;
-
-  const UploadState({
-    this.isUploading = false,
-    this.error,
-    this.progress = 0.0,
-  });
-
-  UploadState copyWith({
-    bool? isUploading,
-    String? error,
-    double? progress,
-  }) =>
-      UploadState(
-        isUploading: isUploading ?? this.isUploading,
-        error: error ?? this.error,
-        progress: progress ?? this.progress,
-      );
-}
 
 class UploadController extends Notifier<UploadState> {
   @override
