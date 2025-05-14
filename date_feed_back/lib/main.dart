@@ -1,9 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'auth/views/auth_view.dart';
+import 'firebase_options.dart' as prod;
+import 'firebase_options_dev.dart' as dev;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final firebaseOptions = kReleaseMode
+      ? prod.DefaultFirebaseOptions.currentPlatform
+      : dev.DefaultFirebaseOptions.currentPlatform;
+  await Firebase.initializeApp(options: firebaseOptions);
   runApp(const ProviderScope(child: MyApp()));
 }
 
