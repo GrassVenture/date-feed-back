@@ -1,16 +1,37 @@
 # date_feed_back
 
-A new Flutter project.
+---
 
-## Getting Started
+## Firebase 本番・開発環境の自動切り替えについて
 
-This project is a starting point for a Flutter application.
+このプロジェクトでは、**ビルドモード（開発/本番）によって自動的に Firebase の設定が切り替わります**。
 
-A few resources to get you started if this is your first Flutter project:
+- 開発用: `lib/firebase_options_dev.dart`
+- 本番用: `lib/firebase_options.dart`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### 仕組み
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- `main.dart` で `kReleaseMode` を使い、
+  - 開発ビルド（`flutter run` など）→ 開発用 Firebase
+  - 本番ビルド（`flutter build web` など）→ 本番用 Firebase
+    を自動で切り替えています。
+
+### コマンド例
+
+- **開発環境で起動**
+
+  ```bash
+  fvm flutter run -d chrome
+  ```
+
+  → 開発用 Firebase（datefeedbackdev）に接続されます
+
+- **本番ビルド**
+  ```bash
+  fvm flutter build web
+  ```
+  → 本番用 Firebase（datefeedback）に接続されます
+
+> 以前のような `--dart-define=FLAVOR=dev` などのコマンドは不要です。
+
+---
