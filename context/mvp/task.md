@@ -12,18 +12,18 @@
 
    - 概要: Flutter Web プロジェクトの作成と基本設定
    - 完了条件:
-     - [ ] `flutter create`でプロジェクト作成
-     - [ ] `pubspec.yaml`に必要なパッケージを追加
+     - [x] `flutter create`でプロジェクト作成
+     - [x] `pubspec.yaml`に必要なパッケージを追加
        - hooks_riverpod
        - firebase_core
        - firebase_auth
        - cloud_firestore
        - google_cloud_storage
-     - [ ] Firebase/GCP プロジェクトの設定
-     - [ ] GitHub リポジトリの設定
+     - [x] Firebase/GCP プロジェクトの設定
+     - [x] GitHub リポジトリの設定
    - 動作確認:
-     - [ ] `flutter pub get`が正常に完了
-     - [ ] `flutter run -d chrome`でビルドが通ること
+     - [x] `flutter pub get`が正常に完了
+     - [x] `flutter run -d chrome`でビルドが通ること
      - [ ] Firebase 接続確認
    - メモ: バージョン指定は`pubspec.yaml`で明示的に行う
 
