@@ -14,11 +14,11 @@ dependencies:
   hooks_riverpod: ^2.5.1
   flutter_hooks: ^0.20.5
   # Firebase
-  firebase_core: ^2.27.1
-  firebase_auth: ^4.17.9
-  cloud_firestore: ^4.15.9
+  firebase_core: ^3.13.0
+  firebase_auth: ^5.5.3
+  cloud_firestore: ^5.6.7
   # ストレージ
-  firebase_storage: ^11.6.10
+  firebase_storage: ^12.4.5
   # ルーティング
   go_router: ^13.2.1
   # ユーティリティ
