@@ -1,4 +1,5 @@
 import 'dart:html' as html;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -49,51 +50,27 @@ class UploadController extends Notifier<UploadState> {
     state = const UploadState(isUploading: false);
   }
 
-  Future<void> uploadFile(html.Blob file) async {
+  Future<void> uploadFile(html.Blob file, {String? originalFileName}) async {
     try {
-      // 1. 署名付きURLをバックエンドから取得
+      final ext = originalFileName?.split('.').last.toLowerCase() ?? 'mp3';
       final fileName =
-          'audio_${DateTime.now().millisecondsSinceEpoch}.wav'; // 拡張子は動的に
-      final signedUrl = await fetchSignedUrl(fileName);
+          'uploads/audio_${DateTime.now().millisecondsSinceEpoch}.$ext';
 
-      // 2. 署名付きURLにPUTでアップロード
-      final request = html.HttpRequest();
-      request.open('PUT', signedUrl);
+      final ref = FirebaseStorage.instance.ref(fileName);
+      final task = ref.putBlob(file);
 
-      request.upload.onProgress.listen((event) {
-        if (event.lengthComputable) {
-          final progress = event.loaded! / event.total!;
-          debugPrint('アップロード進捗: $progress');
-          state = UploadState(
-            isUploading: true,
-            progress: progress,
-          );
-        } else {
-          debugPrint('lengthComputableがfalseです');
-        }
+      task.snapshotEvents.listen((snapshot) {
+        final progress = snapshot.bytesTransferred / snapshot.totalBytes;
+        state = UploadState(isUploading: true, progress: progress);
       });
 
-      request.onLoadEnd.listen((event) {
-        if (request.status == 200) {
-          debugPrint('アップロード完了: status=${request.status}');
-          state =
-              const UploadState(isUploading: false, progress: 1.0, error: null);
-        } else {
-          state = const UploadState(
-              isUploading: false, progress: 0.0, error: 'アップロードに失敗しました');
-        }
-      });
+      final result = await task;
+      final downloadUrl = await result.ref.getDownloadURL();
+      debugPrint('アップロード成功: $downloadUrl');
 
-      request.onError.listen((event) {
-        debugPrint('アップロードエラー発生');
-        state = const UploadState(
-            isUploading: false, progress: 0.0, error: 'アップロード中にエラーが発生しました');
-      });
-
-      request.setRequestHeader('Content-Type', file.type);
-      request.send(file);
+      state = const UploadState(isUploading: false, progress: 1.0);
     } catch (e) {
-      state = UploadState(isUploading: false, error: 'アップロード中にエラーが発生しました: $e');
+      state = UploadState(isUploading: false, error: 'アップロードに失敗しました: $e');
     }
   }
 
