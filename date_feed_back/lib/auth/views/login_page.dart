@@ -13,8 +13,9 @@ class LoginPage extends HookConsumerWidget {
     final passwordController = useTextEditingController();
     final rememberMe = useState(false);
     final hidePassword = useState(true);
-    final authState = ref.watch(authProvider);
-    final auth = ref.read(authProvider.notifier);
+
+    final authState = ref.watch(authNotifierProvider);
+    final authNotifier = ref.read(authNotifierProvider.notifier);
 
     return Scaffold(
       backgroundColor: Colors.deepPurple.shade50,
@@ -129,7 +130,7 @@ class LoginPage extends HookConsumerWidget {
                       onPressed: authState.isLoading
                           ? null
                           : () async {
-                              await auth.signInWithEmailAndPassword(
+                              await authNotifier.signInWithEmailAndPassword(
                                 emailController.text,
                                 passwordController.text,
                               );
@@ -177,7 +178,7 @@ class LoginPage extends HookConsumerWidget {
                       onPressed: authState.isLoading
                           ? null
                           : () async {
-                              await auth.signInWithGoogle();
+                              await authNotifier.signInWithGoogle();
                               if (authState.user != null) {
                                 if (context.mounted) {
                                   context.go('/upload');

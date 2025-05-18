@@ -7,8 +7,8 @@ class AuthView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authProvider);
-    final auth = ref.read(authProvider.notifier);
+    final authState = ref.watch(authNotifierProvider);
+    final auth = ref.read(authNotifierProvider.notifier);
 
     return Scaffold(
       body: Center(
