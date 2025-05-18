@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart' show kReleaseMode;
 
-import 'firebase_options.dart' as prod;
-import 'firebase_options_dev.dart' as dev;
+import 'firebase_options.dart';
 import 'core/routes/app_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final firebaseOptions = kReleaseMode
-      ? prod.DefaultFirebaseOptions.currentPlatform
-      : dev.DefaultFirebaseOptions.currentPlatform;
-  await Firebase.initializeApp(options: firebaseOptions);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.web,
+  );
   runApp(const ProviderScope(child: MyApp()));
 }
 

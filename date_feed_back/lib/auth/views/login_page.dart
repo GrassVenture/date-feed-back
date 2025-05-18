@@ -184,10 +184,7 @@ class LoginPage extends HookConsumerWidget {
                                 }
                               }
                             },
-                      icon: Image.network(
-                        'https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg',
-                        height: 24,
-                      ),
+                      icon: const Icon(Icons.g_mobiledata, size: 24, color: Colors.red),
                       label: const Text('Googleでログイン'),
                       style: OutlinedButton.styleFrom(
                         side: const BorderSide(color: Colors.grey),
