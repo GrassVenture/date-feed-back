@@ -2,6 +2,8 @@ import 'dart:html' as html;
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../controllers/upload_controller.dart';
 
@@ -11,6 +13,18 @@ class UploadPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final uploadState = ref.watch(uploadControllerProvider);
+
+    // ここで副作用として遷移処理
+    useEffect(() {
+      if (!uploadState.isUploading && uploadState.progress >= 1.0) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (ModalRoute.of(context)?.isCurrent ?? true) {
+            context.go('/detail/dummyId');
+          }
+        });
+      }
+      return null;
+    }, [uploadState.isUploading, uploadState.progress]);
 
     return Scaffold(
       appBar: AppBar(
@@ -39,6 +53,10 @@ class UploadPage extends HookConsumerWidget {
                     await ref
                         .read(uploadControllerProvider.notifier)
                         .handleDroppedFile(files.first);
+                    // アップロード完了後に遷移
+                    if (context.mounted) {
+                      context.go('/detail/dummyId');
+                    }
                   }
                 });
               },
