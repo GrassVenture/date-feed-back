@@ -120,18 +120,6 @@ class LoginPage extends HookConsumerWidget {
                         },
                       ),
                       const Text('ログイン状態を保持'),
-                      const Spacer(),
-                      TextButton(
-                        onPressed: () {
-                          // パスワードリセット処理
-                        },
-                        child: const Text(
-                          'パスワードをお忘れですか？',
-                          style: TextStyle(
-                            color: Colors.deepPurple,
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                   const SizedBox(height: 24),
