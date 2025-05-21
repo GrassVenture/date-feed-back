@@ -14,18 +14,6 @@ class UploadPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final uploadState = ref.watch(uploadControllerProvider);
 
-    // ここで副作用として遷移処理
-    useEffect(() {
-      if (!uploadState.isUploading && uploadState.progress >= 1.0) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (ModalRoute.of(context)?.isCurrent ?? true) {
-            context.go('/detail/dummyId');
-          }
-        });
-      }
-      return null;
-    }, [uploadState.isUploading, uploadState.progress]);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('音声アップロード'),

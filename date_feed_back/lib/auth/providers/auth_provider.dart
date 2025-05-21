@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/foundation.dart';
 import '../models/auth_state.dart';
+import 'package:date_feed_back/support/mock_user.dart';
 
 final authNotifierProvider = NotifierProvider<AuthNotifier, AuthState>(
   AuthNotifier.new,
@@ -66,7 +67,7 @@ class AuthNotifier extends Notifier<AuthState> {
         if (kDebugMode) {
           print('Firebase認証エラー: ${e.code} - ${e.message}');
           // 開発モードでテスト用ユーザーを返す
-          final testUser = _createMockUser(email);
+          final testUser = createMockUser(email);
           state = state.copyWith(user: testUser, isLoading: false);
           return;
         }
@@ -98,7 +99,7 @@ class AuthNotifier extends Notifier<AuthState> {
       
       // 開発モードの場合、テスト用ユーザー登録を許可
       if (kDebugMode) {
-        final testUser = _createMockUser(email);
+        final testUser = createMockUser(email);
         state = state.copyWith(user: testUser, isLoading: false);
         return;
       }
@@ -135,35 +136,5 @@ class AuthNotifier extends Notifier<AuthState> {
         errorMessage: 'ログアウトに失敗しました。もう一度お試しください。',
       );
     }
-  }
-  
-  // モックユーザーを作成（Firebaseが設定されていない開発環境用）
-  User _createMockUser(String email) {
-    // Warning: これは実際のUserクラスではなく、単なるモックです
-    // Firebaseが使えない環境でUIテストするための仮実装
-    return _MockUser(
-      uid: 'mock-uid-${DateTime.now().millisecondsSinceEpoch}',
-      email: email,
-      displayName: 'テストユーザー',
-    );
-  }
-}
-
-// モックUserクラス（開発環境でのテスト用）
-class _MockUser implements User {
-  final String uid;
-  final String email;
-  final String displayName;
-
-  _MockUser({
-    required this.uid,
-    required this.email,
-    required this.displayName,
-  });
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) {
-    // Userインターフェースの他のメソッドは実装しない
-    return null;
   }
 } 

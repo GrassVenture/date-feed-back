@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../auth/views/login_page.dart';
 import '../../upload/views/upload_page.dart';
 import '../../auth/providers/auth_provider.dart';
+import '../../analysis/views/analysis_page.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authNotifierProvider);
@@ -38,6 +39,14 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/upload',
         name: 'upload',
         builder: (context, state) => const UploadPage(),
+      ),
+      GoRoute(
+        path: '/detail/:id',
+        name: 'detail',
+        builder: (context, state) {
+          final id = state.pathParameters['id'];
+          return const AnalysisPage();
+        },
       ),
     ],
     errorBuilder: (context, state) => Scaffold(
