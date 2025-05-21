@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:roggle/roggle.dart';
 
 import 'core/routes/app_router.dart';
+
+final logger = Roggle();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,7 +15,7 @@ void main() async {
     options: DefaultFirebaseOptions.web, // ここを必ず指定
   );
   } catch (e) {
-    print('Firebase初期化エラー: $e');
+    logger.e('Firebase初期化エラー: $e');
     // エラーが発生してもアプリは起動する
   }
   runApp(const ProviderScope(child: MyApp()));
