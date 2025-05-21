@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../providers/auth_provider.dart';
+import '../controllers/auth_notifier.dart';
 
 class AuthView extends ConsumerWidget {
   const AuthView({super.key});

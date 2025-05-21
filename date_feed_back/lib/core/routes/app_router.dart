@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../auth/views/login_page.dart';
 import '../../upload/views/upload_page.dart';
-import '../../auth/providers/auth_provider.dart';
+import '../../auth/controllers/auth_notifier.dart';
 import '../../analysis/views/analysis_page.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
