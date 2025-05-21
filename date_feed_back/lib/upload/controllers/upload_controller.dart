@@ -5,10 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../models/upload_state.dart';
 
-final uploadControllerProvider =
-    NotifierProvider<UploadController, UploadState>(
-  UploadController.new,
-);
+final uploadControllerProvider = NotifierProvider<UploadController, UploadState>(() {
+  return UploadController();
+});
 
 class UploadController extends Notifier<UploadState> {
   @override
@@ -39,7 +38,7 @@ class UploadController extends Notifier<UploadState> {
       final sliced = file.slice(0, maxBytes, file.type);
 
       state = const UploadState(isUploading: true);
-      await uploadFile(sliced);
+      await uploadFile(sliced, originalFileName: file.name);
       state = const UploadState(isUploading: false);
       return;
     }
