@@ -1,0 +1,18 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+## Provider の定義場所
+- `Provider` は、関連する `Repository` や `Service` の実装が存在するファイル内に定義すること。
+
+### 具体例
+`auth_repository.dart`
+```dart
+final authRepositoryProvider = Provider<AuthRepository>((ref) {
+  return AuthRepository();
+});
+
+class AuthRepository {
+}
+```
