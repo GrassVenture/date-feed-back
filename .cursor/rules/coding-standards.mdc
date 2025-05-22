@@ -1,0 +1,49 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+## Provider の定義場所
+- `Provider` は、関連する `Repository` や `Service` の実装が存在するファイル内に定義すること。
+
+### 具体例
+`auth_repository.dart`
+```dart
+final authRepositoryProvider = Provider<AuthRepository>((ref) {
+  return AuthRepository();
+});
+
+class AuthRepository {
+}
+```
+
+## ドキュメンテーションコメントの記載ルール
+
+- 日本語でコメントやドキュメントを書く場合、アルファベットと日本語の間にスペースを入れ、文末は `。` で終えること（例: `PDF ファイルを保存する。`）。
+- すべてのパブリックなクラス、関数、メソッド、プロパティに `///` 形式のドキュメンテーションコメントを記載すること。
+- コメントは必ず一文の要約から始めること。
+  - 最初の文で、その要素の主な目的や役割を簡潔に説明する。
+  - 一文要約の後は空行で区切り、詳細説明や補足情報を続けて記載する。
+- クラスや型のコメントは名詞句で終わることが推奨される。
+  - 例：
+    ```dart
+    /// ユーザー情報を管理するクラス。
+    class UserManager { ... }
+    ```
+- 関数やメソッドのコメントは、動詞で終わることが推奨される。
+  - 例：
+    ```dart
+    /// 新しいユーザーを追加する。
+    void addUser(User user) { ... }
+    ```
+- コメント内でパラメータや戻り値、例外について説明する場合は、文章の中で自然に説明する。
+- コメント内で識別子（クラス名やメソッド名など）を参照する場合は、角括弧（[ ]）で囲む。
+- Markdown 記法は可読性を損なわない範囲で利用可能。過度な装飾は避けること。
+- コード例を記載する場合は、バッククォート3つ (```dart) で囲み、Dart コードであることを明示する。
+- オーバーライドしたメンバーについては、親クラスで十分な説明がある場合は省略してもよい。
+
+### 参考リンク
+
+- [Dart公式: public_member_api_docs](mdc:https:/dart.dev/tools/linter-rules/public_member_api_docs)
+- [Effective Dart: Documentation](mdc:https:/dart.dev/effective-dart/documentation)
+- [Effective Dart: DO start doc comments with a single-sentence summary](mdc:https:/dart.dev/effective-dart/documentation#do-start-doc-comments-with-a-single-sentence-summary)

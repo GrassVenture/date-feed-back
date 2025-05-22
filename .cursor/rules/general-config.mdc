@@ -3,15 +3,15 @@ description:
 globs: 
 alwaysApply: true
 ---
-## Response Header
+## 回答の冒頭
 
-In the beginning of your answer, say these:
+回答の冒頭にて、次の内容を記載してください：
 
 - ✅  User Rules
-- Accuracy Estimate: X% 
+- Accuracy Estimate: X %
 - Model: X
 
-Note:
+注記：
 
-- Accuracy Estimate is an estimate percentage based on your knowledge.
-- Model is AI model currently used.
+- Accuracy Estimate は、あなたの知識に基づく推定パーセンテージです。
+- Model は、現在使用している AI モデルです。
