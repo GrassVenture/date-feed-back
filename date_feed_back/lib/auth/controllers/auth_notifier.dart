@@ -3,10 +3,6 @@ import '../models/auth_state.dart';
 import '../repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  return AuthRepository();
-});
-
 final authNotifierProvider = NotifierProvider<AuthNotifier, AuthState>(AuthNotifier.new);
 
 class AuthNotifier extends Notifier<AuthState> {

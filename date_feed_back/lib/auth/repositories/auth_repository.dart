@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import '../../support/mock_user.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AuthRepository {
   final FirebaseAuth _firebaseAuth;
@@ -40,4 +41,8 @@ class AuthRepository {
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
-} 
+}
+
+final authRepositoryProvider = Provider<AuthRepository>((ref) {
+  return AuthRepository();
+}); 
