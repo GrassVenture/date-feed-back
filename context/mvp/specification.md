@@ -41,13 +41,15 @@
 ### 振る舞い
 
 1.  **ログイン:** ユーザーはメールアドレスとパスワードでログインする。認証は Firebase Authentication などを使用。
-2.  **音声アップロード:** ユーザーは音声ファイルをアップロードする。ファイルは署名付き URL 経由で Vertex AI Files API (または GCS) に PUT される。
-3.  **処理開始:** ファイルアップロード完了をトリガー (Eventarc) として Cloud Run ジョブが起動。
-4.  **音声分割 (必要な場合):** Cloud Run が音声ファイルをダウンロードし、15 分を超える場合は ffmpeg で最初の 15 分チャンクを抽出。
-5.  **Gemini 分析:** Cloud Run が Gemini 2.5 Pro を呼び出し、指定されたプロンプトに基づき「文字起こし (JSON)」「非言語情報分析 (Markdown)」「AI フィードバック (Markdown)」を生成させる。(注: プロンプトに応じて複数回の呼び出しが必要になる可能性がある)
-6.  **結果保存:** Cloud Run は生成された結果 (文字起こし JSON、非言語分析 Markdown、フィードバック Markdown) を GCS に保存し、Firestore の `sessions/{docId}` ドキュメントに処理ステータス (`status=done`) と各結果ファイルの GCS URI を記録する。
-7.  **結果表示:** Flutter Web は Firestore の `sessions/{docId}` を `onSnapshot` で監視。ステータスが `done` になったら GCS から結果ファイルを取得し、UI に表示する。
-8.  **エラーハンドリング:**
+2.  **音声アップロード:** ユーザーは音声ファイルを Firebase Storage へアップロードする。
+3.  **ドキュメント作成:** Firebase Storage のファイルURLを Firestore のフィールドとして持たせる。
+4. **APIリクエスト:**
+5.  **処理開始:** ファイルアップロード完了をトリガー (Eventarc) として Cloud Run ジョブが起動。
+6.  **音声分割 (必要な場合):** Cloud Run が音声ファイルをダウンロードし、15 分を超える場合は ffmpeg で最初の 15 分チャンクを抽出。
+7.  **Gemini 分析:** Cloud Run が Gemini 2.5 Pro を呼び出し、指定されたプロンプトに基づき「文字起こし (JSON)」「非言語情報分析 (Markdown)」「AI フィードバック (Markdown)」を生成させる。(注: プロンプトに応じて複数回の呼び出しが必要になる可能性がある)
+8.  **結果保存:** Cloud Run は生成された結果 (文字起こし JSON、非言語分析 Markdown、フィードバック Markdown) を GCS に保存し、Firestore の `sessions/{docId}` ドキュメントに処理ステータス (`status=done`) と各結果ファイルの GCS URI を記録する。
+9.  **結果表示:** Flutter Web は Firestore の `sessions/{docId}` を `onSnapshot` で監視。ステータスが `done` になったら GCS から結果ファイルを取得し、UI に表示する。
+10.  **エラーハンドリング:**
    - アップロード失敗、音声処理エラー、Gemini API エラー発生時は、ユーザーにエラーダイアログを表示し、エラー内容を明示する。
    - 必要に応じてリトライや再アップロードの案内も行う。
 
