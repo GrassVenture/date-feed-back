@@ -1,20 +1,16 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-/// テスト・開発用のモックUserクラス
-class MockUser implements User {
-  @override
-  final String uid;
-  @override
-  final String? email;
-  @override
-  final String? displayName;
+part 'mock_user.freezed.dart';
 
-  MockUser({
-    required this.uid,
-    required this.email,
-    required this.displayName,
-  });
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) => null;
+/// テスト・開発用のモックユーザーモデル。
+///
+/// Firebase Auth の [User] の代替として利用する。
+@freezed
+class MockUser with _$MockUser {
+  /// モックユーザーを生成する。
+  const factory MockUser({
+    required String uid,
+    String? email,
+    String? displayName,
+  }) = _MockUser;
 } 

@@ -1,40 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'package:roggle/roggle.dart';
+import 'package:flutter/foundation.dart' show kReleaseMode;
 
-import 'core/routes/app_router.dart';
-
-final logger = Roggle();
+import 'firebase_options.dart' as prod;
+import 'firebase_options_dev.dart' as dev;
+import 'upload/views/upload_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  try {
-    await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.web, // ここを必ず指定
-  );
-  } catch (e) {
-    logger.e('Firebase初期化エラー: $e');
-    // エラーが発生してもアプリは起動する
-  }
+  final firebaseOptions = kReleaseMode
+      ? prod.DefaultFirebaseOptions.currentPlatform
+      : dev.DefaultFirebaseOptions.currentPlatform;
+  await Firebase.initializeApp(options: firebaseOptions);
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends ConsumerWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routerProvider);
-    
-    return MaterialApp.router(
+  Widget build(BuildContext context) {
+    return MaterialApp(
       title: 'DateFeedBack',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      routerConfig: router,
+      home: const UploadPage(),
     );
   }
 }
