@@ -8,7 +8,7 @@ import '../../upload/views/upload_page.dart';
 import '../../auth/controllers/auth_notifier.dart';
 import '../../analysis/views/analysis_page.dart';
 
-final routerProvider = Provider<GoRouter>((ref) {
+final appRouterProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authNotifierProvider);
 
   return GoRouter(
