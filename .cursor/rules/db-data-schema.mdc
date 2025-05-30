@@ -1,0 +1,41 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+erDiagram
+    users ||--o{ dateSessions : has
+    instructors ||--o{ instructorUsers : manages
+    companies ||--o{ instructors : employs
+
+    users {
+        string name "Non-nullable | ユーザー名"
+    }
+
+    dateSessions {
+        string audioUrl "Non-nullable | Firestoreに保存された音声ファイルURL"
+        string status "Non-nullable | ステータス（値: 'pending', 'completed'）"
+        map transcript "Non-nullable | 文字起こしデータJSON"
+        map analysis "Non-nullable | 解析データJSON"
+        map graph "Nullable | グラフデータJSON"
+        timestamp createdAt "Non-nullable | 作成日時"
+        timestamp updatedAt "Non-nullable | 更新日時"
+    }
+
+    companies {
+        string name "Non-nullable | 会社名（例:恋愛コンサル会社A）"
+        timestamp createdAt "Non-nullable | 作成日時"
+        timestamp updatedAt "Non-nullable | 更新日時"
+    }
+
+    instructors {
+        string name "Non-nullable | 講師名"
+        timestamp createdAt "Non-nullable | 作成日時"
+        timestamp updatedAt "Non-nullable | 更新日時"
+    }
+
+    instructorUsers {
+        string userId "Non-nullable | 管理しているユーザーID"
+        timestamp createdAt "Non-nullable | 作成日時"
+        timestamp updatedAt "Non-nullable | 更新日時"
+    }
