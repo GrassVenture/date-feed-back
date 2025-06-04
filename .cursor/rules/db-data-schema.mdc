@@ -26,18 +26,6 @@ erDiagram
         timestamp updatedAt "Non-nullable | 更新日時"
     }
 
-    instructors {
-        string name "Non-nullable | 講師名"
-        timestamp createdAt "Non-nullable | 作成日時"
-        timestamp updatedAt "Non-nullable | 更新日時"
-    }
-
-    instructorUsers {
-        string userId "Non-nullable | 管理しているユーザーID"
-        timestamp createdAt "Non-nullable | 作成日時"
-        timestamp updatedAt "Non-nullable | 更新日時"
-    }
-
 ```
 
 # Flutter モデル命名・設計ルール
