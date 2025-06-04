@@ -7,7 +7,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../controllers/upload_controller.dart';
 
+/// 音声ファイルのアップロード画面。
 class UploadPage extends HookConsumerWidget {
+  /// [UploadPage] を生成する。
   const UploadPage({super.key});
 
   @override

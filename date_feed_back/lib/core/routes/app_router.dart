@@ -8,11 +8,14 @@ import '../../upload/views/upload_page.dart';
 import '../../auth/controllers/auth_notifier.dart';
 import '../../analysis/views/analysis_page.dart';
 
+/// アプリ全体のルーティングを提供する [Provider]。
 final appRouterProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authNotifierProvider);
 
   return GoRouter(
+    /// ルーティング初期パス。
     initialLocation: '/login',
+    /// ログイン状態に応じたリダイレクト処理。
     redirect: (context, state) {
       final isLoggedIn = authState.user != null;
       final isGoingToLogin = state.uri.path == '/login';
@@ -29,6 +32,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       return null;
     },
+    /// ルート定義一覧。
     routes: [
       GoRoute(
         path: '/login',
@@ -49,6 +53,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         },
       ),
     ],
+    /// ルーティングエラー時の画面。
     errorBuilder: (context, state) => Scaffold(
       body: Center(
         child: Text('エラー: ${state.error}'),

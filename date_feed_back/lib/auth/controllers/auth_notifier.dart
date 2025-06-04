@@ -3,17 +3,21 @@ import '../models/auth_state.dart';
 import '../repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+/// 認証状態を管理する [NotifierProvider]。
 final authNotifierProvider = NotifierProvider<AuthNotifier, AuthState>(AuthNotifier.new);
 
+/// Firebase 認証の状態管理・操作を行う Notifier。
 class AuthNotifier extends Notifier<AuthState> {
   late final AuthRepository _authRepository;
 
   @override
+  /// 認証状態の初期化を行う。
   AuthState build() {
     _authRepository = ref.read(authRepositoryProvider);
     return const AuthState();
   }
 
+  /// メールアドレスとパスワードでサインインする。
   Future<void> signInWithEmailAndPassword(String email, String password) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
@@ -32,6 +36,7 @@ class AuthNotifier extends Notifier<AuthState> {
     }
   }
 
+  /// メールアドレスとパスワードで新規登録する。
   Future<void> signUpWithEmailAndPassword(String email, String password) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
@@ -50,6 +55,7 @@ class AuthNotifier extends Notifier<AuthState> {
     }
   }
 
+  /// Google アカウントでサインインする。
   Future<void> signInWithGoogle() async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
@@ -63,6 +69,7 @@ class AuthNotifier extends Notifier<AuthState> {
     }
   }
 
+  /// サインアウトする。
   Future<void> signOut() async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
@@ -76,6 +83,7 @@ class AuthNotifier extends Notifier<AuthState> {
     }
   }
 
+  /// FirebaseAuthException をユーザー向けメッセージに変換する。
   String _mapFirebaseAuthExceptionToMessage(FirebaseAuthException e) {
     switch (e.code) {
       case 'user-not-found':

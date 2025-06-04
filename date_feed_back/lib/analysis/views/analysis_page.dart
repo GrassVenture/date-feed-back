@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// 詳細分析ページ。
+///
+/// アップロード済み音声ファイルの詳細情報や分析結果を表示するページ。
 class AnalysisPage extends StatelessWidget {
   const AnalysisPage({super.key});
 

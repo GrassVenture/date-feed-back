@@ -4,6 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../controllers/auth_notifier.dart';
 
+/// ログイン画面を表示するページ。
+///
+/// ユーザー名とパスワードによるログインに対応する。
 class LoginPage extends HookConsumerWidget {
   const LoginPage({super.key});
 
