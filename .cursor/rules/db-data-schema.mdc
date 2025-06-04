@@ -1,0 +1,65 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Firestore データ構造と Flutter モデル設計ルール
+
+## ER 図
+
+```mermaid
+erDiagram
+    users ||--o{ dateSessions : has
+
+    users {
+        string name "Non-nullable | ユーザー名"
+    }
+
+    dateSessions {
+        string audioUrl "Non-nullable | Firestoreに保存された音声ファイルURL"
+        string status "Non-nullable | ステータス（値: 'pending', 'completed'）"
+        map transcript "Non-nullable | 文字起こしデータJSON"
+        map analysis "Non-nullable | 解析データJSON"
+        map graph "Nullable | グラフデータJSON"
+        timestamp createdAt "Non-nullable | 作成日時"
+        timestamp updatedAt "Non-nullable | 更新日時"
+    }
+
+```
+
+# Flutter モデル命名・設計ルール
+
+Flutter アプリケーションにおける Firebase Firestore のモデルクラス定義に関するルールを以下に示す。
+
+## 命名規則
+
+- 各モデルクラス名は **Firestore のコレクション名を踏襲**し、**単数形の UpperCamelCase** で定義する  
+  例: `dateSessions` → `DateSession`
+
+- ただし、`users` コレクションに対応するモデルクラス名は `User` とすると Firebase Authentication の `User` クラスと競合するため、  
+  **`AuthedUser`** と命名する
+
+## ドキュメントIDの扱い
+
+- Firestore の各ドキュメント内には、**ドキュメント自身の ID（document ID）をフィールドとしては保持しない**
+- ただし、Flutter 側のモデルクラス上では、**document ID を `id` フィールド等で保持する設計とする**
+
+例:
+```dart
+@freezed
+class DateSession with _$DateSession {
+  const factory DateSession({
+    required String id, // FirestoreのドキュメントID（アプリ側で付与）
+    required String audioUrl,
+    required String status,
+    // 必要に応じて以下を追加（nullableなら `?` を付ける）
+    Map<String, dynamic>? transcript,
+    Map<String, dynamic>? analysis,
+    Map<String, dynamic>? graph,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _DateSession;
+
+  factory DateSession.fromJson(Map<String, dynamic> json) => _$DateSessionFromJson(json);
+}
+```
