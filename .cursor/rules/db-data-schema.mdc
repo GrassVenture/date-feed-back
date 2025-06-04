@@ -10,7 +10,6 @@ alwaysApply: false
 ```mermaid
 erDiagram
     users ||--o{ dateSessions : has
-    instructors ||--o{ instructorUsers : manages
 
     users {
         string name "Non-nullable | ユーザー名"
