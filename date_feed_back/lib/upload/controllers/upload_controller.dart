@@ -5,15 +5,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../models/upload_state.dart';
 
-final uploadControllerProvider =
-    NotifierProvider<UploadController, UploadState>(
-  UploadController.new,
-);
+/// アップロード状態を管理する [NotifierProvider]。
+final uploadControllerProvider = NotifierProvider<UploadController, UploadState>(() {
+  return UploadController();
+});
 
+/// 音声ファイルのアップロード処理を管理する Notifier。
 class UploadController extends Notifier<UploadState> {
   @override
+  /// アップロード状態の初期化を行う。
   UploadState build() => const UploadState();
 
+  /// ドロップまたは選択されたファイルを処理し、アップロードする。
   Future<void> handleDroppedFile(html.File file) async {
     final fileName = file.name.toLowerCase();
     if (!(fileName.endsWith('.mp3') || fileName.endsWith('.wav'))) {
@@ -39,7 +42,7 @@ class UploadController extends Notifier<UploadState> {
       final sliced = file.slice(0, maxBytes, file.type);
 
       state = const UploadState(isUploading: true);
-      await uploadFile(sliced);
+      await uploadFile(sliced, originalFileName: file.name);
       state = const UploadState(isUploading: false);
       return;
     }
@@ -50,6 +53,9 @@ class UploadController extends Notifier<UploadState> {
     state = const UploadState(isUploading: false);
   }
 
+  /// ファイルを Firebase Storage にアップロードする。
+  ///
+  /// [originalFileName] を指定した場合は拡張子に利用する。
   Future<void> uploadFile(html.Blob file, {String? originalFileName}) async {
     try {
       final ext = originalFileName?.split('.').last.toLowerCase() ?? 'mp3';
@@ -74,7 +80,9 @@ class UploadController extends Notifier<UploadState> {
     }
   }
 
-// 署名付きURLを取得する関数（例: REST API経由）
+  /// 指定ファイル名の署名付きURLを取得する。
+  ///
+  /// バックエンドAPI経由で署名付きURLを取得する例。
   Future<String> fetchSignedUrl(String fileName) async {
     final response = await html.HttpRequest.request(
       '/api/gcs-signed-url?filename=$fileName', // ←ここはバックエンドのAPI仕様に合わせて修正

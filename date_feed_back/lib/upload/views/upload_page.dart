@@ -2,10 +2,14 @@ import 'dart:html' as html;
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../controllers/upload_controller.dart';
 
+/// 音声ファイルのアップロード画面。
 class UploadPage extends HookConsumerWidget {
+  /// [UploadPage] を生成する。
   const UploadPage({super.key});
 
   @override
@@ -39,6 +43,10 @@ class UploadPage extends HookConsumerWidget {
                     await ref
                         .read(uploadControllerProvider.notifier)
                         .handleDroppedFile(files.first);
+                    // アップロード完了後に遷移
+                    if (context.mounted) {
+                      context.go('/detail/dummyId');
+                    }
                   }
                 });
               },

@@ -47,3 +47,12 @@ class AuthRepository {
 - [Dart公式: public_member_api_docs](mdc:https:/dart.dev/tools/linter-rules/public_member_api_docs)
 - [Effective Dart: Documentation](mdc:https:/dart.dev/effective-dart/documentation)
 - [Effective Dart: DO start doc comments with a single-sentence summary](mdc:https:/dart.dev/effective-dart/documentation#do-start-doc-comments-with-a-single-sentence-summary)
+
+
+## ログ管理
+
+- アプリケーションのログは一元管理すること。
+- ログ出力には roggleを使用すること。
+- ログレベル（debug, info, warning, error など）や出力先（コンソール、ファイル等）は柔軟に設定できるようにすること。
+- 開発・運用時のトレーサビリティ向上のため、十分な情報を記録すること。
+- 機密情報や個人情報はログに出力しないこと。

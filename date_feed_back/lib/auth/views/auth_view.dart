@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../providers/auth_provider.dart';
+import '../controllers/auth_notifier.dart';
 
+/// 認証状態に応じてログイン・ログアウトUIを表示するページ。
 class AuthView extends ConsumerWidget {
   const AuthView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authProvider);
-    final auth = ref.read(authProvider.notifier);
+    final authState = ref.watch(authNotifierProvider);
+    final auth = ref.read(authNotifierProvider.notifier);
 
     return Scaffold(
       body: Center(
