@@ -1,66 +1,54 @@
-# SpecStory explanation file
-.specstory/.what-is-this.md
 
-# fvm
-
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
 .atom/
 .buildlog/
-.history
-.svn/
-migrate_working_dir/
-
-# IntelliJ related
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
 .dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-/build/
-
-# Symbolication related
-app.*.symbols
-
-# Obfuscation related
-app.*.map.json
-
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
-
-# Environment variables
+.DS_Store
 .env
 .env.development
 .env.production
-
-# Firebase
 .firebase/
-firebase-debug.log
-
+.flutter-plugins
+.flutter-plugins-dependencies
+.fvm/# Miscellaneous
+.history
+.idea/
+.pub-cache/
+.pub/
+.specstory/.what-is-this.md
+.svn/
+*.class
+*.iml
+*.ipr
+*.iws
+*.log
+*.pyc
+*.swp
+**/doc/api/
+**/ios/Flutter/.last_build_id
+/android/app/debug
+/android/app/profile
+/android/app/release
+/build/
+# Android Studio will place build artifacts here
 # Coverage
-coverage/
-
-# Web related
-lib/generated_plugin_registrant.dart
-
+# Environment variables
+# Firebase
+# Flutter/Dart/Pub related
+# fvm
 # FVM Version Cache
-.fvm/
+# IntelliJ related
+# is commented out by default.
+# Miscellaneous
+# Obfuscation related
+# SpecStory explanation file
+# Symbolication related
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# Web related
+#.vscode/
+app.*.map.json
+app.*.symbols
+coverage/
+firebase-debug.log
+lib/generated_plugin_registrant.dart
+migrate_working_dir/
