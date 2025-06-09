@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import '../../support/mock_user.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../support/mock_user.dart';
 
 /// Firebase 認証関連の処理を提供するリポジトリ。
 class AuthRepository {
