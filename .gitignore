@@ -9,6 +9,8 @@
 .firebase/
 .flutter-plugins
 .flutter-plugins-dependencies
+.fvm/
+# Miscellaneous
 .history
 .idea/
 .pub-cache/
@@ -34,6 +36,7 @@
 # Firebase
 # Flutter/Dart/Pub related
 # fvm
+# FVM Version Cache
 # IntelliJ related
 # is commented out by default.
 # Miscellaneous
@@ -50,6 +53,3 @@ coverage/
 firebase-debug.log
 lib/generated_plugin_registrant.dart
 migrate_working_dir/
-
-# FVM Version Cache
-.fvm/
