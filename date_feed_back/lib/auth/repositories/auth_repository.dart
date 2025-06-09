@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import '../../support/mock_user.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../support/mock_user.dart';
 
 /// Firebase 認証関連の処理を提供するリポジトリ。
 class AuthRepository {
@@ -14,7 +15,8 @@ class AuthRepository {
   /// メールアドレスとパスワードでサインインする。
   ///
   /// 成功時は [User] を返す。
-  Future<User?> signInWithEmailAndPassword(String email, String password) async {
+  Future<User?> signInWithEmailAndPassword(
+      String email, String password) async {
     final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
@@ -25,14 +27,15 @@ class AuthRepository {
   /// メールアドレスとパスワードで新規登録する。
   ///
   /// デバッグ時はモックユーザーを返す。
-  Future<User?> signUpWithEmailAndPassword(String email, String password) async {
+  Future<User?> signUpWithEmailAndPassword(
+      String email, String password) async {
     try {
       final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       return userCredential.user;
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       if (kDebugMode) {
         return createMockUser(email);
       }
@@ -58,4 +61,4 @@ class AuthRepository {
 /// [AuthRepository] のプロバイダー。
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return AuthRepository();
-}); 
+});
