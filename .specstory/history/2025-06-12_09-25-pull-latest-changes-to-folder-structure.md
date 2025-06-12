@@ -1516,3 +1516,211 @@ Model: GPT-4.1
 
 ---
 
+_**User**_
+
+
+
+---
+
+_**Assistant**_
+
+✅  User Rules  
+Accuracy Estimate: 100 %  
+Model: GPT-4.1  
+
+このエラーは、  
+`.specstory/history/2025-06-12_09-25-pull-latest-changes-to-folder-structure.md`  
+にローカルで未コミットの変更があるため、ブランチを切り替えられないことを意味します。
+
+---
+
+## 解決方法
+
+### 1. 変更をコミットする場合
+
+```sh
+git add .specstory/history/2025-06-12_09-25-pull-latest-changes-to-folder-structure.md
+git commit -m "WIP: update specstory history"
+git checkout main
+```
+
+---
+
+### 2. 変更を一時的に退避（stash）する場合
+
+```sh
+git stash push -m "WIP: specstory history"
+git checkout main
+```
+- 必要になったら `git stash pop` で元に戻せます。
+
+---
+
+### 3. 変更を破棄してもよい場合
+
+```sh
+git checkout -- .specstory/history/2025-06-12_09-25-pull-latest-changes-to-folder-structure.md
+git checkout main
+```
+
+---
+
+ご自身の作業状況に合わせて、  
+- コミット  
+- スタッシュ  
+- 破棄  
+のいずれかを選んでください。
+
+迷う場合や他にも未コミットファイルがある場合は、`git status` の結果を教えていただければアドバイスします！
+
+---
+
+_**User**_
+
+
+
+---
+
+_**Assistant**_
+
+✅  User Rules  
+Accuracy Estimate: 100 %  
+Model: GPT-4.1  
+
+このエラーは、  
+「未追跡（untracked）のファイルが現在の作業ディレクトリに存在し、ブランチを切り替えるとそれらが上書きされてしまうため、checkout が中断された」  
+という意味です。
+
+---
+
+## 解決方法
+
+### 1. 未追跡ファイルを一時退避（stash）する
+
+```sh
+git stash push -u -m "WIP: untracked files"
+git checkout refactor/folder-structure
+```
+- `-u` オプションで未追跡ファイルも stash できます。
+
+---
+
+### 2. 未追跡ファイルを削除してもよい場合
+
+**本当に不要な場合のみ！**
+
+```sh
+rm .specstory/.gitignore
+rm .specstory/history/2025-05-30_09-19-コミット手順の確認.md
+rm .specstory/history/2025-06-06_23-47-最新版をpullする方法.md
+rm .specstory/history/2025-06-08_23-07-understanding-the-gitignore-file.md
+rm .specstory/history/2025-06-12_09-25-pull-latest-changes-to-folder-structure.md
+git checkout refactor/folder-structure
+```
+
+---
+
+### 3. 退避したファイルを戻したい場合
+
+ブランチ切り替え後、必要なら
+
+```sh
+git stash pop
+```
+でファイルを戻せます。
+
+---
+
+ご自身の作業状況に合わせて、  
+- スタッシュ（退避）  
+- 削除  
+のどちらかを選んでください。
+
+不明点があれば、状況を教えていただければアドバイスします！
+
+---
+
+_**User**_
+
+This branch has conflicts that must be resolved
+Use the command line to resolve conflicts before continuing.
+
+date_feed_back/pubspec.lock
+
+---
+
+_**Assistant**_
+
+✅  User Rules  
+Accuracy Estimate: 100 %  
+Model: GPT-4.1  
+
+`This branch has conflicts that must be resolved`  
+`date_feed_back/pubspec.lock`  
+というメッセージは、**マージやリベースの途中で `pubspec.lock` にコンフリクトが発生している**状態です。
+
+---
+
+## 解決方法（pubspec.lock の場合のおすすめ）
+
+### 1. マージやリベースの途中状態を確認
+
+```sh
+git status
+```
+- `both modified:   date_feed_back/pubspec.lock` などと表示されていれば、コンフリクト中です。
+
+---
+
+### 2. `pubspec.lock` を一度削除
+
+```sh
+rm date_feed_back/pubspec.lock
+```
+
+---
+
+### 3. 依存パッケージを再取得して `pubspec.lock` を再生成
+
+```sh
+cd date_feed_back
+fvm flutter pub get
+cd ..
+```
+
+---
+
+### 4. 変更をステージング
+
+```sh
+git add date_feed_back/pubspec.lock
+```
+
+---
+
+### 5. コンフリクト解消コミット
+
+```sh
+git commit -m "Resolve pubspec.lock conflict by regenerating"
+```
+
+---
+
+### 6. 必要に応じて push
+
+```sh
+git push origin <ブランチ名>
+```
+
+---
+
+#### 補足
+- `pubspec.lock` のコンフリクトは手動で編集せず、「削除→再生成」がFlutterプロジェクトでは最も安全です。
+- 他にもコンフリクトしているファイルがあれば、同様に対応してください。
+
+---
+
+もし途中でエラーや不明点があれば、その内容を教えてください！
+
+---
+
