@@ -96,4 +96,9 @@ class UploadController extends Notifier<UploadState> {
       throw Exception('署名付きURLの取得に失敗しました');
     }
   }
+
+  /// アップロード状態を初期化する。
+  void reset() {
+    state = const UploadState();
+  }
 }
