@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
 import '../controllers/auth_notifier.dart';
 
 /// ログイン画面を表示するページ。
@@ -188,7 +189,8 @@ class LoginPage extends HookConsumerWidget {
                                 }
                               }
                             },
-                      icon: const Icon(Icons.g_mobiledata, size: 24, color: Colors.red),
+                      icon: const Icon(Icons.g_mobiledata,
+                          size: 24, color: Colors.red),
                       label: const Text('Googleでログイン'),
                       style: OutlinedButton.styleFrom(
                         side: const BorderSide(color: Colors.grey),
@@ -216,4 +218,4 @@ class LoginPage extends HookConsumerWidget {
       ),
     );
   }
-} 
+}

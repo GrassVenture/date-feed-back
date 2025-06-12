@@ -64,3 +64,6 @@ lib/generated_plugin_registrant.dart
 
 # FVM Version Cache
 .fvm/
+
+# Cursor
+.cursor/mcp.json

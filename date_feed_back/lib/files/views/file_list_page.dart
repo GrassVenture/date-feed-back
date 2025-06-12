@@ -1,132 +1,236 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:universal_html/html.dart' as html;
 
-class FileListPage extends StatelessWidget {
-  final List<Map<String, String>> files = List.generate(
-    7,
-    (index) => {
-      'title': 'ファイル名',
-      'date': '2025/05/15',
-      'time': '12:50',
-      'user': '佐藤さん',
-    },
-  );
+import '../../upload/controllers/upload_controller.dart';
+import 'sidebar.dart';
+import 'create_new_file_button.dart';
 
-  FileListPage({super.key});
+/// ファイル一覧画面を表示するウィジェット。
+///
+/// Figmaデザインに基づき、SVGアイコンや配色・レイアウトを反映する。
+class FileListPage extends HookConsumerWidget {
+  const FileListPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final uploadState = ref.watch(uploadControllerProvider);
+    // ダミーファイルリスト
+    final files = List.generate(
+      7,
+      (index) => {
+        'title': 'ファイル名',
+        'date': '2025/05/15',
+        'time': '12:50',
+        'user': '佐藤さん',
+      },
+    );
     return Scaffold(
-      backgroundColor: const Color(0xFFFCFBFF),
+      backgroundColor: const Color(0xFFFBFAFE),
       body: Row(
         children: [
           // サイドバー
-          Container(
-            width: 60,
-            color: Colors.transparent,
-            child: const Column(
-              children: [
-                SizedBox(height: 20),
-                Icon(Icons.home, color: Color(0xFFE6DFFF), size: 32),
-              ],
-            ),
-          ),
+          const Sidebar(),
           // メインコンテンツ
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Column(
-                children: [
-                  // ヘッダー
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                // 画面幅に応じてカラム数とパディングを決定
+                int crossAxisCount;
+                double horizontalPadding;
+                if (constraints.maxWidth >= 1200) {
+                  crossAxisCount = 3;
+                  horizontalPadding = 32.0;
+                } else if (constraints.maxWidth >= 800) {
+                  crossAxisCount = 2;
+                  horizontalPadding = 24.0;
+                } else {
+                  crossAxisCount = 1;
+                  horizontalPadding = 8.0;
+                }
+                return Padding(
+                  padding: EdgeInsets.all(horizontalPadding),
+                  child: Column(
                     children: [
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add, color: Color(0xFF8B5CF6)),
-                        label: const Text(
-                          '新規作成',
-                          style: TextStyle(color: Color(0xFF8B5CF6)),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          elevation: 2,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 32, vertical: 20),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
+                      // ヘッダー
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.grey[200],
-                            child: const Icon(Icons.person, color: Colors.grey),
+                          CreateNewFileButton(
+                            onPressed: () async {
+                              final uploadInput = html.FileUploadInputElement();
+                              uploadInput.accept = '.mp3,.wav';
+                              uploadInput.click();
+                              uploadInput.onChange.listen((event) async {
+                                final files = uploadInput.files;
+                                if (files != null && files.isNotEmpty) {
+                                  await ref
+                                      .read(uploadControllerProvider.notifier)
+                                      .handleDroppedFile(files.first);
+                                  // アップロード完了後にリストを更新（ここではsetState相当の再ビルドのみ）
+                                  // 実際のリスト更新はリポジトリ連携時に実装
+                                }
+                              });
+                            },
+                            horizontalPadding: horizontalPadding,
                           ),
-                          const SizedBox(width: 8),
-                          Text('UserName',
-                              style: TextStyle(color: Colors.grey[700])),
+                          Row(
+                            children: [
+                              Container(
+                                width: 24,
+                                height: 24,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFFD9D9D9),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    'assets/icons/person_icon2.svg',
+                                    width: 14,
+                                    height: 14,
+                                    colorFilter: const ColorFilter.mode(
+                                        Color(0xFF645E6D), BlendMode.srcIn),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              const Text(
+                                'UserName',
+                                style: TextStyle(
+                                  color: Color(0xFF2F2F2F),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14,
+                                  fontFamily: 'Noto Sans JP',
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
+                      ),
+                      const SizedBox(height: 32),
+                      if (uploadState.isUploading)
+                        Column(
+                          children: [
+                            const LinearProgressIndicator(),
+                            const SizedBox(height: 8),
+                            Text(
+                              uploadState.progress > 0
+                                  ? 'アップロード中... ${(uploadState.progress * 100).toStringAsFixed(0)}%'
+                                  : 'アップロード準備中...',
+                            ),
+                          ],
+                        ),
+                      // ファイルカード一覧
+                      Expanded(
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: crossAxisCount,
+                            mainAxisSpacing: 32,
+                            crossAxisSpacing: 32,
+                            childAspectRatio: 2.2,
+                          ),
+                          itemCount: files.length,
+                          itemBuilder: (context, index) {
+                            final file = files[index];
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0xFFECECEC),
+                                    blurRadius: 8,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              padding: const EdgeInsets.all(32),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        file['title']!,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          fontFamily: 'Noto Sans JP',
+                                          color: Color(0xFF645E6D),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        '作成日:',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Color(0xFF645E6D),
+                                          fontFamily: 'Noto Sans JP',
+                                        ),
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        file['date']!,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Color(0xFF645E6D),
+                                          fontFamily: 'Noto Sans JP',
+                                        ),
+                                      ),
+                                      const SizedBox(width: 16),
+                                      SvgPicture.asset(
+                                        'assets/icons/play_circle_outline.svg',
+                                        width: 16,
+                                        height: 16,
+                                        colorFilter: const ColorFilter.mode(
+                                            Color(0xFF645E6D), BlendMode.srcIn),
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        file['time']!,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Color(0xFF645E6D),
+                                          fontFamily: 'Noto Sans JP',
+                                        ),
+                                      ),
+                                      const SizedBox(width: 16),
+                                      SvgPicture.asset(
+                                        'assets/icons/person2.svg',
+                                        width: 16,
+                                        height: 16,
+                                        colorFilter: const ColorFilter.mode(
+                                            Color(0xFF645E6D), BlendMode.srcIn),
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        file['user']!,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Color(0xFF645E6D),
+                                          fontFamily: 'Noto Sans JP',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 32),
-                  // ファイルカード一覧
-                  Expanded(
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        mainAxisSpacing: 24,
-                        crossAxisSpacing: 24,
-                        childAspectRatio: 2.2,
-                      ),
-                      itemCount: files.length,
-                      itemBuilder: (context, index) {
-                        final file = files[index];
-                        return Card(
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  file['title']!,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                const SizedBox(height: 12),
-                                Row(
-                                  children: [
-                                    Text('作成日: ${file['date']}'),
-                                    const SizedBox(width: 16),
-                                    const Icon(Icons.access_time,
-                                        size: 16, color: Colors.grey),
-                                    const SizedBox(width: 4),
-                                    Text(file['time']!),
-                                    const SizedBox(width: 16),
-                                    const Icon(Icons.person,
-                                        size: 16, color: Colors.grey),
-                                    const SizedBox(width: 4),
-                                    Text(file['user']!),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
           ),
         ],

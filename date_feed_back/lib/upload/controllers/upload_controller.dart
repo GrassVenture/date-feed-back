@@ -1,18 +1,20 @@
-import 'dart:html' as html;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:universal_html/html.dart' as html;
 
 import '../models/upload_state.dart';
 
 /// アップロード状態を管理する [NotifierProvider]。
-final uploadControllerProvider = NotifierProvider<UploadController, UploadState>(() {
+final uploadControllerProvider =
+    NotifierProvider<UploadController, UploadState>(() {
   return UploadController();
 });
 
 /// 音声ファイルのアップロード処理を管理する Notifier。
 class UploadController extends Notifier<UploadState> {
   @override
+
   /// アップロード状態の初期化を行う。
   UploadState build() => const UploadState();
 
