@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../auth/views/login_page.dart';
 import '../../upload/views/upload_page.dart';
@@ -15,6 +14,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     /// ルーティング初期パス。
     initialLocation: '/login',
+
     /// ログイン状態に応じたリダイレクト処理。
     redirect: (context, state) {
       final isLoggedIn = authState.user != null;
@@ -32,6 +32,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       return null;
     },
+
     /// ルート定義一覧。
     routes: [
       GoRoute(
@@ -48,11 +49,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/detail/:id',
         name: 'detail',
         builder: (context, state) {
-          final id = state.pathParameters['id'];
           return const AnalysisPage();
         },
       ),
     ],
+
     /// ルーティングエラー時の画面。
     errorBuilder: (context, state) => Scaffold(
       body: Center(
@@ -60,4 +61,4 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
     ),
   );
-}); 
+});

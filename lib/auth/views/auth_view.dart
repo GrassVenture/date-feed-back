@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import '../controllers/auth_notifier.dart';
 
 /// 認証状態に応じてログイン・ログアウトUIを表示するページ。
@@ -49,4 +50,4 @@ class AuthView extends ConsumerWidget {
       ),
     );
   }
-} 
+}

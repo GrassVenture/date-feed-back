@@ -1,16 +1,19 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../models/auth_state.dart';
-import '../repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../models/auth_state.dart';
+import '../repositories/auth_repository.dart';
+
 /// 認証状態を管理する [NotifierProvider]。
-final authNotifierProvider = NotifierProvider<AuthNotifier, AuthState>(AuthNotifier.new);
+final authNotifierProvider =
+    NotifierProvider<AuthNotifier, AuthState>(AuthNotifier.new);
 
 /// Firebase 認証の状態管理・操作を行う Notifier。
 class AuthNotifier extends Notifier<AuthState> {
   late final AuthRepository _authRepository;
 
   @override
+
   /// 認証状態の初期化を行う。
   AuthState build() {
     _authRepository = ref.read(authRepositoryProvider);
@@ -21,7 +24,8 @@ class AuthNotifier extends Notifier<AuthState> {
   Future<void> signInWithEmailAndPassword(String email, String password) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
-      final user = await _authRepository.signInWithEmailAndPassword(email, password);
+      final user =
+          await _authRepository.signInWithEmailAndPassword(email, password);
       state = state.copyWith(user: user, isLoading: false);
     } on FirebaseAuthException catch (e) {
       state = state.copyWith(
@@ -40,7 +44,8 @@ class AuthNotifier extends Notifier<AuthState> {
   Future<void> signUpWithEmailAndPassword(String email, String password) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
-      final user = await _authRepository.signUpWithEmailAndPassword(email, password);
+      final user =
+          await _authRepository.signUpWithEmailAndPassword(email, password);
       state = state.copyWith(user: user, isLoading: false);
     } on FirebaseAuthException catch (e) {
       state = state.copyWith(
@@ -104,4 +109,4 @@ class AuthNotifier extends Notifier<AuthState> {
         return '認証に失敗しました。もう一度お試しください。';
     }
   }
-} 
+}
