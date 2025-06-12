@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:universal_html/html.dart' as html;
 
 import '../../upload/controllers/upload_controller.dart';
+import '../../upload/views/upload_uploading_file_card.dart';
 import 'sidebar.dart';
 import 'create_new_file_button.dart';
 
@@ -131,9 +132,26 @@ class FileListPage extends HookConsumerWidget {
                             crossAxisSpacing: 32,
                             childAspectRatio: 2.2,
                           ),
-                          itemCount: files.length,
+                          itemCount: uploadState.isUploading
+                              ? files.length + 1
+                              : files.length,
                           itemBuilder: (context, index) {
-                            final file = files[index];
+                            if (uploadState.isUploading && index == 0) {
+                              return UploadUploadingFileCard(
+                                fileName:
+                                    uploadState.fileName ?? 'アップロード中のファイル',
+                                progress: uploadState.progress,
+                                fileSize: uploadState.fileSize,
+                                onCancel: () {
+                                  // キャンセル処理: 状態リセット
+                                  ref
+                                      .read(uploadControllerProvider.notifier)
+                                      .reset();
+                                },
+                              );
+                            }
+                            final file = files[
+                                uploadState.isUploading ? index - 1 : index];
                             return Container(
                               decoration: BoxDecoration(
                                 color: Colors.white,
