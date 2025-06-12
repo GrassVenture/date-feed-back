@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:universal_html/html.dart' as html;
 
 import '../controllers/upload_controller.dart';
+import 'upload_uploading_banner.dart';
 
 /// 音声ファイルのアップロード画面。
 class UploadPage extends HookConsumerWidget {
@@ -22,6 +23,9 @@ class UploadPage extends HookConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            uploadState.isUploading
+                ? const UploadUploadingBanner()
+                : const SizedBox.shrink(),
             const Text(
               '音声ファイルをアップロード',
               style: TextStyle(
