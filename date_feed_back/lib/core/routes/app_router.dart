@@ -3,9 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../auth/views/login_page.dart';
-import '../../upload/views/upload_page.dart';
 import '../../auth/controllers/auth_notifier.dart';
 import '../../analysis/views/analysis_page.dart';
+import '../../files/views/file_list_page.dart';
 
 /// アプリ全体のルーティングを提供する [Provider]。
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -41,16 +41,16 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
-        path: '/upload',
-        name: 'upload',
-        builder: (context, state) => const UploadPage(),
-      ),
-      GoRoute(
         path: '/detail/:id',
         name: 'detail',
         builder: (context, state) {
           return const AnalysisPage();
         },
+      ),
+      GoRoute(
+        path: '/files',
+        name: 'files',
+        builder: (context, state) => const FileListPage(),
       ),
     ],
 
