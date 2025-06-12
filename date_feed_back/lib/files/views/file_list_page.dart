@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:universal_html/html.dart' as html;
+
+import '../../upload/controllers/upload_controller.dart';
 import 'sidebar.dart';
 import 'create_new_file_button.dart';
 
 /// ファイル一覧画面を表示するウィジェット。
 ///
 /// Figmaデザインに基づき、SVGアイコンや配色・レイアウトを反映する。
-class FileListPage extends StatelessWidget {
-  final List<Map<String, String>> files = List.generate(
-    7,
-    (index) => {
-      'title': 'ファイル名',
-      'date': '2025/05/15',
-      'time': '12:50',
-      'user': '佐藤さん',
-    },
-  );
-
-  FileListPage({super.key});
+class FileListPage extends HookConsumerWidget {
+  const FileListPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final uploadState = ref.watch(uploadControllerProvider);
+    // ダミーファイルリスト
+    final files = List.generate(
+      7,
+      (index) => {
+        'title': 'ファイル名',
+        'date': '2025/05/15',
+        'time': '12:50',
+        'user': '佐藤さん',
+      },
+    );
     return Scaffold(
       backgroundColor: const Color(0xFFFBFAFE),
       body: Row(
@@ -53,7 +58,21 @@ class FileListPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CreateNewFileButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              final uploadInput = html.FileUploadInputElement();
+                              uploadInput.accept = '.mp3,.wav';
+                              uploadInput.click();
+                              uploadInput.onChange.listen((event) async {
+                                final files = uploadInput.files;
+                                if (files != null && files.isNotEmpty) {
+                                  await ref
+                                      .read(uploadControllerProvider.notifier)
+                                      .handleDroppedFile(files.first);
+                                  // アップロード完了後にリストを更新（ここではsetState相当の再ビルドのみ）
+                                  // 実際のリスト更新はリポジトリ連携時に実装
+                                }
+                              });
+                            },
                             horizontalPadding: horizontalPadding,
                           ),
                           Row(
@@ -90,6 +109,18 @@ class FileListPage extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 32),
+                      if (uploadState.isUploading)
+                        Column(
+                          children: [
+                            const LinearProgressIndicator(),
+                            const SizedBox(height: 8),
+                            Text(
+                              uploadState.progress > 0
+                                  ? 'アップロード中... ${(uploadState.progress * 100).toStringAsFixed(0)}%'
+                                  : 'アップロード準備中...',
+                            ),
+                          ],
+                        ),
                       // ファイルカード一覧
                       Expanded(
                         child: GridView.builder(
