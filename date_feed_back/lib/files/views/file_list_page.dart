@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'sidebar.dart';
 
 /// ファイル一覧画面を表示するウィジェット。
 ///
@@ -24,22 +25,7 @@ class FileListPage extends StatelessWidget {
       body: Row(
         children: [
           // サイドバー
-          Container(
-            width: 60,
-            color: Colors.transparent,
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                SvgPicture.asset(
-                  'assets/icons/home_icon2.svg',
-                  width: 32,
-                  height: 32,
-                  colorFilter: const ColorFilter.mode(
-                      Color(0xFF3C1A6C), BlendMode.srcIn),
-                ),
-              ],
-            ),
-          ),
+          const Sidebar(),
           // メインコンテンツ
           Expanded(
             child: Padding(
