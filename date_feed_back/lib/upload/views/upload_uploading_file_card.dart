@@ -11,11 +11,19 @@ class UploadUploadingFileCard extends StatelessWidget {
   /// アップロード進捗（0.0〜1.0）。
   final double progress;
 
+  /// ファイルサイズ（バイト単位）。
+  final int? fileSize;
+
+  /// キャンセルボタン押下時のコールバック。
+  final VoidCallback? onCancel;
+
   /// [UploadUploadingFileCard] を生成する。
   const UploadUploadingFileCard({
     super.key,
     required this.fileName,
     required this.progress,
+    this.fileSize,
+    this.onCancel,
   });
 
   @override
@@ -54,17 +62,31 @@ class UploadUploadingFileCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 16),
-          // ファイル名
+          // ファイル名とサイズ
           Expanded(
-            child: Text(
-              fileName,
-              style: const TextStyle(
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w700,
-                fontSize: 16,
-                color: Colors.black,
-              ),
-              overflow: TextOverflow.ellipsis,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  fileName,
+                  style: const TextStyle(
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                if (fileSize != null)
+                  Text(
+                    _formatFileSize(fileSize!),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFF645E6D),
+                    ),
+                  ),
+              ],
             ),
           ),
           const SizedBox(width: 16),
@@ -96,8 +118,24 @@ class UploadUploadingFileCard extends StatelessWidget {
               ],
             ),
           ),
+          // キャンセルボタン（オプション）
+          if (onCancel != null) ...[
+            const SizedBox(width: 8),
+            IconButton(
+              icon: const Icon(Icons.close, color: Color(0xFF9B6ADF)),
+              onPressed: onCancel,
+              tooltip: 'アップロードをキャンセル',
+            ),
+          ],
         ],
       ),
     );
+  }
+
+  /// ファイルサイズを人間が読みやすい形式に変換する。
+  String _formatFileSize(int bytes) {
+    if (bytes < 1024) return '$bytes B';
+    if (bytes < 1024 * 1024) return '${(bytes / 1024).toStringAsFixed(1)} KB';
+    return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
   }
 }
