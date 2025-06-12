@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'sidebar.dart';
+import 'create_new_file_button.dart';
 
 /// ファイル一覧画面を表示するウィジェット。
 ///
@@ -51,35 +52,9 @@ class FileListPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ElevatedButton.icon(
+                          CreateNewFileButton(
                             onPressed: () {},
-                            icon: SvgPicture.asset(
-                              'assets/icons/plus_icon.svg',
-                              width: 20,
-                              height: 20,
-                              colorFilter: const ColorFilter.mode(
-                                  Color(0xFF9B6ADF), BlendMode.srcIn),
-                            ),
-                            label: const Text(
-                              '新規作成',
-                              style: TextStyle(
-                                color: Color(0xFF9B6ADF),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                fontFamily: 'Noto Sans JP',
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              elevation: 4,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: horizontalPadding * 1.5,
-                                  vertical: 24),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              shadowColor: const Color(0xFFECECEC),
-                            ),
+                            horizontalPadding: horizontalPadding,
                           ),
                           Row(
                             children: [
