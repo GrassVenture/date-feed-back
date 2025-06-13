@@ -110,18 +110,6 @@ class FileListPage extends HookConsumerWidget {
                         ],
                       ),
                       const SizedBox(height: 32),
-                      if (uploadState.isUploading)
-                        Column(
-                          children: [
-                            const LinearProgressIndicator(),
-                            const SizedBox(height: 8),
-                            Text(
-                              uploadState.progress > 0
-                                  ? 'アップロード中... ${(uploadState.progress * 100).toStringAsFixed(0)}%'
-                                  : 'アップロード準備中...',
-                            ),
-                          ],
-                        ),
                       // ファイルカード一覧
                       Expanded(
                         child: GridView.builder(
