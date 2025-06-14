@@ -97,7 +97,7 @@ class FileUploadDialog extends StatelessWidget {
                       color: Color(0xFFFFFFFF),
                       shape: BoxShape.rectangle,
                     ),
-                    child: const Icon(Icons.audiotrack,
+                    child: const Icon(Icons.audio_file,
                         size: 32, color: Color(0xFF9B6ADF)),
                   ),
                   const SizedBox(width: 16),
