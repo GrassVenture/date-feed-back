@@ -7,6 +7,7 @@ import 'sidebar.dart';
 import 'widgets/file_data.dart';
 import 'widgets/file_list_header.dart';
 import 'widgets/responsive_file_grid.dart';
+import 'widgets/file_upload_dialog.dart';
 
 /// ファイル一覧画面を表示するウィジェット。
 ///
@@ -46,40 +47,57 @@ class FileListPage extends HookConsumerWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFFFBFAFE),
-      body: Row(
+      body: Stack(
         children: [
-          // サイドバー
-          const Sidebar(),
-          // メインコンテンツ
-          Expanded(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: FileListHeader(
-                    onCreateNewFile: handleCreateNewFile,
-                    horizontalPadding:
-                        24.0, // デフォルト値、ResponsiveFileGrid 側で再計算される
-                    userName: 'UserName',
-                  ),
+          Row(
+            children: [
+              // サイドバー
+              const Sidebar(),
+              // メインコンテンツ
+              Expanded(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: FileListHeader(
+                        onCreateNewFile: handleCreateNewFile,
+                        horizontalPadding:
+                            24.0, // デフォルト値、ResponsiveFileGrid 側で再計算される
+                        userName: 'UserName',
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    // ファイルカード一覧
+                    Expanded(
+                      child: ResponsiveFileGrid(
+                        files: files,
+                        isUploading: uploadState.isUploading,
+                        uploadingFileName: uploadState.fileName,
+                        progress: uploadState.progress,
+                        fileSize: uploadState.fileSize,
+                        onCancelUpload: () {
+                          ref.read(uploadControllerProvider.notifier).reset();
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 32),
-                // ファイルカード一覧
-                Expanded(
-                  child: ResponsiveFileGrid(
-                    files: files,
-                    isUploading: uploadState.isUploading,
-                    uploadingFileName: uploadState.fileName,
-                    progress: uploadState.progress,
-                    fileSize: uploadState.fileSize,
-                    onCancelUpload: () {
-                      ref.read(uploadControllerProvider.notifier).reset();
-                    },
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
+          // 右下にアップロードダイアログを重ねて表示
+          if (uploadState.isUploading)
+            Positioned(
+              right: 32,
+              bottom: 32,
+              child: FileUploadDialog(
+                fileName: uploadState.fileName ?? 'アップロード中のファイル',
+                progress: uploadState.progress,
+                onClose: () {
+                  ref.read(uploadControllerProvider.notifier).reset();
+                },
+              ),
+            ),
         ],
       ),
     );
