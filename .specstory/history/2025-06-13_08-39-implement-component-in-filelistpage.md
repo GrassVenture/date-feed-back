@@ -766,3 +766,84 @@ figma-mcp.mdc の旧ファイルは不要になったため削除し、ルール
 
 ---
 
+_**User**_
+
+ルールの粒度を変更したいです。　@figma-mcp.mdc について。
+このファイル自体の目的は、Figma の MCP利用時のコーディングルール全般です。
+
+その一つとして今回のアイコンに関してがあります。今後、別のルールも追加することも見越して変更してください。
+
+---
+
+_**Assistant**_
+
+```diff
+- # Figma アイコン命名と Flutter Icons 対応ルール
++ # Figma MCP 利用時のコーディングルール
++ 
++ ## 目的
++ Figma の MCP（Multi-Component Platform）を利用したデザインから実装する際の、コーディングルール全般をまとめる。
++ 
++ 本ファイルは、Figma デザインと Flutter 実装の間で一貫性・再現性・保守性を高めるための指針を提供する。
++ 
++ ---
++ 
++ ## 目次
++ 1. アイコン命名と Flutter Icons 対応ルール
++ 2. （今後追加予定）
++ 
++ ---
++ 
++ ## 1. アイコン命名と Flutter Icons 対応ルール
+  
+- ## 目的
++ ### 概要
+  Figma デザイン上で 'Icons.xxx' という命名がされたアイコンは、Flutter 実装時に Material Icons の `Icons.xxx` を優先して利用すること。
+  
+- ---
+- 
+- ## 運用ルール
+- 
++ ### 運用ルール
+  - Figma 上でアイコンレイヤー名が `Icons.xxx` となっている場合、Flutter 側では `Icons.xxx` をそのまま利用する。
+      - 例: Figma で `Icons.audio_file` → Flutter で `Icons.audio_file`
+```
+
+```diff
+  - アイコンの色・サイズ・配置は Figma デザインに準拠する。
+  
+- ---
+- 
+- ## 具体例
+- 
++ ### 具体例
+  - Figma: `Icons.close` → Flutter: `Icons.close`
+  - Figma: `Icons.audio_file` → Flutter: `Icons.audio_file`
+  - Figma: `Icons.person` → Flutter: `Icons.person`
+  
+- ---
+- 
+- ## 備考
++ ### 備考
+  - Figma 側で 'Icons' 以外の命名（例: SVG名や独自名）が付与されている場合は、個別に実装方針を検討する。
+  - 本ルールはプロジェクト全体で統一的に適用すること。
++ 
++ ---
++ 
++ ## 2. （今後追加予定）
++ - ここに新たな MCP 関連ルールを追記してください。
+  
+```
+
+---
+
+'✅ provider.mdc
+
+figma-mcp.mdc の粒度を「Figma MCP 利用時のコーディングルール全般」に拡張し、  
+アイコンルールを 1 章としてサブセクション化しました。  
+今後、他の MCP 関連ルールも章立てで追加しやすい構成になっています。
+
+'💡 provider.mdc
+
+---
+
