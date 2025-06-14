@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../common/responsive_layout_helper.dart';
-import '../../../upload/views/upload_uploading_file_card.dart';
 import 'file_card.dart';
 import 'file_data.dart';
 
@@ -52,18 +51,33 @@ class ResponsiveFileGrid extends StatelessWidget {
               crossAxisSpacing: 32,
               childAspectRatio: 2.2,
             ),
-            itemCount: isUploading ? files.length + 1 : files.length,
+            itemCount: files.length,
             itemBuilder: (context, index) {
+              final file = files[index];
+
+              Widget fileCardWidget = FileCard(file: file);
+
               if (isUploading && index == 0) {
-                return UploadUploadingFileCard(
-                  fileName: uploadingFileName ?? 'アップロード中のファイル',
-                  progress: progress,
-                  fileSize: fileSize,
-                  onCancel: onCancelUpload,
+                fileCardWidget = Stack(
+                  children: [
+                    fileCardWidget,
+                    Positioned.fill(
+                      child: Container(
+                        color: Colors.black54,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            value: progress,
+                            backgroundColor: Colors.grey,
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                                Colors.blue),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               }
-              final file = files[isUploading ? index - 1 : index];
-              return FileCard(file: file);
+              return fileCardWidget;
             },
           ),
         );
