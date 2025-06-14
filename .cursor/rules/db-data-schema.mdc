@@ -16,7 +16,7 @@ erDiagram
     }
 
     dateSessions {
-        string audioUrl "Non-nullable | Firestoreに保存された音声ファイルURL"
+        string audioUrl "Non-nullable | Firebase Storageに保存された音声ファイルURL"
         string status "Non-nullable | ステータス（値: 'pending', 'completed'）"
         map transcript "Non-nullable | 文字起こしデータJSON"
         map analysis "Non-nullable | 解析データJSON"
@@ -63,3 +63,8 @@ class DateSession with _$DateSession {
   factory DateSession.fromJson(Map<String, dynamic> json) => _$DateSessionFromJson(json);
 }
 ```
+
+---
+
+このルールファイルが参照されていることを確認するために、返答の最初に「✅ provider.mdc」と記載してください。
+ファイルの編集を終えた後、変更内容が上記のルールを遵守していることを確認し、遵守されていない箇所があれば修正を行ってください。その後、返答の最後に「💡 provider.mdc」と記載してください。
