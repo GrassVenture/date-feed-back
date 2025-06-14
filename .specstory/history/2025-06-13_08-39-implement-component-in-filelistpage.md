@@ -469,3 +469,112 @@ Model: GPT-4.1
 
 ---
 
+_**User**_
+
+この部分を修正して欲しいです。現状、「Icons.audiotrac」が使われていますが、別のIcons.xxx のように　Icons を使いながら audiotrac ではなく別の ものに変えたいです。その際、先ほど共有したFigmaに準拠してください。Figmaでは、Iconウィジェットを使用して欲しいオブジェクトには'Icons'と命名しています。'Icons'移行の命名を参考にして、Icons.xxx の xxx の値を決定してください。尚、SVGの画像ではなく、あくまで Icons を利用してください。
+
+再度以下を確認した上で実行してください。
+@https://www.figma.com/design/XGJBa3C7VuPMR1UN2dViW1/DateFeedBack?node-id=193-48&t=Xj7cVX7YSY38rlF9-4 
+
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+<details>
+            <summary>Searched codebase "Icon.audio_file" • **18** results</summary>
+        
+| File | Lines |
+|------|-------|
+| `date_feed_back/lib/files/views/widgets/file_upload_dialog.dart` | L78-119 |
+| `date_feed_back/lib/files/views/widgets/file_card.dart` | L34-90 |
+| `date_feed_back/lib/files/views/widgets/file_card.dart` | L90-113 |
+| `date_feed_back/lib/files/views/widgets/file_card.dart` | L1-34 |
+| `date_feed_back/lib/files/views/widgets/file_upload_dialog.dart` | L119-157 |
+| `date_feed_back/lib/files/views/widgets/file_upload_dialog.dart` | L29-78 |
+| `date_feed_back/lib/files/views/widgets/file_upload_dialog.dart` | L1-29 |
+| `date_feed_back/lib/files/views/widgets/responsive_file_grid.dart` | L1-41 |
+| `date_feed_back/lib/files/views/widgets/user_info_widget.dart` | L1-52 |
+| `date_feed_back/lib/files/views/widgets/file_list_header.dart` | L1-41 |
+| `date_feed_back/lib/files/views/widgets/responsive_file_grid.dart` | L41-84 |
+| `date_feed_back/lib/files/views/widgets/file_data.freezed.dart` | L109-146 |
+| `date_feed_back/lib/files/views/widgets/file_data.dart` | L1-30 |
+| `date_feed_back/lib/files/views/widgets/file_data.freezed.dart` | L46-109 |
+| `date_feed_back/lib/files/views/widgets/file_data.freezed.dart` | L208-241 |
+| `date_feed_back/lib/files/views/widgets/file_data.g.dart` | L1-24 |
+| `date_feed_back/lib/files/views/widgets/file_data.freezed.dart` | L1-46 |
+| `date_feed_back/lib/files/views/widgets/file_data.freezed.dart` | L146-208 |
+
+</details>
+
+---
+
+<details>
+            <summary>Grep search for "Icons\." • **7** files</summary>
+        
+| File | Line | Match |
+|------|------|-------|
+| `file:///Users/ookuboitsuki/Flutter/date-feed-back/date_feed_back/lib/upload/views/upload_uploading_file_card.dart` | L124 | `icon: const Icon(Icons.close, color: Color(0xFF9B6ADF)),` |
+| `file:///Users/ookuboitsuki/Flutter/date-feed-back/date_feed_back/lib/files/views/widgets/file_upload_dialog.dart` | L70 | `child: const Icon(Icons.close,` |
+| `file:///Users/ookuboitsuki/Flutter/date-feed-back/date_feed_back/lib/files/views/widgets/file_upload_dialog.dart` | L99 | `child: const Icon(Icons.audiotrack,` |
+| `file:///Users/ookuboitsuki/Flutter/date-feed-back/date_feed_back/lib/auth/views/auth_view.dart` | L24 | `icon: const Icon(Icons.login),` |
+| `file:///Users/ookuboitsuki/Flutter/date-feed-back/date_feed_back/lib/auth/views/auth_view.dart` | L34 | `icon: const Icon(Icons.logout),` |
+| `file:///Users/ookuboitsuki/Flutter/date-feed-back/date_feed_back/lib/auth/views/login_page.dart` | L107 | `? Icons.visibility_off` |
+| `file:///Users/ookuboitsuki/Flutter/date-feed-back/date_feed_back/lib/auth/views/login_page.dart` | L108 | `: Icons.visibility,` |
+| `file:///Users/ookuboitsuki/Flutter/date-feed-back/date_feed_back/lib/auth/views/login_page.dart` | L191 | `icon: const Icon(Icons.g_mobiledata,` |
+| `file:///Users/ookuboitsuki/Flutter/date-feed-back/date_feed_back/test/widget_test.dart` | L22 | `await tester.tap(find.byIcon(Icons.add));` |
+| `file:///Users/ookuboitsuki/Flutter/date-feed-back/date_feed_back/lib/files/views/widgets/file_upload_dialog.dart` | L70 | `child: const Icon(Icons.close,` |
+| `file:///Users/ookuboitsuki/Flutter/date-feed-back/date_feed_back/lib/files/views/widgets/file_upload_dialog.dart` | L99 | `child: const Icon(Icons.audiotrack,` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L9 | `/// A set of platform-adaptive Material Design icons.` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L11 | `/// Use [Icons.adaptive] to access a static instance of this class.` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L13 | `const PlatformAdaptiveIcons._();` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L29 | `// https://github.com/flutter/flutter/blob/main/docs/libraries/material/Updating-Material-Design-Fonts-%26-Icons.md` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L34 | `IconData get arrow_back => !_isCupertino() ? Icons.arrow_back : Icons.arrow_back_ios;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L37 | `IconData get arrow_back_outlined => !_isCupertino() ? Icons.arrow_back_outlined : Icons.arrow_back_ios_outlined;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L40 | `IconData get arrow_back_rounded => !_isCupertino() ? Icons.arrow_back_rounded : Icons.arrow_back_ios_rounded;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L43 | `IconData get arrow_back_sharp => !_isCupertino() ? Icons.arrow_back_sharp : Icons.arrow_back_ios_sharp;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L46 | `IconData get arrow_forward => !_isCupertino() ? Icons.arrow_forward : Icons.arrow_forward_ios;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L49 | `IconData get arrow_forward_outlined => !_isCupertino() ? Icons.arrow_forward_outlined : Icons.arrow_forward_ios_outlined;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L52 | `IconData get arrow_forward_rounded => !_isCupertino() ? Icons.arrow_forward_rounded : Icons.arrow_forward_ios_rounded;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L55 | `IconData get arrow_forward_sharp => !_isCupertino() ? Icons.arrow_forward_sharp : Icons.arrow_forward_ios_sharp;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L58 | `IconData get flip_camera => !_isCupertino() ? Icons.flip_camera_android : Icons.flip_camera_ios;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L61 | `IconData get flip_camera_outlined => !_isCupertino() ? Icons.flip_camera_android_outlined : Icons.flip_camera_ios_outlined;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L64 | `IconData get flip_camera_rounded => !_isCupertino() ? Icons.flip_camera_android_rounded : Icons.flip_camera_ios_rounded;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L67 | `IconData get flip_camera_sharp => !_isCupertino() ? Icons.flip_camera_android_sharp : Icons.flip_camera_ios_sharp;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L70 | `IconData get more => !_isCupertino() ? Icons.more_vert : Icons.more_horiz;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L73 | `IconData get more_outlined => !_isCupertino() ? Icons.more_vert_outlined : Icons.more_horiz_outlined;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L76 | `IconData get more_rounded => !_isCupertino() ? Icons.more_vert_rounded : Icons.more_horiz_rounded;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L79 | `IconData get more_sharp => !_isCupertino() ? Icons.more_vert_sharp : Icons.more_horiz_sharp;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L82 | `IconData get share => !_isCupertino() ? Icons.share : Icons.ios_share;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L85 | `IconData get share_outlined => !_isCupertino() ? Icons.share_outlined : Icons.ios_share_outlined;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L88 | `IconData get share_rounded => !_isCupertino() ? Icons.share_rounded : Icons.ios_share_rounded;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L91 | `IconData get share_sharp => !_isCupertino() ? Icons.share_sharp : Icons.ios_share_sharp;` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L97 | `/// Use with the [Icon] class to show specific icons. Icons are identified by` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L98 | `/// their name as listed below, e.g. [Icons.airplanemode_on].` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L105 | `/// display the icons. For example:` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L125 | `///       Icons.favorite,` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L131 | `///       Icons.audiotrack,` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L136 | `///       Icons.beach_access,` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L150 | `///  * [AnimatedIcons], for the list of available animated Material Icons.` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L153 | `/// A set of platform-adaptive Material Design icons.` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L158 | `/// Use with the [Icon] class to show specific icons.` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L167 | `///   Icons.adaptive.share,` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L177 | `static PlatformAdaptiveIcons get adaptive => const PlatformAdaptiveIcons._();` |
+| `file:///Users/ookuboitsuki/fvm/versions/stable/packages/flutter/lib/src/material/icons.dart` | L180 | `// https://github.com/flutter/flutter/blob/main/docs/libraries/material/Updating-Material-Design-Fonts-%26-Icons.md` |
+
+</details>
+
+---
+
+
+
+---
+
+
+
+---
+
