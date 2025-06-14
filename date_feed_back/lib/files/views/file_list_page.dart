@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:universal_html/html.dart' as html;
 
+import '../../common/responsive_layout_helper.dart';
 import '../../upload/controllers/upload_controller.dart';
 import 'sidebar.dart';
 import 'widgets/file_data.dart';
@@ -61,8 +62,8 @@ class FileListPage extends HookConsumerWidget {
                       padding: const EdgeInsets.all(24.0),
                       child: FileListHeader(
                         onCreateNewFile: handleCreateNewFile,
-                        horizontalPadding:
-                            24.0, // デフォルト値、ResponsiveFileGrid 側で再計算される
+                        horizontalPadding: ResponsiveLayoutHelper.of(context)
+                            .horizontalPadding,
                         userName: 'UserName',
                       ),
                     ),

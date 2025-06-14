@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/responsive_layout_helper.dart';
 import '../../../upload/views/upload_uploading_file_card.dart';
 import 'file_card.dart';
 import 'file_data.dart';
@@ -41,23 +42,12 @@ class ResponsiveFileGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        int crossAxisCount;
-        double horizontalPadding;
-        if (constraints.maxWidth >= 1200) {
-          crossAxisCount = 3;
-          horizontalPadding = 32.0;
-        } else if (constraints.maxWidth >= 800) {
-          crossAxisCount = 2;
-          horizontalPadding = 24.0;
-        } else {
-          crossAxisCount = 1;
-          horizontalPadding = 8.0;
-        }
+        final config = ResponsiveLayoutHelper.fromWidth(constraints.maxWidth);
         return Padding(
-          padding: EdgeInsets.all(horizontalPadding),
+          padding: EdgeInsets.all(config.horizontalPadding),
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: crossAxisCount,
+              crossAxisCount: config.crossAxisCount,
               mainAxisSpacing: 32,
               crossAxisSpacing: 32,
               childAspectRatio: 2.2,
