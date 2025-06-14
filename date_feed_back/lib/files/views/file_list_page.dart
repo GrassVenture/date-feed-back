@@ -73,12 +73,7 @@ class FileListPage extends HookConsumerWidget {
                       child: ResponsiveFileGrid(
                         files: files,
                         isUploading: uploadState.isUploading,
-                        uploadingFileName: uploadState.fileName,
                         progress: uploadState.progress,
-                        fileSize: uploadState.fileSize,
-                        onCancelUpload: () {
-                          ref.read(uploadControllerProvider.notifier).reset();
-                        },
                       ),
                     ),
                   ],
