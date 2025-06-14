@@ -16,7 +16,7 @@ erDiagram
     }
 
     dateSessions {
-        string audioUrl "Non-nullable | Firestoreに保存された音声ファイルURL"
+        string audioUrl "Non-nullable | Firebase Storageに保存された音声ファイルURL"
         string status "Non-nullable | ステータス（値: 'pending', 'completed'）"
         map transcript "Non-nullable | 文字起こしデータJSON"
         map analysis "Non-nullable | 解析データJSON"
