@@ -14,27 +14,15 @@ class ResponsiveFileGrid extends StatelessWidget {
   /// アップロード中かどうか。
   final bool isUploading;
 
-  /// アップロード中ファイル名。
-  final String? uploadingFileName;
-
   /// アップロード進捗（0.0〜1.0）。
   final double progress;
-
-  /// アップロード中ファイルサイズ。
-  final int? fileSize;
-
-  /// アップロードキャンセル時のコールバック。
-  final VoidCallback onCancelUpload;
 
   /// [ResponsiveFileGrid] のインスタンスを生成する。
   const ResponsiveFileGrid({
     super.key,
     required this.files,
     required this.isUploading,
-    required this.uploadingFileName,
     required this.progress,
-    required this.fileSize,
-    required this.onCancelUpload,
   });
 
   @override
