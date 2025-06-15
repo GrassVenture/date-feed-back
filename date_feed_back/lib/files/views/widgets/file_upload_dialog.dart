@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'file_info_row.dart';
+import 'file_upload_dialog_header.dart';
+
 /// ファイルアップロード進行状況を表示するダイアログ。
 ///
 /// Figma デザイン（file_upload_dialog_coontainer）に基づき、
@@ -44,117 +47,14 @@ class FileUploadDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             // ヘッダー
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 28),
-              decoration: const BoxDecoration(
-                color: Color(0xFFF4F4F5),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    '1件のファイルをアップロード中です',
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                      color: Color(0xFF2F2F2F),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: onClose,
-                    borderRadius: BorderRadius.circular(12),
-                    child: const Icon(Icons.close,
-                        size: 24, color: Color(0xFF2F2F2F)),
-                  ),
-                ],
-              ),
+            FileUploadDialogHeader(
+              title: '1件のファイルをアップロード中です',
+              onClose: onClose,
             ),
             // 本体
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-              decoration: const BoxDecoration(
-                color: Color(0xFFFFFFFF),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(16),
-                  bottomRight: Radius.circular(16),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // ファイルアイコン
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFFFFFFF),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: const Icon(Icons.audio_file,
-                        size: 32, color: Color(0xFF9B6ADF)),
-                  ),
-                  const SizedBox(width: 16),
-                  // ファイル名
-                  Expanded(
-                    child: Text(
-                      fileName,
-                      style: const TextStyle(
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  const SizedBox(width: 32),
-                  // プログレスサークル
-                  // Progress < 1.0 の場合は CircularProgressIndicator を表示し、
-                  // Progress >= 1.0 の場合は緑色のチェックマークアイコンを表示する。
-                  progress < 1.0
-                      ? SizedBox(
-                          width: 48,
-                          height: 48,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              SizedBox(
-                                width: 48,
-                                height: 48,
-                                child: CircularProgressIndicator(
-                                  value: progress,
-                                  strokeWidth: 6,
-                                  backgroundColor: const Color(0xFFECECEC),
-                                  valueColor:
-                                      const AlwaysStoppedAnimation<Color>(
-                                          Color(0xFF9B6ADF)),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : Container(
-                          width: 48,
-                          height: 48,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFF9B6ADF),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.check,
-                            size: 32,
-                            color: Colors.white,
-                          ),
-                        ),
-                ],
-              ),
+            FileInfoRow(
+              fileName: fileName,
+              progress: progress,
             ),
           ],
         ),
