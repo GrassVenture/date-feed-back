@@ -5,7 +5,7 @@ import 'file_upload_dialog_header.dart';
 
 /// ファイルアップロード進行状況を表示するダイアログ。
 ///
-/// Figma デザイン（file_upload_dialog_coontainer）に基づき、
+/// Figma デザインに基づき、
 /// 配色・角丸・影・レイアウト・テキスト等を再現する。
 class FileUploadDialog extends StatelessWidget {
   /// アップロード中のファイル名。
