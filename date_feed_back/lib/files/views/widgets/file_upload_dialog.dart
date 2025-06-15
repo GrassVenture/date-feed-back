@@ -31,7 +31,6 @@ class FileUploadDialog extends StatelessWidget {
       color: Colors.transparent,
       child: Container(
         width: 498,
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
         decoration: BoxDecoration(
           color: const Color(0xFFFFFFFF),
           borderRadius: BorderRadius.circular(16),
