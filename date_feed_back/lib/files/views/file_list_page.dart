@@ -1,8 +1,8 @@
+import 'package:date_feed_back/files/views/widgets/files_responsive_layout_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:universal_html/html.dart' as html;
 
-import '../../common/responsive_layout_helper.dart';
 import '../../upload/controllers/upload_controller.dart';
 import 'sidebar.dart';
 import 'widgets/file_data.dart';
@@ -62,8 +62,9 @@ class FileListPage extends HookConsumerWidget {
                       padding: const EdgeInsets.all(24.0),
                       child: FileListHeader(
                         onCreateNewFile: handleCreateNewFile,
-                        horizontalPadding: ResponsiveLayoutHelper.of(context)
-                            .horizontalPadding,
+                        horizontalPadding:
+                            FilesResponsiveLayoutHelper.of(context)
+                                .horizontalPadding,
                         userName: 'UserName',
                       ),
                     ),

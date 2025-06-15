@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../common/responsive_layout_helper.dart';
 import 'file_card.dart';
 import 'file_data.dart';
+import 'files_responsive_layout_helper.dart';
 
 /// レスポンシブなファイルグリッドを表示するウィジェット。
 ///
@@ -29,7 +29,8 @@ class ResponsiveFileGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final config = ResponsiveLayoutHelper.fromWidth(constraints.maxWidth);
+        final config =
+            FilesResponsiveLayoutHelper.fromWidth(constraints.maxWidth);
         return Padding(
           padding: EdgeInsets.all(config.horizontalPadding),
           child: GridView.builder(
