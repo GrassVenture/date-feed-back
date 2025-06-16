@@ -1,7 +1,7 @@
 {
   "specstory.autoSave.enabled": true,
   "specstory.helpUsImprove": false,
-  "dart.flutterSdkPath": ".fvm/versions/stable",
+  "dart.flutterSdkPath": ".fvm/versions/3.32.4",
   "search.exclude": {
     "**/.fvm": true
   },
