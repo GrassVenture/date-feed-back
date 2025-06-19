@@ -35,7 +35,7 @@ class LoginPage extends HookConsumerWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 10,
                     spreadRadius: 1,
                   ),
@@ -47,18 +47,12 @@ class LoginPage extends HookConsumerWidget {
                 children: [
                   const Text(
                     'Log in',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 24),
                   const Text(
                     'ユーザー名',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 8),
                   TextField(
@@ -81,10 +75,7 @@ class LoginPage extends HookConsumerWidget {
                   const SizedBox(height: 16),
                   const Text(
                     'パスワード',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 8),
                   TextField(
@@ -189,8 +180,11 @@ class LoginPage extends HookConsumerWidget {
                                 }
                               }
                             },
-                      icon: const Icon(Icons.g_mobiledata,
-                          size: 24, color: Colors.red),
+                      icon: const Icon(
+                        Icons.g_mobiledata,
+                        size: 24,
+                        color: Colors.red,
+                      ),
                       label: const Text('Googleでログイン'),
                       style: OutlinedButton.styleFrom(
                         side: const BorderSide(color: Colors.grey),
