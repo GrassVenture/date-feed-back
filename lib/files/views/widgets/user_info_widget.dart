@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:date_feed_back/core/app_color.dart';
 
 /// ユーザー情報（アイコンと名前）を表示するウィジェット。
 ///
@@ -21,8 +22,8 @@ class UserInfoWidget extends StatelessWidget {
         Container(
           width: 24,
           height: 24,
-          decoration: const BoxDecoration(
-            color: Color(0xFFD9D9D9),
+          decoration: BoxDecoration(
+            color: AppColor.grayMiddle,
             shape: BoxShape.circle,
           ),
           child: Center(
@@ -31,15 +32,15 @@ class UserInfoWidget extends StatelessWidget {
               width: 14,
               height: 14,
               colorFilter:
-                  const ColorFilter.mode(Color(0xFF645E6D), BlendMode.srcIn),
+                  ColorFilter.mode(AppColor.textLight, BlendMode.srcIn),
             ),
           ),
         ),
         const SizedBox(width: 8),
         Text(
           userName,
-          style: const TextStyle(
-            color: Color(0xFF2F2F2F),
+          style: TextStyle(
+            color: AppColor.textBlack,
             fontWeight: FontWeight.normal,
             fontSize: 14,
             fontFamily: 'Noto Sans JP',

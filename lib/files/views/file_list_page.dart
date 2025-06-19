@@ -2,6 +2,7 @@ import 'package:date_feed_back/files/views/widgets/files_responsive_layout_helpe
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:universal_html/html.dart' as html;
+import 'package:date_feed_back/core/app_color.dart';
 
 import '../../upload/controllers/upload_controller.dart';
 import 'sidebar.dart';
@@ -47,7 +48,7 @@ class FileListPage extends HookConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFBFAFE),
+      backgroundColor: AppColor.background,
       body: Stack(
         children: [
           Row(

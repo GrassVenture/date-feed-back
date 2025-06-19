@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:date_feed_back/core/app_color.dart';
 
 import 'progress_indicator.dart';
 
@@ -25,7 +26,7 @@ class FileInfoRow extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
       decoration: const BoxDecoration(
-        color: Color(0xFFFFFFFF),
+        color: Colors.white,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(16),
           bottomRight: Radius.circular(16),
@@ -40,11 +41,11 @@ class FileInfoRow extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: const BoxDecoration(
-              color: Color(0xFFFFFFFF),
+              color: Colors.white,
               shape: BoxShape.rectangle,
             ),
-            child: const Icon(Icons.audio_file,
-                size: 32, color: Color(0xFF9B6ADF)),
+            child: Icon(Icons.audio_file,
+                size: 32, color: AppColor.main[300]!),
           ),
           const SizedBox(width: 16),
           // ファイル名

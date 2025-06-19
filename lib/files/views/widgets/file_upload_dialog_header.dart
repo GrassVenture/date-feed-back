@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:date_feed_back/core/app_color.dart';
 
 /// ファイルアップロードダイアログのヘッダー部分。
 ///
@@ -21,9 +22,9 @@ class FileUploadDialogHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 28),
-      decoration: const BoxDecoration(
-        color: Color(0xFFF4F4F5),
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: AppColor.grayLight,
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(16),
           topRight: Radius.circular(16),
         ),
@@ -33,17 +34,17 @@ class FileUploadDialogHeader extends StatelessWidget {
         children: [
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'Inter',
               fontWeight: FontWeight.w700,
               fontSize: 16,
-              color: Color(0xFF2F2F2F),
+              color: AppColor.textBlack,
             ),
           ),
           InkWell(
             onTap: onClose,
             borderRadius: BorderRadius.circular(12),
-            child: const Icon(Icons.close, size: 24, color: Color(0xFF2F2F2F)),
+            child: Icon(Icons.close, size: 24, color: AppColor.textBlack),
           ),
         ],
       ),

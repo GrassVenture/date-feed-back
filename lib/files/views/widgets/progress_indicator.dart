@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:date_feed_back/core/app_color.dart';
 
 /// ファイルアップロードの進捗状況を示すウィジェット。
 ///
@@ -28,9 +29,9 @@ class ProgressIndicatorWidget extends StatelessWidget {
                   child: CircularProgressIndicator(
                     value: progress,
                     strokeWidth: 6,
-                    backgroundColor: const Color(0xFFECECEC),
+                    backgroundColor: AppColor.grayMiddle,
                     valueColor:
-                        const AlwaysStoppedAnimation<Color>(Color(0xFF9B6ADF)),
+                        AlwaysStoppedAnimation<Color>(AppColor.main[300]!),
                   ),
                 ),
               ],
@@ -39,8 +40,8 @@ class ProgressIndicatorWidget extends StatelessWidget {
         : Container(
             width: 48,
             height: 48,
-            decoration: const BoxDecoration(
-              color: Color(0xFF9B6ADF),
+            decoration: BoxDecoration(
+              color: AppColor.main[300]!,
               shape: BoxShape.circle,
             ),
             child: const Icon(

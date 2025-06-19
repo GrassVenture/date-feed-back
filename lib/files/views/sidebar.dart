@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:date_feed_back/core/app_color.dart';
 
 /// アプリケーションの左サイドバーを表示するウィジェット。
 ///
@@ -12,7 +13,7 @@ class Sidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 60,
-      color: const Color(0xFF3C1A6C),
+      color: AppColor.mainDark,
       child: Column(
         children: [
           const SizedBox(height: 20),

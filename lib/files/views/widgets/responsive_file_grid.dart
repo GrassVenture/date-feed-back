@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:date_feed_back/core/app_color.dart';
 
 import 'file_card.dart';
 import 'file_data.dart';
@@ -57,8 +58,8 @@ class ResponsiveFileGrid extends StatelessWidget {
                           child: CircularProgressIndicator(
                             value: progress,
                             backgroundColor: Colors.grey,
-                            valueColor: const AlwaysStoppedAnimation<Color>(
-                                Color(0xFF9B6ADF)),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColor.main[300]!),
                           ),
                         ),
                       ),

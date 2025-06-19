@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:date_feed_back/core/app_color.dart';
 
 import 'file_data.dart';
 
@@ -22,11 +23,11 @@ class FileCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Color(0xFFECECEC),
+            color: AppColor.grayMiddle,
             blurRadius: 8,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -40,11 +41,11 @@ class FileCard extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 file.title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                   fontFamily: 'Noto Sans JP',
-                  color: Color(0xFF645E6D),
+                  color: AppColor.textLight,
                 ),
               ),
             ],
@@ -52,20 +53,20 @@ class FileCard extends StatelessWidget {
           const SizedBox(height: 8),
           Row(
             children: [
-              const Text(
+              Text(
                 '作成日:',
                 style: TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF645E6D),
+                  color: AppColor.textLight,
                   fontFamily: 'Noto Sans JP',
                 ),
               ),
               const SizedBox(width: 4),
               Text(
                 file.date,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF645E6D),
+                  color: AppColor.textLight,
                   fontFamily: 'Noto Sans JP',
                 ),
               ),
@@ -75,14 +76,14 @@ class FileCard extends StatelessWidget {
                 width: 16,
                 height: 16,
                 colorFilter:
-                    const ColorFilter.mode(Color(0xFF645E6D), BlendMode.srcIn),
+                    ColorFilter.mode(AppColor.textLight, BlendMode.srcIn),
               ),
               const SizedBox(width: 4),
               Text(
                 file.time,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF645E6D),
+                  color: AppColor.textLight,
                   fontFamily: 'Noto Sans JP',
                 ),
               ),
@@ -92,14 +93,14 @@ class FileCard extends StatelessWidget {
                 width: 16,
                 height: 16,
                 colorFilter:
-                    const ColorFilter.mode(Color(0xFF645E6D), BlendMode.srcIn),
+                    ColorFilter.mode(AppColor.textLight, BlendMode.srcIn),
               ),
               const SizedBox(width: 4),
               Text(
                 file.user,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF645E6D),
+                  color: AppColor.textLight,
                   fontFamily: 'Noto Sans JP',
                 ),
               ),
