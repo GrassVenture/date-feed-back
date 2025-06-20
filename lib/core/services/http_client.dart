@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:roggle/roggle.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -28,7 +29,7 @@ class HttpClient {
   ///
   /// [dio] と [logger] を外部から注入できる。
   HttpClient({Dio? dio, Roggle? logger})
-    : dio = dio ?? Dio(),
+    : dio = dio ?? Dio(BaseOptions(baseUrl: dotenv.env['DEV_API_URL'] ?? '')),
       logger = logger ?? Roggle();
 
   /// Cloud Run API に音声分析をリクエストする（認証情報付き）。
