@@ -33,7 +33,7 @@ class HttpClient {
 
   /// Cloud Run API に音声分析をリクエストする（認証情報付き）。
   ///
-  /// [fileUri] は Google Cloud Storage 上のファイル URI。
+  /// [fileUri] は Firebase Storage 上のファイル URI。
   /// [userId] はリクエストユーザーの ID。省略時は開発用ダミー値を利用する。
   /// [accessToken] は認証用アクセストークン。省略時は開発用ダミー値を利用する。
   ///
