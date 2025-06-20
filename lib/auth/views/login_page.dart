@@ -176,7 +176,7 @@ class LoginPage extends HookConsumerWidget {
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      Expanded(child: Divider()),
+                      const Expanded(child: Divider()),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
@@ -186,7 +186,7 @@ class LoginPage extends HookConsumerWidget {
                           ),
                         ),
                       ),
-                      Expanded(child: Divider()),
+                      const Expanded(child: Divider()),
                     ],
                   ),
                   const SizedBox(height: 16),

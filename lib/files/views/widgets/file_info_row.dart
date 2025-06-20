@@ -44,7 +44,7 @@ class FileInfoRow extends StatelessWidget {
               color: Colors.white,
               shape: BoxShape.rectangle,
             ),
-            child: Icon(Icons.audio_file,
+            child: const Icon(Icons.audio_file,
                 size: 32, color: AppColor.main),
           ),
           const SizedBox(width: 16),

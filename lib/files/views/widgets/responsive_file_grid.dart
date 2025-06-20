@@ -58,7 +58,7 @@ class ResponsiveFileGrid extends StatelessWidget {
                           child: CircularProgressIndicator(
                             value: progress,
                             backgroundColor: Colors.grey,
-                            valueColor: AlwaysStoppedAnimation<Color>(
+                            valueColor: const AlwaysStoppedAnimation<Color>(
                                 AppColor.main),
                           ),
                         ),

@@ -13,9 +13,9 @@ class Sidebar extends StatelessWidget {
     return Container(
       width: 60,
       color: AppColor.mainDark,
-      child: Column(
+      child: const Column(
         children: [
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
 
           /// ホームアイコン（中央寄せ・白色）
           Icon(
