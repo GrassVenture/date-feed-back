@@ -13,6 +13,13 @@ final httpClientProvider = Provider<HttpClient>((ref) {
 ///
 /// 音声分析 API へのリクエストや、署名付き URL へのファイルアップロードを行う。
 class HttpClient {
+  /// 開発用ダミーアクセストークン。
+  static const String _dummyAccessToken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZGV2X3Rlc3RfdXNlcl8xMjMiLCJleHAiOjQ3OTgwMDAwMDB9.dummy_signature_abcdefg123456';
+
+  /// 開発用ダミーユーザーID。
+  static const String _dummyUserId = '3M7z7EVShLNEAR8pQRZkgZFJti13';
+
   /// [Dio] インスタンス。
   final Dio dio;
 
@@ -26,22 +33,32 @@ class HttpClient {
     : dio = dio ?? Dio(),
       logger = logger ?? Roggle();
 
-  /// Cloud Run API に音声分析をリクエストする。
+  /// Cloud Run API に音声分析をリクエストする（認証情報付き）。
   ///
   /// [fileUri] は Google Cloud Storage 上のファイル URI。
-  /// [userId] はリクエストユーザーの ID。
+  /// [userId] はリクエストユーザーの ID。省略時は開発用ダミー値を利用する。
+  /// [accessToken] は認証用アクセストークン。省略時は開発用ダミー値を利用する。
   ///
   /// 成功時は API レスポンスの JSON マップを返す。
   /// 失敗時は例外をスローする。
   Future<Map<String, dynamic>> requestAudioAnalysis({
     required String fileUri,
-    required String userId,
+    String? userId,
+    String? accessToken,
   }) async {
+    final requestUserId = userId ?? _dummyUserId;
+    final requestToken = accessToken ?? _dummyAccessToken;
+
     try {
       final response = await dio.post(
         '/analyzeAudio',
-        options: Options(headers: {'Content-Type': 'application/json'}),
-        data: {'file_uri': fileUri, 'user_id': userId},
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $requestToken',
+          },
+        ),
+        data: {'file_uri': fileUri, 'user_id': requestUserId},
       );
 
       if (response.statusCode == 200) {
