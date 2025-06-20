@@ -163,8 +163,8 @@
        V->>H: useState/useEffect
        H->>C: ファイル長チェック・冒頭 15 分抽出
        C->>P: 抽出した 15 分ファイルを uploadAudio()
-       P->>GCS: 署名付きURLでアップロード
-       P->>CR: 分析リクエスト
+       P->>FirebaseStorage: 音声ファイルをアップロード
+       P->>CR: Firebase Storage のダウンロード URL を含む分析リクエスト
        CR->>FS: 文字起こしデータ保存
        CR->>FS: ステータス更新
        CR->>FS: 非言語分析データ保存
@@ -340,14 +340,14 @@ HooksRiverpod を採用することで、以下の利点を活かした実装を
 
    - サイズ: 最大 15 分（約 28MB@16kHz mono）
    - 形式: MP3/WAV
-   - 保存先: Google Cloud Storage
+   - 保存先: Firebase Storage
    - 15 分を超える音声ファイルはクライアント側で冒頭 15 分のみを抽出し、その部分だけをアップロードする必要がある
 
 2. **API エンドポイント**
 
    - Cloud Run API: `/analyzeAudio`
      - Method: POST
-     - Parameters: file_uri, user_id
+     - Parameters: file_uri, user_id（Firebase Storage のダウンロードURL）,
      - Response: { session_id: string }
 
 3. **Firestore 制約**
