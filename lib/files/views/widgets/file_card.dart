@@ -11,10 +11,7 @@ class FileCard extends StatelessWidget {
   final FileData file;
 
   /// [FileCard] のインスタンスを生成する。
-  const FileCard({
-    super.key,
-    required this.file,
-  });
+  const FileCard({super.key, required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +71,10 @@ class FileCard extends StatelessWidget {
                 'assets/icons/play_circle_outline.svg',
                 width: 16,
                 height: 16,
-                colorFilter:
-                    const ColorFilter.mode(Color(0xFF645E6D), BlendMode.srcIn),
+                colorFilter: const ColorFilter.mode(
+                  Color(0xFF645E6D),
+                  BlendMode.srcIn,
+                ),
               ),
               const SizedBox(width: 4),
               Text(
@@ -88,11 +87,13 @@ class FileCard extends StatelessWidget {
               ),
               const SizedBox(width: 16),
               SvgPicture.asset(
-                'assets/icons/person2.svg',
+                'assets/icons/person.svg',
                 width: 16,
                 height: 16,
-                colorFilter:
-                    const ColorFilter.mode(Color(0xFF645E6D), BlendMode.srcIn),
+                colorFilter: const ColorFilter.mode(
+                  Color(0xFF645E6D),
+                  BlendMode.srcIn,
+                ),
               ),
               const SizedBox(width: 4),
               Text(
