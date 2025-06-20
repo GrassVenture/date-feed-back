@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:dio/dio.dart';
 import 'package:roggle/roggle.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -73,37 +71,6 @@ class HttpClient {
       rethrow;
     } on Exception catch (error) {
       logger.e('Exception in audio analysis: ${error.toString()}');
-      rethrow;
-    }
-  }
-
-  /// Google Cloud Storage への署名付き URL アップロード用のヘルパー。
-  ///
-  /// [signedUrl] はアップロード先の署名付き URL。
-  /// [audioData] はアップロードする音声データ。
-  /// [contentType] は Content-Type ヘッダー値。
-  ///
-  /// 成功時は何も返さない。失敗時は例外をスローする。
-  Future<void> uploadToSignedUrl({
-    required String signedUrl,
-    required Uint8List audioData,
-    required String contentType,
-  }) async {
-    try {
-      final response = await dio.put(
-        signedUrl,
-        data: audioData,
-        options: Options(headers: {'Content-Type': contentType}),
-      );
-
-      if (response.statusCode == 200) {
-        logger.d('File upload successful');
-      } else {
-        logger.e('File upload failed: ${response.statusCode}');
-        throw Exception('Upload failed: ${response.statusCode}');
-      }
-    } on DioException catch (error) {
-      logger.e('DioException in file upload: ${error.message}');
       rethrow;
     }
   }
