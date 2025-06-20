@@ -9,10 +9,7 @@ class UserInfoWidget extends StatelessWidget {
   final String userName;
 
   /// [UserInfoWidget] のインスタンスを生成する。
-  const UserInfoWidget({
-    super.key,
-    required this.userName,
-  });
+  const UserInfoWidget({super.key, required this.userName});
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +24,13 @@ class UserInfoWidget extends StatelessWidget {
           ),
           child: Center(
             child: SvgPicture.asset(
-              'assets/icons/person_icon2.svg',
+              'assets/icons/person_icon.svg',
               width: 14,
               height: 14,
-              colorFilter:
-                  const ColorFilter.mode(Color(0xFF645E6D), BlendMode.srcIn),
+              colorFilter: const ColorFilter.mode(
+                Color(0xFF645E6D),
+                BlendMode.srcIn,
+              ),
             ),
           ),
         ),
