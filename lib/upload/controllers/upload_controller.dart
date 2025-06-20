@@ -4,19 +4,25 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:universal_html/html.dart' as html;
 
 import '../models/upload_state.dart';
+import '../../core/usecases/audio_analysis_usecase.dart';
 
 /// アップロード状態を管理する [NotifierProvider]。
 final uploadControllerProvider =
     NotifierProvider<UploadController, UploadState>(() {
-  return UploadController();
-});
+      return UploadController();
+    });
 
 /// 音声ファイルのアップロード処理を管理する Notifier。
 class UploadController extends Notifier<UploadState> {
-  @override
+  /// 音声分析UseCaseのインスタンス。
+  late final AudioAnalysisUseCase _audioAnalysisUseCase;
 
-  /// アップロード状態の初期化を行う。
-  UploadState build() => const UploadState();
+  @override
+  /// アップロード状態の初期化と依存性注入を行う。
+  UploadState build() {
+    _audioAnalysisUseCase = ref.read(audioAnalysisUseCaseProvider);
+    return const UploadState();
+  }
 
   /// ドロップまたは選択されたファイルを処理し、アップロードする。
   Future<void> handleDroppedFile(html.File file) async {
@@ -55,9 +61,10 @@ class UploadController extends Notifier<UploadState> {
     state = const UploadState(isUploading: false);
   }
 
-  /// ファイルを Firebase Storage にアップロードする。
+  /// ファイルを Firebase Storage にアップロードし、分析リクエストを送信する。
   ///
   /// [originalFileName] を指定した場合は拡張子に利用する。
+  /// アップロード完了後、Firebase Storage のダウンロード URL を音声分析 API に渡す。
   Future<void> uploadFile(html.Blob file, {String? originalFileName}) async {
     try {
       final ext = originalFileName?.split('.').last.toLowerCase() ?? 'mp3';
@@ -76,9 +83,31 @@ class UploadController extends Notifier<UploadState> {
       final downloadUrl = await result.ref.getDownloadURL();
       debugPrint('アップロード成功: $downloadUrl');
 
-      state = const UploadState(isUploading: false, progress: 1.0);
+      // アップロード完了後、Firebase StorageのダウンロードURLを使用して音声分析APIを呼び出し
+      String? sessionId;
+      try {
+        final analysisResult = await _audioAnalysisUseCase.analyzeAudio(
+          audioUrl: downloadUrl,
+          userId: '3M7z7EVShLNEAR8pQRZkgZFJti13', // 固定値
+        );
+        // sessionId, session_id, id のいずれかで取得を試みる
+        sessionId =
+            analysisResult['sessionId'] ??
+            analysisResult['session_id'] ??
+            analysisResult['id']?.toString();
+      } catch (e) {
+        state = UploadState(isUploading: false, error: '音声分析に失敗しました: $e');
+        return;
+      }
+
+      state = UploadState(
+        isUploading: false,
+        progress: 1.0,
+        downloadUrl: downloadUrl,
+        analysisSessionId: sessionId,
+      );
     } catch (e) {
-      state = UploadState(isUploading: false, error: 'アップロードに失敗しました: $e');
+      state = UploadState(isUploading: false, error: 'アップロードまたは分析に失敗しました: $e');
     }
   }
 
