@@ -59,7 +59,7 @@ class LoginPage extends HookConsumerWidget {
                     'ユーザー名',
                     style: TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.bold,
                       color: AppColor.textBlack,
                     ),
                   ),
