@@ -59,7 +59,7 @@ class ResponsiveFileGrid extends StatelessWidget {
                             value: progress,
                             backgroundColor: Colors.grey,
                             valueColor: AlwaysStoppedAnimation<Color>(
-                                AppColor.main[300]!),
+                                AppColor.main),
                           ),
                         ),
                       ),

@@ -26,12 +26,12 @@ class CreateNewFileButton extends StatelessWidget {
       icon: Icon(
         Icons.add,
         size: 20,
-        color: AppColor.main[300]!,
+        color: AppColor.main,
       ),
       label: Text(
         '新規作成',
         style: TextStyle(
-          color: AppColor.main[300]!,
+          color: AppColor.main,
           fontWeight: FontWeight.bold,
           fontSize: 16,
           fontFamily: 'Noto Sans JP',

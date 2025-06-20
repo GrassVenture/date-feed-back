@@ -154,7 +154,7 @@ class LoginPage extends HookConsumerWidget {
                               }
                             },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColor.main[300]!,
+                        backgroundColor: AppColor.main,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(

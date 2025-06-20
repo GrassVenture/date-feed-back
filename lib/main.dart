@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       title: 'DateFeedBack',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColor.main[300]!,
+          seedColor: AppColor.main,
           brightness: Brightness.light,
         ),
         useMaterial3: true,

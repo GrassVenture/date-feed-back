@@ -31,7 +31,7 @@ class ProgressIndicatorWidget extends StatelessWidget {
                     strokeWidth: 6,
                     backgroundColor: AppColor.grayMiddle,
                     valueColor:
-                        AlwaysStoppedAnimation<Color>(AppColor.main[300]!),
+                        AlwaysStoppedAnimation<Color>(AppColor.main),
                   ),
                 ),
               ],
@@ -41,7 +41,7 @@ class ProgressIndicatorWidget extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: AppColor.main[300]!,
+              color: AppColor.main,
               shape: BoxShape.circle,
             ),
             child: const Icon(
