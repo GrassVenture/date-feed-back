@@ -49,7 +49,7 @@ class HttpClient {
 
     try {
       final response = await dio.post(
-        '/analyzeAudio',
+        '/analyzeConversation',
         options: Options(
           headers: {
             'Content-Type': 'application/json',
