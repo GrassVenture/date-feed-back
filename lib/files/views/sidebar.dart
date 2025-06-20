@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:date_feed_back/core/app_color.dart';
 
 /// アプリケーションの左サイドバーを表示するウィジェット。
@@ -19,14 +18,10 @@ class Sidebar extends StatelessWidget {
           const SizedBox(height: 20),
 
           /// ホームアイコン（中央寄せ・白色）
-          SvgPicture.asset(
-            'assets/icons/home_icon.svg',
-            width: 32,
-            height: 32,
-            colorFilter: const ColorFilter.mode(
-              Colors.white,
-              BlendMode.srcIn,
-            ),
+          Icon(
+            Icons.home,
+            size: 32,
+            color: Colors.white,
           ),
         ],
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:date_feed_back/core/app_color.dart';
 
 /// 新規ファイル作成ボタンウィジェット。
@@ -24,14 +23,10 @@ class CreateNewFileButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: onPressed,
-      icon: SvgPicture.asset(
-        'assets/icons/plus_icon.svg',
-        width: 20,
-        height: 20,
-        colorFilter: ColorFilter.mode(
-          AppColor.main[300]!,
-          BlendMode.srcIn,
-        ),
+      icon: Icon(
+        Icons.add,
+        size: 20,
+        color: AppColor.main[300]!,
       ),
       label: Text(
         '新規作成',

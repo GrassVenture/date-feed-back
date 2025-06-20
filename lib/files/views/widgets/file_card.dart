@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:date_feed_back/core/app_color.dart';
 
 import 'file_data.dart';
@@ -71,12 +70,10 @@ class FileCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
-              SvgPicture.asset(
-                'assets/icons/play_circle_outline.svg',
-                width: 16,
-                height: 16,
-                colorFilter:
-                    ColorFilter.mode(AppColor.textLight, BlendMode.srcIn),
+              Icon(
+                Icons.play_circle_outline,
+                size: 16,
+                color: AppColor.textLight,
               ),
               const SizedBox(width: 4),
               Text(
@@ -88,12 +85,10 @@ class FileCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
-              SvgPicture.asset(
-                'assets/icons/person2.svg',
-                width: 16,
-                height: 16,
-                colorFilter:
-                    ColorFilter.mode(AppColor.textLight, BlendMode.srcIn),
+              Icon(
+                Icons.person,
+                size: 16,
+                color: AppColor.textLight,
               ),
               const SizedBox(width: 4),
               Text(
