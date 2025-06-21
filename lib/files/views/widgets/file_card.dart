@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'file_data.dart';
+import '../../../upload/models/date_session.dart';
 
 /// ファイル情報をカード形式で表示するウィジェット。
 ///
 /// [file] には表示するファイルデータを指定する。
 class FileCard extends StatelessWidget {
   /// 表示するファイルデータ。
-  final FileData file;
+  final DateSession file;
 
   /// [FileCard] のインスタンスを生成する。
   const FileCard({super.key, required this.file});
