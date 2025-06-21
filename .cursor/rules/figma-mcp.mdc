@@ -50,7 +50,7 @@ Figma デザインから実装する際、ハードコーディングされた�
 ### 運用ルール
 - ハードコーディングされた色値（`Color(0xFFXXXXXX)`）は使用禁止
 - 必ず `lib/core/app_color.dart` で定義された `AppColor` プロパティを使用する
-- 各ファイルで `AppColor` をインポート: `import 'package:date_feed_back/core/app_color.dart';`
+- 各ファイルで `AppColor` をインポート: `import '../../core/app_color.dart';` (相対パス)
 - MaterialColor スウォッチの適切なインデックスを使用する
 
 ### 色の対応表例

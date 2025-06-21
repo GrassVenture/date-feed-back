@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:date_feed_back/core/app_color.dart';
 
+import '../../../core/app_color.dart';
 import 'file_card.dart';
 import 'file_data.dart';
 import 'files_responsive_layout_helper.dart';

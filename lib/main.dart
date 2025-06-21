@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-import 'package:date_feed_back/core/app_color.dart';
 
+import 'core/app_color.dart';
 import 'files/views/file_list_page.dart';
 import 'firebase_options.dart' as prod;
 import 'firebase_options_dev.dart' as dev;

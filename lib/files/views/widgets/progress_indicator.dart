@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:date_feed_back/core/app_color.dart';
+
+import '../../../core/app_color.dart';
 
 /// ファイルアップロードの進捗状況を示すウィジェット。
 ///

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:date_feed_back/core/app_color.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../core/app_color.dart';
 
 /// アプリケーションの左サイドバーを表示するウィジェット。
 ///

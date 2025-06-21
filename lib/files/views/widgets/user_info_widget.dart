@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:date_feed_back/core/app_color.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../core/app_color.dart';
 
 /// ユーザー情報（アイコンと名前）を表示するウィジェット。
 ///
