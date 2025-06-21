@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../core/app_color.dart';
+
 /// 新規ファイル作成ボタンウィジェット。
 ///
 /// 新規ファイルを作成するためのボタンを表示する。
@@ -23,19 +25,15 @@ class CreateNewFileButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: onPressed,
-      icon: SvgPicture.asset(
-        'assets/icons/plus_icon.svg',
-        width: 20,
-        height: 20,
-        colorFilter: const ColorFilter.mode(
-          Color(0xFF9B6ADF),
-          BlendMode.srcIn,
-        ),
+      icon: const Icon(
+        Icons.add,
+        size: 20,
+        color: AppColor.main,
       ),
       label: const Text(
         '新規作成',
         style: TextStyle(
-          color: Color(0xFF9B6ADF),
+          color: AppColor.main,
           fontWeight: FontWeight.bold,
           fontSize: 16,
           fontFamily: 'Noto Sans JP',
@@ -51,7 +49,7 @@ class CreateNewFileButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
-        shadowColor: const Color(0xFFECECEC),
+        shadowColor: AppColor.grayMiddle,
       ),
     );
   }

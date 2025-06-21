@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/app_color.dart';
+
 /// ファイルアップロードの進捗状況を示すウィジェット。
 ///
 /// `progress` の値に基づいて、`CircularProgressIndicator` または完了を示すチェックマークアイコンを表示する。
@@ -28,9 +30,9 @@ class ProgressIndicatorWidget extends StatelessWidget {
                   child: CircularProgressIndicator(
                     value: progress,
                     strokeWidth: 6,
-                    backgroundColor: const Color(0xFFECECEC),
+                    backgroundColor: AppColor.grayMiddle,
                     valueColor:
-                        const AlwaysStoppedAnimation<Color>(Color(0xFF9B6ADF)),
+                        const AlwaysStoppedAnimation<Color>(AppColor.main),
                   ),
                 ),
               ],
@@ -40,7 +42,7 @@ class ProgressIndicatorWidget extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: const BoxDecoration(
-              color: Color(0xFF9B6ADF),
+              color: AppColor.main,
               shape: BoxShape.circle,
             ),
             child: const Icon(

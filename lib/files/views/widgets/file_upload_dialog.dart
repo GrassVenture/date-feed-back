@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/app_color.dart';
 import 'file_info_row.dart';
 import 'file_upload_dialog_header.dart';
 
@@ -32,12 +33,12 @@ class FileUploadDialog extends StatelessWidget {
       child: Container(
         width: 498,
         decoration: BoxDecoration(
-          color: const Color(0xFFFFFFFF),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-              color: Color(0xFFECECEC),
-              offset: Offset(0, 2),
+              color: AppColor.grayMiddle,
+              offset: const Offset(0, 2),
               blurRadius: 8,
             ),
           ],

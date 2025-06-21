@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/app_color.dart';
 import '../controllers/auth_notifier.dart';
 
 /// ログイン画面を表示するページ。
@@ -22,7 +23,7 @@ class LoginPage extends HookConsumerWidget {
     final authNotifier = ref.read(authNotifierProvider.notifier);
 
     return Scaffold(
-      backgroundColor: Colors.deepPurple.shade50,
+      backgroundColor: AppColor.mainLight,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -45,14 +46,22 @@ class LoginPage extends HookConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Log in',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.textBlack,
+                    ),
                   ),
                   const SizedBox(height: 24),
-                  const Text(
+                  Text(
                     'ユーザー名',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.textBlack,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   TextField(
@@ -60,7 +69,7 @@ class LoginPage extends HookConsumerWidget {
                     decoration: InputDecoration(
                       hintText: 'ユーザー名を入力',
                       filled: true,
-                      fillColor: Colors.grey.shade100,
+                      fillColor: AppColor.grayLight,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                         borderSide: BorderSide.none,
@@ -73,9 +82,13 @@ class LoginPage extends HookConsumerWidget {
                     keyboardType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: 16),
-                  const Text(
+                  Text(
                     'パスワード',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: AppColor.textBlack,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   TextField(
@@ -84,7 +97,7 @@ class LoginPage extends HookConsumerWidget {
                     decoration: InputDecoration(
                       hintText: 'パスワードを入力',
                       filled: true,
-                      fillColor: Colors.grey.shade100,
+                      fillColor: AppColor.grayLight,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                         borderSide: BorderSide.none,
@@ -98,7 +111,7 @@ class LoginPage extends HookConsumerWidget {
                           hidePassword.value
                               ? Icons.visibility_off
                               : Icons.visibility,
-                          color: Colors.grey,
+                          color: AppColor.textLight,
                         ),
                         onPressed: () {
                           hidePassword.value = !hidePassword.value;
@@ -115,7 +128,12 @@ class LoginPage extends HookConsumerWidget {
                           rememberMe.value = value ?? false;
                         },
                       ),
-                      const Text('ログイン状態を保持'),
+                      Text(
+                        'ログイン状態を保持',
+                        style: TextStyle(
+                          color: AppColor.textBlack,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 24),
@@ -136,7 +154,7 @@ class LoginPage extends HookConsumerWidget {
                               }
                             },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple,
+                        backgroundColor: AppColor.main,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
@@ -156,14 +174,19 @@ class LoginPage extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Row(
+                  Row(
                     children: [
-                      Expanded(child: Divider()),
+                      const Expanded(child: Divider()),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: Text('または'),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          'または',
+                          style: TextStyle(
+                            color: AppColor.textLight,
+                          ),
+                        ),
                       ),
-                      Expanded(child: Divider()),
+                      const Expanded(child: Divider()),
                     ],
                   ),
                   const SizedBox(height: 16),
@@ -180,14 +203,16 @@ class LoginPage extends HookConsumerWidget {
                                 }
                               }
                             },
-                      icon: const Icon(
-                        Icons.g_mobiledata,
-                        size: 24,
-                        color: Colors.red,
+                      icon: const Icon(Icons.g_mobiledata,
+                          size: 24, color: Colors.red),
+                      label: Text(
+                        'Googleでログイン',
+                        style: TextStyle(
+                          color: AppColor.textBlack,
+                        ),
                       ),
-                      label: const Text('Googleでログイン'),
                       style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: Colors.grey),
+                        side: BorderSide(color: AppColor.grayMiddle),
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),

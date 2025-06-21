@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../core/app_color.dart';
+
 /// アプリケーションの左サイドバーを表示するウィジェット。
 ///
 /// 背景色は濃いパープル（#3C1A6C）で、上部に白いホームアイコンを表示する。
@@ -12,20 +14,16 @@ class Sidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 60,
-      color: const Color(0xFF3C1A6C),
-      child: Column(
+      color: AppColor.mainDark,
+      child: const Column(
         children: [
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
 
           /// ホームアイコン（中央寄せ・白色）
-          SvgPicture.asset(
-            'assets/icons/home_icon.svg',
-            width: 32,
-            height: 32,
-            colorFilter: const ColorFilter.mode(
-              Colors.white,
-              BlendMode.srcIn,
-            ),
+          Icon(
+            Icons.home,
+            size: 32,
+            color: Colors.white,
           ),
         ],
       ),
