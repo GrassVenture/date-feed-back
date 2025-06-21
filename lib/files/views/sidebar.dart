@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/app_color.dart';
 
@@ -20,11 +19,7 @@ class Sidebar extends StatelessWidget {
           SizedBox(height: 20),
 
           /// ホームアイコン（中央寄せ・白色）
-          Icon(
-            Icons.home,
-            size: 32,
-            color: Colors.white,
-          ),
+          Icon(Icons.home, size: 32, color: Colors.white),
         ],
       ),
     );

@@ -1,20 +1,20 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'file_data.dart';
+part of 'date_session.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$FileDataImpl _$$FileDataImplFromJson(Map<String, dynamic> json) =>
-    _$FileDataImpl(
+_$DateSessionImpl _$$DateSessionImplFromJson(Map<String, dynamic> json) =>
+    _$DateSessionImpl(
       title: json['title'] as String,
       date: json['date'] as String,
       time: json['time'] as String,
       user: json['user'] as String,
     );
 
-Map<String, dynamic> _$$FileDataImplToJson(_$FileDataImpl instance) =>
+Map<String, dynamic> _$$DateSessionImplToJson(_$DateSessionImpl instance) =>
     <String, dynamic>{
       'title': instance.title,
       'date': instance.date,

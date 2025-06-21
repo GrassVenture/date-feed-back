@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/app_color.dart';
-import 'file_data.dart';
+import '../../../upload/models/date_session.dart';
 
 /// ファイル情報をカード形式で表示するウィジェット。
 ///
 /// [file] には表示するファイルデータを指定する。
 class FileCard extends StatelessWidget {
   /// 表示するファイルデータ。
-  final FileData file;
+  final DateSession file;
 
   /// [FileCard] のインスタンスを生成する。
-  const FileCard({
-    super.key,
-    required this.file,
-  });
+  const FileCard({super.key, required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -86,11 +82,7 @@ class FileCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
-              Icon(
-                Icons.person,
-                size: 16,
-                color: AppColor.textLight,
-              ),
+              Icon(Icons.person, size: 16, color: AppColor.textLight),
               const SizedBox(width: 4),
               Text(
                 file.user,

@@ -6,7 +6,7 @@ import 'package:universal_html/html.dart' as html;
 import '../../core/app_color.dart';
 import '../../upload/controllers/upload_controller.dart';
 import 'sidebar.dart';
-import 'widgets/file_data.dart';
+import '../../upload/models/date_session.dart';
 import 'widgets/file_list_header.dart';
 import 'widgets/responsive_file_grid.dart';
 import 'widgets/file_upload_dialog.dart';
@@ -23,7 +23,7 @@ class FileListPage extends HookConsumerWidget {
     // ダミーファイルリスト
     final files = List.generate(
       7,
-      (index) => const FileData(
+      (index) => const DateSession(
         title: 'ファイル名',
         date: '2025/05/15',
         time: '12:50',
@@ -63,9 +63,9 @@ class FileListPage extends HookConsumerWidget {
                       padding: const EdgeInsets.all(24.0),
                       child: FileListHeader(
                         onCreateNewFile: handleCreateNewFile,
-                        horizontalPadding:
-                            FilesResponsiveLayoutHelper.of(context)
-                                .horizontalPadding,
+                        horizontalPadding: FilesResponsiveLayoutHelper.of(
+                          context,
+                        ).horizontalPadding,
                         userName: 'UserName',
                       ),
                     ),
