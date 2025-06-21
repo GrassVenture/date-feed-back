@@ -14,7 +14,8 @@ Figma の MCP（Multi-Component Platform）を利用したデザインから実�
 
 ## 目次
 1. アイコン命名と Flutter Icons 対応ルール
-2. （今後追加予定）
+2. カラー値の AppColor 対応ルール
+3. （今後追加予定）
 
 ---
 
@@ -41,7 +42,55 @@ Figma デザイン上で 'Icons.xxx' という命名がされたアイコンは�
 
 ---
 
-## 2. （今後追加予定）
+## 2. カラー値の AppColor 対応ルール
+
+### 概要
+Figma デザインから実装する際、ハードコーディングされた色値は必ず `AppColor` クラスで定義されたプロパティを使用すること。
+
+### 運用ルール
+- ハードコーディングされた色値（`Color(0xFFXXXXXX)`）は使用禁止
+- 必ず `lib/core/app_color.dart` で定義された `AppColor` プロパティを使用する
+- 各ファイルで `AppColor` をインポート: `import 'package:date_feed_back/core/app_color.dart';`
+- MaterialColor スウォッチの適切なインデックスを使用する
+
+### 色の対応表例
+- メインカラー: `AppColor.main` (0xFF9B6ADF)
+- 濃い紫: `AppColor.mainDark` (0xFF3C1A6C)
+- 背景色: `AppColor.background` (0xFFFBFAFE)
+- 明るいテキスト: `AppColor.textLight` (0xFF645E6D)
+- 黒テキスト: `AppColor.textBlack` (0xFF2F2F2F)
+- 明るいグレー: `AppColor.grayLight` (0xFFF4F4F5)
+- 中間グレー: `AppColor.grayMiddle` (0xFFE3E2E4)
+- 明るいメインカラー: `AppColor.mainLight` (0xFFE0CBFC)
+
+### 置き換えパターン例
+- `Color(0xFF9B6ADF)` → `AppColor.main`
+- `Color(0xFF3C1A6C)` → `AppColor.mainDark`
+- `Color(0xFFFBFAFE)` → `AppColor.background`
+- `Color(0xFF645E6D)` → `AppColor.textLight`
+- `Color(0xFF2F2F2F)` → `AppColor.textBlack`
+- `Color(0xFFF4F4F5)` → `AppColor.grayLight`
+- `Color(0xFFE3E2E4)` → `AppColor.grayMiddle`
+- `Color(0xFFECECEC)` → `AppColor.grayMiddle`
+
+### 具体例
+```dart
+// ❌ 悪い例
+color: const Color(0xFF9B6ADF)
+
+// ✅ 良い例
+color: AppColor.main
+```
+
+### 備考
+- 既存の `AppColor` クラスの構造を維持する
+- MaterialColor スウォッチのインデックス（[50], [100], [300]など）を正しく使用する
+- 色の意味に応じて適切な `AppColor` プロパティを選択する
+- 本ルールはプロジェクト全体で統一的に適用すること
+
+---
+
+## 3. （今後追加予定）
 - ここに新たな MCP 関連ルールを追記してください。
 
 ---
