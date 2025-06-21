@@ -69,3 +69,6 @@ lib/generated_plugin_registrant.dart
 # Environment variables
 .env
 .env.*
+
+# Envied generated file
+**/env.g.dart
