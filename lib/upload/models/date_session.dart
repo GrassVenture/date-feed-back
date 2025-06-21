@@ -1,15 +1,15 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'file_data.freezed.dart';
-part 'file_data.g.dart';
+part 'date_session.freezed.dart';
+part 'date_session.g.dart';
 
 /// ファイル情報を表すデータクラス。
 ///
 /// ファイル名、作成日、作成時刻、ユーザー名を保持する。
 @freezed
-class FileData with _$FileData {
-  /// [FileData] のインスタンスを生成する。
-  const factory FileData({
+class DateSession with _$DateSession {
+  /// [DateSession] のインスタンスを生成する。
+  const factory DateSession({
     /// ファイル名。
     required String title,
 
@@ -21,9 +21,9 @@ class FileData with _$FileData {
 
     /// ユーザー名。
     required String user,
-  }) = _FileData;
+  }) = _DateSession;
 
-  /// JSON から [FileData] インスタンスを生成する。
-  factory FileData.fromJson(Map<String, dynamic> json) =>
-      _$FileDataFromJson(json);
+  /// JSON から [DateSession] インスタンスを生成する。
+  factory DateSession.fromJson(Map<String, dynamic> json) =>
+      _$DateSessionFromJson(json);
 }
