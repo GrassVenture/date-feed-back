@@ -345,7 +345,7 @@ HooksRiverpod を採用することで、以下の利点を活かした実装を
 
 2. **API エンドポイント**
 
-   - Cloud Run API: `/analyzeAudio`
+   - Cloud Run API: `/analyzeConversation`
      - Method: POST
      - Parameters: file_uri, user_id（Firebase Storage のダウンロードURL）,
      - Response: { session_id: string }
