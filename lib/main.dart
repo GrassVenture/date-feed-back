@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -11,9 +10,6 @@ import 'firebase_options_dev.dart' as dev;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // dotenv 初期化
-  await dotenv.load();
 
   final firebaseOptions = kReleaseMode
       ? prod.DefaultFirebaseOptions.currentPlatform
