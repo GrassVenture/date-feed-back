@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
+import 'core/app_color.dart';
 import 'files/views/file_list_page.dart';
 import 'firebase_options.dart' as prod;
 import 'firebase_options_dev.dart' as dev;
@@ -32,7 +33,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'DateFeedBack',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppColor.main,
+          brightness: Brightness.light,
+        ),
         useMaterial3: true,
       ),
       home: const FileListPage(),

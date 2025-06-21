@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:universal_html/html.dart' as html;
 
+import '../../core/app_color.dart';
 import '../../upload/controllers/upload_controller.dart';
 import 'sidebar.dart';
 import '../../upload/models/date_session.dart';
@@ -47,7 +48,7 @@ class FileListPage extends HookConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFBFAFE),
+      backgroundColor: AppColor.background,
       body: Stack(
         children: [
           Row(

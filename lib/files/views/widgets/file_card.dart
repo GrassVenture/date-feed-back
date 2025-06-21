@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../core/app_color.dart';
 import '../../../upload/models/date_session.dart';
 
 /// ファイル情報をカード形式で表示するウィジェット。
@@ -19,11 +19,11 @@ class FileCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Color(0xFFECECEC),
+            color: AppColor.grayMiddle,
             blurRadius: 8,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -37,11 +37,11 @@ class FileCard extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 file.title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                   fontFamily: 'Noto Sans JP',
-                  color: Color(0xFF645E6D),
+                  color: AppColor.textLight,
                 ),
               ),
             ],
@@ -49,58 +49,46 @@ class FileCard extends StatelessWidget {
           const SizedBox(height: 8),
           Row(
             children: [
-              const Text(
+              Text(
                 '作成日:',
                 style: TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF645E6D),
+                  color: AppColor.textLight,
                   fontFamily: 'Noto Sans JP',
                 ),
               ),
               const SizedBox(width: 4),
               Text(
                 file.date,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF645E6D),
+                  color: AppColor.textLight,
                   fontFamily: 'Noto Sans JP',
                 ),
               ),
               const SizedBox(width: 16),
-              SvgPicture.asset(
-                'assets/icons/play_circle_outline.svg',
-                width: 16,
-                height: 16,
-                colorFilter: const ColorFilter.mode(
-                  Color(0xFF645E6D),
-                  BlendMode.srcIn,
-                ),
+              Icon(
+                Icons.play_circle_outline,
+                size: 16,
+                color: AppColor.textLight,
               ),
               const SizedBox(width: 4),
               Text(
                 file.time,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF645E6D),
+                  color: AppColor.textLight,
                   fontFamily: 'Noto Sans JP',
                 ),
               ),
               const SizedBox(width: 16),
-              SvgPicture.asset(
-                'assets/icons/person.svg',
-                width: 16,
-                height: 16,
-                colorFilter: const ColorFilter.mode(
-                  Color(0xFF645E6D),
-                  BlendMode.srcIn,
-                ),
-              ),
+              Icon(Icons.person, size: 16, color: AppColor.textLight),
               const SizedBox(width: 4),
               Text(
                 file.user,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF645E6D),
+                  color: AppColor.textLight,
                   fontFamily: 'Noto Sans JP',
                 ),
               ),

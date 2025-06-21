@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/app_color.dart';
 import '../../../upload/models/date_session.dart';
 import 'file_card.dart';
 import 'files_responsive_layout_helper.dart';
@@ -59,7 +60,7 @@ class ResponsiveFileGrid extends StatelessWidget {
                             value: progress,
                             backgroundColor: Colors.grey,
                             valueColor: const AlwaysStoppedAnimation<Color>(
-                              Color(0xFF9B6ADF),
+                              AppColor.main,
                             ),
                           ),
                         ),
