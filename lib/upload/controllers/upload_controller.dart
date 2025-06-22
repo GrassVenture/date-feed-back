@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -85,9 +87,11 @@ class UploadController extends Notifier<UploadState> {
 
       // アップロード完了後、Firebase StorageのダウンロードURLを使用して音声分析APIを呼び出し
       try {
-        await _audioAnalysisUseCase.analyzeConversation(
-          audioUrl: downloadUrl,
-          userId: '3M7z7EVShLNEAR8pQRZkgZFJti13', // 固定値
+        unawaited(
+          _audioAnalysisUseCase.analyzeConversation(
+            audioUrl: downloadUrl,
+            userId: '3M7z7EVShLNEAR8pQRZkgZFJti13', // 固定値
+          ),
         );
       } catch (e) {
         state = UploadState(isUploading: false, error: '音声分析に失敗しました: $e');
