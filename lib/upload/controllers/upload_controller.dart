@@ -84,17 +84,11 @@ class UploadController extends Notifier<UploadState> {
       debugPrint('アップロード成功: $downloadUrl');
 
       // アップロード完了後、Firebase StorageのダウンロードURLを使用して音声分析APIを呼び出し
-      String? sessionId;
       try {
-        final analysisResult = await _audioAnalysisUseCase.analyzeConversation(
+        await _audioAnalysisUseCase.analyzeConversation(
           audioUrl: downloadUrl,
           userId: '3M7z7EVShLNEAR8pQRZkgZFJti13', // 固定値
         );
-        // sessionId, session_id, id のいずれかで取得を試みる
-        sessionId =
-            analysisResult['sessionId'] ??
-            analysisResult['session_id'] ??
-            analysisResult['id']?.toString();
       } catch (e) {
         state = UploadState(isUploading: false, error: '音声分析に失敗しました: $e');
         return;
@@ -104,7 +98,6 @@ class UploadController extends Notifier<UploadState> {
         isUploading: false,
         progress: 1.0,
         downloadUrl: downloadUrl,
-        analysisSessionId: sessionId,
       );
     } catch (e) {
       state = UploadState(isUploading: false, error: 'アップロードまたは分析に失敗しました: $e');
