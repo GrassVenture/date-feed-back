@@ -24,7 +24,7 @@
 2.  **依存パッケージのインストール**
 
     ```bash
-    flutter pub get
+    fvm flutter pub get
     ```
 
 3.  **環境変数の設定（Envied）**
@@ -42,13 +42,13 @@
     2.  **コード生成の実行**
 
         ```bash
-        flutter pub run build_runner build --delete-conflicting-outputs
+        fvm flutter pub run build_runner build --delete-conflicting-outputs
         ```
 
 4.  **アプリケーションの実行**
 
     ```bash
-    flutter run -d chrome
+    fvm flutter run -d chrome
     ```
 
 -----
