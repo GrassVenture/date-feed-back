@@ -24,7 +24,7 @@ class AudioAnalysisUseCase {
   /// [audioUrl] には Firebase Storage 上の音声ファイルの URL を指定する。
   /// 成功時は API レスポンスの JSON マップを返す。
   /// 失敗時は例外をスローする。
-  Future<Map<String, dynamic>> analyzeAudio({
+  Future<Map<String, dynamic>> analyzeConversation({
     required String audioUrl,
     String? userId,
     String? accessToken,
