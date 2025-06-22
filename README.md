@@ -33,7 +33,7 @@
     ```
 
 3.  **環境変数の設定（Envied）**
-    このプロジェクトでは [`envied`](https://www.google.com/search?q=%5Bhttps://pub.dev/packages/envied%5D\(https://pub.dev/packages/envied\)) パッケージを使用して、`.env` ファイルの内容を安全に Dart コードとして使用できるようにしています。
+    このプロジェクトでは [`envied`](https://pub.dev/packages/envied) パッケージを使用して、`.env` ファイルの内容を安全に Dart コードとして使用できるようにしています。
 
     1.  **`.env` ファイルの準備**
         プロジェクトのルートディレクトリに `.env` ファイルを作成し、以下の内容を記述します。
