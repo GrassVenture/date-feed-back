@@ -10,19 +10,13 @@ import '../../core/usecases/audio_analysis_usecase.dart';
 
 /// アップロード状態を管理する [NotifierProvider]。
 final uploadControllerProvider =
-    NotifierProvider<UploadController, UploadState>(() {
-      return UploadController();
-    });
+    NotifierProvider<UploadController, UploadState>(UploadController.new);
 
 /// 音声ファイルのアップロード処理を管理する Notifier。
 class UploadController extends Notifier<UploadState> {
-  /// 音声分析UseCaseのインスタンス。
-  late final AudioAnalysisUseCase _audioAnalysisUseCase;
-
   @override
-  /// アップロード状態の初期化と依存性注入を行う。
+  /// アップロード状態の初期化を行う。
   UploadState build() {
-    _audioAnalysisUseCase = ref.read(audioAnalysisUseCaseProvider);
     return const UploadState();
   }
 
@@ -73,8 +67,8 @@ class UploadController extends Notifier<UploadState> {
       final fileName =
           'uploads/audio_${DateTime.now().millisecondsSinceEpoch}.$ext';
 
-      final ref = FirebaseStorage.instance.ref(fileName);
-      final task = ref.putBlob(file);
+      final storageRef = FirebaseStorage.instance.ref(fileName);
+      final task = storageRef.putBlob(file);
 
       task.snapshotEvents.listen((snapshot) {
         final progress = snapshot.bytesTransferred / snapshot.totalBytes;
@@ -86,9 +80,10 @@ class UploadController extends Notifier<UploadState> {
       debugPrint('アップロード成功: $downloadUrl');
 
       // アップロード完了後、Firebase StorageのダウンロードURLを使用して音声分析APIを呼び出し
+      final audioAnalysisUseCase = ref.read(audioAnalysisUseCaseProvider);
       try {
         unawaited(
-          _audioAnalysisUseCase.analyzeDateSession(
+          audioAnalysisUseCase.analyzeDateSession(
             audioUrl: downloadUrl,
             userId: '3M7z7EVShLNEAR8pQRZkgZFJti13', // 固定値
           ),
