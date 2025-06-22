@@ -51,7 +51,7 @@ class HttpClient {
 
     try {
       final response = await dio.post(
-        '/analyzeConversation',
+        '/analyzeDateSession',
         options: Options(
           headers: {
             'Content-Type': 'application/json',

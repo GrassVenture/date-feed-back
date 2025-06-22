@@ -88,7 +88,7 @@ class UploadController extends Notifier<UploadState> {
       // アップロード完了後、Firebase StorageのダウンロードURLを使用して音声分析APIを呼び出し
       try {
         unawaited(
-          _audioAnalysisUseCase.analyzeConversation(
+          _audioAnalysisUseCase.analyzeDateSession(
             audioUrl: downloadUrl,
             userId: '3M7z7EVShLNEAR8pQRZkgZFJti13', // 固定値
           ),
