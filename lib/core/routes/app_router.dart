@@ -22,12 +22,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       // ログイン済みで、ログインページに行こうとしている場合
       if (isLoggedIn && isGoingToLogin) {
-        return '/upload';
+        return FileListPage.routePath;
       }
 
       // 未ログインで、ログインページ以外に行こうとしている場合
       if (!isLoggedIn && !isGoingToLogin) {
-        return '/login';
+        return LoginPage.routePath;
       }
 
       return null;
@@ -36,20 +36,20 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     /// ルート定義一覧。
     routes: [
       GoRoute(
-        path: '/login',
-        name: 'login',
+        path: LoginPage.routePath,
+        name: LoginPage.routeName,
         builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
-        path: '/detail/:id',
-        name: 'detail',
+        path: AnalysisPage.routePath,
+        name: AnalysisPage.routeName,
         builder: (context, state) {
           return const AnalysisPage();
         },
       ),
       GoRoute(
-        path: '/files',
-        name: 'files',
+        path: FileListPage.routePath,
+        name: FileListPage.routeName,
         builder: (context, state) => const FileListPage(),
       ),
     ],

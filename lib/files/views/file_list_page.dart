@@ -15,6 +15,9 @@ import 'widgets/file_upload_dialog.dart';
 ///
 /// Figmaデザインに基づき、SVGアイコンや配色・レイアウトを反映する。
 class FileListPage extends HookConsumerWidget {
+  static const routeName = '/files';
+  static const routePath = '/files';
+
   const FileListPage({super.key});
 
   @override
