@@ -8,9 +8,14 @@
 
 ### 必要な環境
 
-  - Flutter 3.19.0
-  - Dart 3.3.0
-  - Node.js 18.x以上（Firebase Tools用）
+- **Flutter**: 3.32.4（FVM により管理）
+- **Dart**: 3.8.1（Flutter SDK に同梱）
+- **Node.js**: 18.x 以上（Firebase Tools 用、推奨: 最新安定版）
+
+※ Flutter および Dart のバージョンは `.fvmrc` によりプロジェクトに固定されています。
+
+**参考**: [FVMでFlutter SDKのバージョンをプロジェクト毎に管理する](https://zenn.dev/altiveinc/articles/flutter-version-management)
+
 
 ### セットアップ手順
 
