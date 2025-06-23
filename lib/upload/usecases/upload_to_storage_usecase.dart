@@ -5,22 +5,34 @@ import 'package:roggle/roggle.dart';
 
 import 'upload_to_storage_exception.dart';
 
-/// [UploadToStorageUseCase] の Provider。
+/// Firebase Storage へのファイルアップロードを行う UseCase の Provider。
+///
+/// [UploadToStorageUseCase] のインスタンスを提供する。
 final uploadToStorageUseCaseProvider = Provider(
   (ref) => UploadToStorageUseCase(),
 );
 
-/// Firebase Storage へファイルをアップロードする UseCase。
+/// Firebase Storage へファイルをアップロードするクラス。
+///
+/// ファイルをアップロードし、ダウンロード URL を取得する。
 class UploadToStorageUseCase {
   /// ロガーインスタンス。
   final Roggle logger;
 
-  /// コンストラクタ。
+  /// [UploadToStorageUseCase] のインスタンスを生成する。
+  ///
+  /// [logger] を省略した場合はデフォルトの [Roggle] を利用する。
   UploadToStorageUseCase({Roggle? logger}) : logger = logger ?? Roggle();
 
   /// ファイルを Firebase Storage にアップロードし、ダウンロード URL を返す。
   ///
   /// アップロードに失敗した場合は [UploadToStorageException] を投げる。
+  ///
+  /// [file] アップロード対象のファイル。
+  /// [originalFileName] 元のファイル名（省略可）。
+  /// [onProgress] 進捗コールバック（省略可）。
+  ///
+  /// 戻り値はアップロード後のダウンロード URL。
   Future<String> call(
     html.Blob file, {
     String? originalFileName,

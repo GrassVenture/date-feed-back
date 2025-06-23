@@ -4,30 +4,40 @@ import 'package:roggle/roggle.dart';
 import '../../analysis/services/analysis_service.dart';
 import 'request_analysis_exception.dart';
 
-/// [RequestAnalysisUseCase] の Provider。
+/// 音声分析 API を呼び出す UseCase の Provider。
+///
+/// [RequestAnalysisUseCase] のインスタンスを提供する。
 final requestAnalysisUseCaseProvider = Provider((ref) {
   final analysisService = ref.read(analysisServiceProvider);
   return RequestAnalysisUseCase(analysisService);
 });
 
-/// 音声分析 API を呼び出す UseCase。
+/// 音声分析 API を呼び出すクラス。
+///
+/// 指定したファイル URI とユーザー ID で音声分析 API を呼び出す。
 class RequestAnalysisUseCase {
-  /// [AnalysisService]。
-  final AnalysisService _analysisService;
+  /// [AnalysisService] のインスタンス。
+  final AnalysisService analysisService;
 
   /// ロガー。
   final Roggle logger;
 
   /// [RequestAnalysisUseCase] のインスタンスを生成する。
-  RequestAnalysisUseCase(this._analysisService, {Roggle? logger})
+  ///
+  /// [analysisService] 音声分析サービス。
+  /// [logger] を省略した場合はデフォルトの [Roggle] を利用する。
+  RequestAnalysisUseCase(this.analysisService, {Roggle? logger})
     : logger = logger ?? Roggle();
 
   /// 音声分析 API を呼び出す。
   ///
   /// 失敗した場合は [RequestAnalysisException] を投げる。
+  ///
+  /// [fileUri] 分析対象ファイルの URI。
+  /// [userId] ユーザー ID。
   Future<void> call({required String fileUri, required String userId}) async {
     try {
-      await _analysisService.analyzeDateSession(
+      await analysisService.analyzeDateSession(
         fileUri: fileUri,
         userId: userId,
       );
