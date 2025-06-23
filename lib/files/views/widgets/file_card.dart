@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/app_color.dart';
 import '../../../upload/models/date_session.dart';
+import '../../../core/utils/formatters.dart';
 
 /// ファイル情報をカード形式で表示するウィジェット。
 ///
@@ -74,7 +75,7 @@ class FileCard extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               Text(
-                file.time,
+                file.durationSeconds.toMMSS(),
                 style: TextStyle(
                   fontSize: 14,
                   color: AppColor.textLight,

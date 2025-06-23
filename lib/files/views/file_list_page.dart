@@ -26,7 +26,7 @@ class FileListPage extends HookConsumerWidget {
       (index) => DateSession(
         title: 'ファイル名',
         createdAt: DateTime(2025, 5, 15),
-        time: '12:50',
+        durationSeconds: 770,
         user: '佐藤さん',
       ),
     );
