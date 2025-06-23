@@ -23,9 +23,9 @@ class FileListPage extends HookConsumerWidget {
     // ダミーファイルリスト
     final files = List.generate(
       7,
-      (index) => const DateSession(
+      (index) => DateSession(
         title: 'ファイル名',
-        date: '2025/05/15',
+        createdAt: DateTime(2025, 5, 15),
         time: '12:50',
         user: '佐藤さん',
       ),
