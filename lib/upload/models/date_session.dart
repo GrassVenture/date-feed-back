@@ -19,8 +19,8 @@ class DateSession with _$DateSession {
     /// 作成日時。
     @TimestampConverter() required DateTime createdAt,
 
-    /// 作成時刻（例: 12:50）。
-    required String time,
+    /// 音声ファイルの長さ（秒）。
+    required int durationSeconds,
 
     /// ユーザー名。
     required String user,

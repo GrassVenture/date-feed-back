@@ -27,8 +27,8 @@ mixin _$DateSession {
   @TimestampConverter()
   DateTime get createdAt => throw _privateConstructorUsedError;
 
-  /// 作成時刻（例: 12:50）。
-  String get time => throw _privateConstructorUsedError;
+  /// 音声ファイルの長さ（秒）。
+  int get durationSeconds => throw _privateConstructorUsedError;
 
   /// ユーザー名。
   String get user => throw _privateConstructorUsedError;
@@ -52,7 +52,7 @@ abstract class $DateSessionCopyWith<$Res> {
   $Res call(
       {String title,
       @TimestampConverter() DateTime createdAt,
-      String time,
+      int durationSeconds,
       String user});
 }
 
@@ -73,7 +73,7 @@ class _$DateSessionCopyWithImpl<$Res, $Val extends DateSession>
   $Res call({
     Object? title = null,
     Object? createdAt = null,
-    Object? time = null,
+    Object? durationSeconds = null,
     Object? user = null,
   }) {
     return _then(_value.copyWith(
@@ -85,10 +85,10 @@ class _$DateSessionCopyWithImpl<$Res, $Val extends DateSession>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      time: null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as String,
+      durationSeconds: null == durationSeconds
+          ? _value.durationSeconds
+          : durationSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -108,7 +108,7 @@ abstract class _$$DateSessionImplCopyWith<$Res>
   $Res call(
       {String title,
       @TimestampConverter() DateTime createdAt,
-      String time,
+      int durationSeconds,
       String user});
 }
 
@@ -127,7 +127,7 @@ class __$$DateSessionImplCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? createdAt = null,
-    Object? time = null,
+    Object? durationSeconds = null,
     Object? user = null,
   }) {
     return _then(_$DateSessionImpl(
@@ -139,10 +139,10 @@ class __$$DateSessionImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      time: null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as String,
+      durationSeconds: null == durationSeconds
+          ? _value.durationSeconds
+          : durationSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -157,7 +157,7 @@ class _$DateSessionImpl implements _DateSession {
   const _$DateSessionImpl(
       {required this.title,
       @TimestampConverter() required this.createdAt,
-      required this.time,
+      required this.durationSeconds,
       required this.user});
 
   factory _$DateSessionImpl.fromJson(Map<String, dynamic> json) =>
@@ -172,9 +172,9 @@ class _$DateSessionImpl implements _DateSession {
   @TimestampConverter()
   final DateTime createdAt;
 
-  /// 作成時刻（例: 12:50）。
+  /// 音声ファイルの長さ（秒）。
   @override
-  final String time;
+  final int durationSeconds;
 
   /// ユーザー名。
   @override
@@ -182,7 +182,7 @@ class _$DateSessionImpl implements _DateSession {
 
   @override
   String toString() {
-    return 'DateSession(title: $title, createdAt: $createdAt, time: $time, user: $user)';
+    return 'DateSession(title: $title, createdAt: $createdAt, durationSeconds: $durationSeconds, user: $user)';
   }
 
   @override
@@ -193,13 +193,15 @@ class _$DateSessionImpl implements _DateSession {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
-            (identical(other.time, time) || other.time == time) &&
+            (identical(other.durationSeconds, durationSeconds) ||
+                other.durationSeconds == durationSeconds) &&
             (identical(other.user, user) || other.user == user));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, title, createdAt, time, user);
+  int get hashCode =>
+      Object.hash(runtimeType, title, createdAt, durationSeconds, user);
 
   /// Create a copy of DateSession
   /// with the given fields replaced by the non-null parameter values.
@@ -221,7 +223,7 @@ abstract class _DateSession implements DateSession {
   const factory _DateSession(
       {required final String title,
       @TimestampConverter() required final DateTime createdAt,
-      required final String time,
+      required final int durationSeconds,
       required final String user}) = _$DateSessionImpl;
 
   factory _DateSession.fromJson(Map<String, dynamic> json) =
@@ -236,9 +238,9 @@ abstract class _DateSession implements DateSession {
   @TimestampConverter()
   DateTime get createdAt;
 
-  /// 作成時刻（例: 12:50）。
+  /// 音声ファイルの長さ（秒）。
   @override
-  String get time;
+  int get durationSeconds;
 
   /// ユーザー名。
   @override

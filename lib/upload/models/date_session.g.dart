@@ -11,7 +11,7 @@ _$DateSessionImpl _$$DateSessionImplFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String,
       createdAt:
           const TimestampConverter().fromJson(json['createdAt'] as Timestamp),
-      time: json['time'] as String,
+      durationSeconds: (json['durationSeconds'] as num).toInt(),
       user: json['user'] as String,
     );
 
@@ -19,6 +19,6 @@ Map<String, dynamic> _$$DateSessionImplToJson(_$DateSessionImpl instance) =>
     <String, dynamic>{
       'title': instance.title,
       'createdAt': const TimestampConverter().toJson(instance.createdAt),
-      'time': instance.time,
+      'durationSeconds': instance.durationSeconds,
       'user': instance.user,
     };
