@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../core/converters/timestamp_converter.dart';
 
 part 'date_session.freezed.dart';
 part 'date_session.g.dart';
@@ -13,8 +16,8 @@ class DateSession with _$DateSession {
     /// ファイル名。
     required String title,
 
-    /// 作成日（例: 2025/05/15）。
-    required String date,
+    /// 作成日時。
+    @TimestampConverter() required DateTime createdAt,
 
     /// 作成時刻（例: 12:50）。
     required String time,

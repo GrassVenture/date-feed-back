@@ -9,7 +9,8 @@ part of 'date_session.dart';
 _$DateSessionImpl _$$DateSessionImplFromJson(Map<String, dynamic> json) =>
     _$DateSessionImpl(
       title: json['title'] as String,
-      date: json['date'] as String,
+      createdAt:
+          const TimestampConverter().fromJson(json['createdAt'] as Timestamp),
       time: json['time'] as String,
       user: json['user'] as String,
     );
@@ -17,7 +18,7 @@ _$DateSessionImpl _$$DateSessionImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$DateSessionImplToJson(_$DateSessionImpl instance) =>
     <String, dynamic>{
       'title': instance.title,
-      'date': instance.date,
+      'createdAt': const TimestampConverter().toJson(instance.createdAt),
       'time': instance.time,
       'user': instance.user,
     };

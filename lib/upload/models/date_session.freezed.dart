@@ -23,8 +23,9 @@ mixin _$DateSession {
   /// ファイル名。
   String get title => throw _privateConstructorUsedError;
 
-  /// 作成日（例: 2025/05/15）。
-  String get date => throw _privateConstructorUsedError;
+  /// 作成日時。
+  @TimestampConverter()
+  DateTime get createdAt => throw _privateConstructorUsedError;
 
   /// 作成時刻（例: 12:50）。
   String get time => throw _privateConstructorUsedError;
@@ -48,7 +49,11 @@ abstract class $DateSessionCopyWith<$Res> {
           DateSession value, $Res Function(DateSession) then) =
       _$DateSessionCopyWithImpl<$Res, DateSession>;
   @useResult
-  $Res call({String title, String date, String time, String user});
+  $Res call(
+      {String title,
+      @TimestampConverter() DateTime createdAt,
+      String time,
+      String user});
 }
 
 /// @nodoc
@@ -67,7 +72,7 @@ class _$DateSessionCopyWithImpl<$Res, $Val extends DateSession>
   @override
   $Res call({
     Object? title = null,
-    Object? date = null,
+    Object? createdAt = null,
     Object? time = null,
     Object? user = null,
   }) {
@@ -76,10 +81,10 @@ class _$DateSessionCopyWithImpl<$Res, $Val extends DateSession>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       time: null == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
@@ -100,7 +105,11 @@ abstract class _$$DateSessionImplCopyWith<$Res>
       __$$DateSessionImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, String date, String time, String user});
+  $Res call(
+      {String title,
+      @TimestampConverter() DateTime createdAt,
+      String time,
+      String user});
 }
 
 /// @nodoc
@@ -117,7 +126,7 @@ class __$$DateSessionImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? title = null,
-    Object? date = null,
+    Object? createdAt = null,
     Object? time = null,
     Object? user = null,
   }) {
@@ -126,10 +135,10 @@ class __$$DateSessionImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       time: null == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
@@ -147,7 +156,7 @@ class __$$DateSessionImplCopyWithImpl<$Res>
 class _$DateSessionImpl implements _DateSession {
   const _$DateSessionImpl(
       {required this.title,
-      required this.date,
+      @TimestampConverter() required this.createdAt,
       required this.time,
       required this.user});
 
@@ -158,9 +167,10 @@ class _$DateSessionImpl implements _DateSession {
   @override
   final String title;
 
-  /// 作成日（例: 2025/05/15）。
+  /// 作成日時。
   @override
-  final String date;
+  @TimestampConverter()
+  final DateTime createdAt;
 
   /// 作成時刻（例: 12:50）。
   @override
@@ -172,7 +182,7 @@ class _$DateSessionImpl implements _DateSession {
 
   @override
   String toString() {
-    return 'DateSession(title: $title, date: $date, time: $time, user: $user)';
+    return 'DateSession(title: $title, createdAt: $createdAt, time: $time, user: $user)';
   }
 
   @override
@@ -181,14 +191,15 @@ class _$DateSessionImpl implements _DateSession {
         (other.runtimeType == runtimeType &&
             other is _$DateSessionImpl &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.date, date) || other.date == date) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.time, time) || other.time == time) &&
             (identical(other.user, user) || other.user == user));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, title, date, time, user);
+  int get hashCode => Object.hash(runtimeType, title, createdAt, time, user);
 
   /// Create a copy of DateSession
   /// with the given fields replaced by the non-null parameter values.
@@ -209,7 +220,7 @@ class _$DateSessionImpl implements _DateSession {
 abstract class _DateSession implements DateSession {
   const factory _DateSession(
       {required final String title,
-      required final String date,
+      @TimestampConverter() required final DateTime createdAt,
       required final String time,
       required final String user}) = _$DateSessionImpl;
 
@@ -220,9 +231,10 @@ abstract class _DateSession implements DateSession {
   @override
   String get title;
 
-  /// 作成日（例: 2025/05/15）。
+  /// 作成日時。
   @override
-  String get date;
+  @TimestampConverter()
+  DateTime get createdAt;
 
   /// 作成時刻（例: 12:50）。
   @override
