@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:universal_html/html.dart' as html;
 
+import '../../analysis/services/analysis_service.dart';
 import '../models/upload_state.dart';
-import '../../core/usecases/audio_analysis_usecase.dart';
 
 /// アップロード状態を管理する [NotifierProvider]。
 final uploadControllerProvider =
@@ -80,11 +80,11 @@ class UploadController extends Notifier<UploadState> {
       debugPrint('アップロード成功: $downloadUrl');
 
       // アップロード完了後、Firebase StorageのダウンロードURLを使用して音声分析APIを呼び出し
-      final audioAnalysisUseCase = ref.read(audioAnalysisUseCaseProvider);
+      final audioAnalysisService = ref.read(analysisServiceProvider);
       try {
         unawaited(
-          audioAnalysisUseCase.analyzeDateSession(
-            audioUrl: downloadUrl,
+          audioAnalysisService.analyzeDateSession(
+            fileUri: downloadUrl,
             userId: '3M7z7EVShLNEAR8pQRZkgZFJti13', // 固定値
           ),
         );
