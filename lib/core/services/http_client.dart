@@ -9,17 +9,10 @@ final httpClientProvider = Provider<HttpClient>((ref) {
   return HttpClient();
 });
 
-/// HTTP 通信を担当するクライアントクラス。
+/// HTTP 通信を担当する汎用クライアントクラス。
 ///
-/// 音声分析 API へのリクエストや、署名付き URL へのファイルアップロードを行う。
+/// API へのリクエストやファイルアップロードなど、共通的な HTTP 通信処理を提供する。
 class HttpClient {
-  /// 開発用ダミーアクセストークン。
-  static const String _dummyAccessToken =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZGV2X3Rlc3RfdXNlcl8xMjMiLCJleHAiOjQ3OTgwMDAwMDB9.dummy_signature_abcdefg123456';
-
-  /// 開発用ダミーユーザーID。
-  static const String _dummyUserId = '3M7z7EVShLNEAR8pQRZkgZFJti13';
-
   /// [Dio] インスタンス。
   final Dio dio;
 
@@ -33,46 +26,40 @@ class HttpClient {
     : dio = dio ?? Dio(BaseOptions(baseUrl: Env.devApiUrl)),
       logger = logger ?? Roggle();
 
-  /// Cloud Run API に音声分析をリクエストする（認証情報付き）。
+  /// POST リクエストを送信する。
   ///
-  /// [fileUri] は Firebase Storage 上のファイル URI。
-  /// [userId] はリクエストユーザーの ID。省略時は開発用ダミー値を利用する。
-  /// [accessToken] は認証用アクセストークン。省略時は開発用ダミー値を利用する。
+  /// [endpoint] はリクエスト先のエンドポイント。
+  /// [data] はリクエストボディ。
+  /// [headers] で追加ヘッダーを指定できる。
   ///
   /// 成功時は API レスポンスの JSON マップを返す。
   /// 失敗時は例外をスローする。
-  Future<Map<String, dynamic>> requestAudioAnalysis({
-    required String fileUri,
-    String? userId,
-    String? accessToken,
+  Future<Map<String, dynamic>> post({
+    required String endpoint,
+    required Map<String, dynamic> data,
+    Map<String, String>? headers,
   }) async {
-    final requestUserId = userId ?? _dummyUserId;
-    final requestToken = accessToken ?? _dummyAccessToken;
-
     try {
       final response = await dio.post(
-        '/analyzeDateSession',
+        endpoint,
         options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer $requestToken',
-          },
+          headers: {'Content-Type': 'application/json', ...?headers},
         ),
-        data: {'file_uri': fileUri, 'user_id': requestUserId},
+        data: data,
       );
 
       if (response.statusCode == 200) {
-        logger.d('Audio analysis request successful: ${response.data}');
+        logger.d('POST $endpoint successful: \\${response.data}');
         return Map<String, dynamic>.from(response.data);
       } else {
-        logger.e('Audio analysis request failed: ${response.data}');
-        throw Exception('Analysis request failed: ${response.statusCode}');
+        logger.e('POST $endpoint failed: \\${response.data}');
+        throw Exception('POST request failed: \\${response.statusCode}');
       }
     } on DioException catch (error) {
-      logger.e('DioException in audio analysis: ${error.message}');
+      logger.e('DioException in POST $endpoint: \\${error.message}');
       rethrow;
     } on Exception catch (error) {
-      logger.e('Exception in audio analysis: ${error.toString()}');
+      logger.e('Exception in POST $endpoint: \\${error.toString()}');
       rethrow;
     }
   }
