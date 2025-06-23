@@ -8,6 +8,10 @@ import '../usecases/validate_audio_file_usecase.dart';
 import '../usecases/extract_audio_segment_usecase.dart';
 import '../usecases/upload_to_storage_usecase.dart';
 import '../usecases/request_analysis_usecase.dart';
+import '../usecases/validate_audio_file_exception.dart';
+import '../usecases/extract_audio_segment_exception.dart';
+import '../usecases/upload_to_storage_exception.dart';
+import '../usecases/request_analysis_exception.dart';
 
 /// アップロード状態を管理する [NotifierProvider]。
 final uploadControllerProvider =
@@ -28,9 +32,10 @@ class UploadController extends Notifier<UploadState> {
     final uploadToStorage = ref.read(uploadToStorageUseCaseProvider);
     final requestAnalysis = ref.read(requestAnalysisUseCaseProvider);
 
-    // 検証
+    // 検証＋音声長取得
+    double duration;
     try {
-      await validateAudioFile.call(file);
+      duration = await validateAudioFile.call(file);
     } on ValidateAudioFileException catch (e) {
       state = UploadState(error: e.message);
       return;
@@ -39,23 +44,10 @@ class UploadController extends Notifier<UploadState> {
       return;
     }
 
-    // 音声長取得
-    final audio = html.AudioElement();
-    audio.src = html.Url.createObjectUrl(file);
-    try {
-      await audio.onLoadedMetadata.first;
-    } catch (e) {
-      state = const UploadState(error: '音声ファイルのメタデータ取得に失敗しました');
-      return;
-    }
-
     // 15分抽出
     html.Blob uploadBlob;
     try {
-      uploadBlob = await extractAudioSegment.call(
-        file,
-        audio.duration.toDouble(),
-      );
+      uploadBlob = await extractAudioSegment.call(file, duration);
     } on ExtractAudioSegmentException catch (e) {
       state = UploadState(error: e.message);
       return;
