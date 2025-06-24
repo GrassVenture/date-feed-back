@@ -43,15 +43,6 @@ class AuthRepository {
     }
   }
 
-  /// Google アカウントでサインインする。
-  ///
-  /// 成功時は [User] を返す。
-  Future<User?> signInWithGoogle() async {
-    final GoogleAuthProvider googleProvider = GoogleAuthProvider();
-    final userCredential = await _firebaseAuth.signInWithPopup(googleProvider);
-    return userCredential.user;
-  }
-
   /// サインアウトする。
   Future<void> signOut() async {
     await _firebaseAuth.signOut();

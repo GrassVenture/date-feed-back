@@ -60,20 +60,6 @@ class AuthNotifier extends Notifier<AuthState> {
     }
   }
 
-  /// Google アカウントでサインインする。
-  Future<void> signInWithGoogle() async {
-    state = state.copyWith(isLoading: true, errorMessage: null);
-    try {
-      final user = await _authRepository.signInWithGoogle();
-      state = state.copyWith(user: user, isLoading: false);
-    } catch (_) {
-      state = state.copyWith(
-        isLoading: false,
-        errorMessage: 'Googleログインに失敗しました。もう一度お試しください。',
-      );
-    }
-  }
-
   /// サインアウトする。
   Future<void> signOut() async {
     state = state.copyWith(isLoading: true, errorMessage: null);

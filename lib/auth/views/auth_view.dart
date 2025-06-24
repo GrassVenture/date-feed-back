@@ -20,11 +20,7 @@ class AuthView extends ConsumerWidget {
             if (authState.isLoading)
               const CircularProgressIndicator()
             else if (authState.user == null)
-              ElevatedButton.icon(
-                onPressed: () => auth.signInWithGoogle(),
-                icon: const Icon(Icons.login),
-                label: const Text('Googleでログイン'),
-              )
+              const SizedBox.shrink()
             else
               Column(
                 children: [
