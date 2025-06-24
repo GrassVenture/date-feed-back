@@ -13,12 +13,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     /// ルーティング初期パス。
-    initialLocation: '/login',
+    initialLocation: LoginPage.routePath,
 
     /// ログイン状態に応じたリダイレクト処理。
     redirect: (context, state) {
       final isLoggedIn = authState.user != null;
-      final isGoingToLogin = state.uri.path == '/login';
+      final isGoingToLogin = state.uri.path == LoginPage.routePath;
 
       // ログイン済みで、ログインページに行こうとしている場合
       if (isLoggedIn && isGoingToLogin) {
