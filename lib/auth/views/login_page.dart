@@ -153,7 +153,7 @@ class LoginPage extends HookConsumerWidget {
                               );
                               if (authState.user != null) {
                                 if (context.mounted) {
-                                  context.push(FileListPage.routePath);
+                                  context.go(FileListPage.routePath);
                                 }
                               }
                             },
