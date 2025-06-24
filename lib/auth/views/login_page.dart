@@ -13,7 +13,7 @@ import '../controllers/auth_notifier.dart';
 class LoginPage extends HookConsumerWidget {
   const LoginPage({super.key});
 
-  static const routeName = '/login';
+  static const routeName = 'login';
   static const routePath = '/login';
 
   @override

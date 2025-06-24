@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 ///
 /// アップロード済み音声ファイルの詳細情報や分析結果を表示するページ。
 class AnalysisPage extends StatelessWidget {
-  static const routeName = '/detail/:id';
+  static const routeName = 'detail';
   static const routePath = '/detail/:id';
 
   const AnalysisPage({super.key});
