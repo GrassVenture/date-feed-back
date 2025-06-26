@@ -347,7 +347,7 @@ HooksRiverpod を採用することで、以下の利点を活かした実装を
 
    - Cloud Run API: `/analyzeDateSession`
      - Method: POST
-     - Parameters: file_uri, user_id（Firebase Storage のダウンロードURL）,
+     - Parameters: storageUrl, userId（Firebase Storage のダウンロードURL）,
      - Response: { session_id: string }
 
 3. **Firestore 制約**
