@@ -60,7 +60,7 @@ class FileCard extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               Text(
-                file.createdAt.toString(),
+                file.createdAt.toJapaneseDate(),
                 style: TextStyle(
                   fontSize: 14,
                   color: AppColor.textLight,
