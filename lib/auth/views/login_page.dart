@@ -1,3 +1,4 @@
+import 'package:date_feed_back/files/views/file_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,6 +12,9 @@ import '../controllers/auth_notifier.dart';
 /// ユーザー名とパスワードによるログインに対応する。
 class LoginPage extends HookConsumerWidget {
   const LoginPage({super.key});
+
+  static const routeName = 'login';
+  static const routePath = '/login';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -149,7 +153,7 @@ class LoginPage extends HookConsumerWidget {
                               );
                               if (authState.user != null) {
                                 if (context.mounted) {
-                                  context.go('/upload');
+                                  context.go(FileListPage.routePath);
                                 }
                               }
                             },
@@ -174,52 +178,6 @@ class LoginPage extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      const Expanded(child: Divider()),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Text(
-                          'または',
-                          style: TextStyle(
-                            color: AppColor.textLight,
-                          ),
-                        ),
-                      ),
-                      const Expanded(child: Divider()),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton.icon(
-                      onPressed: authState.isLoading
-                          ? null
-                          : () async {
-                              await authNotifier.signInWithGoogle();
-                              if (authState.user != null) {
-                                if (context.mounted) {
-                                  context.go('/upload');
-                                }
-                              }
-                            },
-                      icon: const Icon(Icons.g_mobiledata,
-                          size: 24, color: Colors.red),
-                      label: Text(
-                        'Googleでログイン',
-                        style: TextStyle(
-                          color: AppColor.textBlack,
-                        ),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: AppColor.grayMiddle),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                  ),
                   if (authState.errorMessage != null)
                     Padding(
                       padding: const EdgeInsets.only(top: 16),

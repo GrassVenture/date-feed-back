@@ -13,21 +13,21 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     /// ルーティング初期パス。
-    initialLocation: '/login',
+    initialLocation: LoginPage.routePath,
 
     /// ログイン状態に応じたリダイレクト処理。
     redirect: (context, state) {
       final isLoggedIn = authState.user != null;
-      final isGoingToLogin = state.uri.path == '/login';
+      final isGoingToLogin = state.uri.path == LoginPage.routePath;
 
       // ログイン済みで、ログインページに行こうとしている場合
       if (isLoggedIn && isGoingToLogin) {
-        return '/upload';
+        return FileListPage.routePath;
       }
 
       // 未ログインで、ログインページ以外に行こうとしている場合
       if (!isLoggedIn && !isGoingToLogin) {
-        return '/login';
+        return LoginPage.routePath;
       }
 
       return null;
@@ -36,20 +36,20 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     /// ルート定義一覧。
     routes: [
       GoRoute(
-        path: '/login',
-        name: 'login',
+        path: LoginPage.routePath,
+        name: LoginPage.routeName,
         builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
-        path: '/detail/:id',
-        name: 'detail',
+        path: AnalysisPage.routePath,
+        name: AnalysisPage.routeName,
         builder: (context, state) {
           return const AnalysisPage();
         },
       ),
       GoRoute(
-        path: '/files',
-        name: 'files',
+        path: FileListPage.routePath,
+        name: FileListPage.routeName,
         builder: (context, state) => const FileListPage(),
       ),
     ],
