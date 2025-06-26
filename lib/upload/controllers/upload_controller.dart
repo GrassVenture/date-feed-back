@@ -15,13 +15,15 @@ import '../usecases/request_analysis_exception.dart';
 
 /// アップロード状態を管理する [NotifierProvider]。
 final uploadControllerProvider =
-    NotifierProvider<UploadController, UploadState>(UploadController.new);
+    AutoDisposeNotifierProvider<UploadController, UploadState>(
+      UploadController.new,
+    );
 
 /// 音声ファイルのアップロード処理を管理する Notifier。
 ///
 /// ファイルの検証、音声セグメントの抽出、クラウドストレージへのアップロード、
 /// 分析 API の呼び出しといった一連のフローを制御する。
-class UploadController extends Notifier<UploadState> {
+class UploadController extends AutoDisposeNotifier<UploadState> {
   /// [UploadState] の初期状態を構築する。
   @override
   UploadState build() => const UploadState();

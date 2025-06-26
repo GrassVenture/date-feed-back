@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../env/env.dart';
 
 /// [HttpClient] のインスタンスを提供する Provider。
-final httpClientProvider = Provider<HttpClient>((ref) {
+final httpClientProvider = Provider.autoDispose<HttpClient>((ref) {
   return HttpClient();
 });
 

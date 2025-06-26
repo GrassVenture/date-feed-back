@@ -8,7 +8,7 @@ import 'upload_to_storage_exception.dart';
 /// Firebase Storage へのファイルアップロードを行う UseCase の Provider。
 ///
 /// [UploadToStorageUseCase] のインスタンスを提供する。
-final uploadToStorageUseCaseProvider = Provider(
+final uploadToStorageUseCaseProvider = Provider.autoDispose(
   (ref) => UploadToStorageUseCase(),
 );
 

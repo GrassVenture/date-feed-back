@@ -7,7 +7,7 @@ import 'validate_audio_file_exception.dart';
 /// 音声ファイルの検証と長さ取得を行う UseCase の Provider。
 ///
 /// [ValidateAudioFileUseCase] のインスタンスを提供する。
-final validateAudioFileUseCaseProvider = Provider(
+final validateAudioFileUseCaseProvider = Provider.autoDispose(
   (ref) => ValidateAudioFileUseCase(),
 );
 
