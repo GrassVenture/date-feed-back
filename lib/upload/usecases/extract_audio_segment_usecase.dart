@@ -7,13 +7,13 @@ import 'extract_audio_segment_exception.dart';
 /// 音声ファイルから 15 分以内のセグメントを抽出する UseCase の Provider。
 ///
 /// [ExtractAudioSegmentUseCase] のインスタンスを提供する。
-final extractAudioSegmentUseCaseProvider = Provider(
+final extractAudioSegmentUseCaseProvider = Provider.autoDispose(
   (ref) => ExtractAudioSegmentUseCase(),
 );
 
 /// 音声ファイルから 15 分以内のセグメントを抽出するクラス。
 ///
-/// 15 分を超える場合は冒頭 15 分分のバイト数でスライスしたファイルを返す。
+/// 15 分を超える場合は冒頭 15 分のバイト数でスライスしたファイルを返す。
 class ExtractAudioSegmentUseCase {
   /// ロガーインスタンス。
   final Roggle logger;
