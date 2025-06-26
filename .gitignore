@@ -65,3 +65,10 @@ lib/generated_plugin_registrant.dart
 
 # Cursor
 .cursor/mcp.json
+
+# Environment variables
+.env
+.env.*
+
+# Envied generated file
+**/env.g.dart

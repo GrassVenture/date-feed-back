@@ -24,6 +24,7 @@ mixin _$UploadState {
   String? get downloadUrl => throw _privateConstructorUsedError;
   UploadStatus get status => throw _privateConstructorUsedError;
   Uint8List? get bytes => throw _privateConstructorUsedError;
+  String? get analysisSessionId => throw _privateConstructorUsedError;
 
   /// Create a copy of UploadState
   /// with the given fields replaced by the non-null parameter values.
@@ -46,7 +47,8 @@ abstract class $UploadStateCopyWith<$Res> {
       int? fileSize,
       String? downloadUrl,
       UploadStatus status,
-      Uint8List? bytes});
+      Uint8List? bytes,
+      String? analysisSessionId});
 }
 
 /// @nodoc
@@ -72,6 +74,7 @@ class _$UploadStateCopyWithImpl<$Res, $Val extends UploadState>
     Object? downloadUrl = freezed,
     Object? status = null,
     Object? bytes = freezed,
+    Object? analysisSessionId = freezed,
   }) {
     return _then(_value.copyWith(
       isUploading: null == isUploading
@@ -106,6 +109,10 @@ class _$UploadStateCopyWithImpl<$Res, $Val extends UploadState>
           ? _value.bytes
           : bytes // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
+      analysisSessionId: freezed == analysisSessionId
+          ? _value.analysisSessionId
+          : analysisSessionId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -126,7 +133,8 @@ abstract class _$$UploadStateImplCopyWith<$Res>
       int? fileSize,
       String? downloadUrl,
       UploadStatus status,
-      Uint8List? bytes});
+      Uint8List? bytes,
+      String? analysisSessionId});
 }
 
 /// @nodoc
@@ -150,6 +158,7 @@ class __$$UploadStateImplCopyWithImpl<$Res>
     Object? downloadUrl = freezed,
     Object? status = null,
     Object? bytes = freezed,
+    Object? analysisSessionId = freezed,
   }) {
     return _then(_$UploadStateImpl(
       isUploading: null == isUploading
@@ -184,6 +193,10 @@ class __$$UploadStateImplCopyWithImpl<$Res>
           ? _value.bytes
           : bytes // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
+      analysisSessionId: freezed == analysisSessionId
+          ? _value.analysisSessionId
+          : analysisSessionId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -199,7 +212,8 @@ class _$UploadStateImpl with DiagnosticableTreeMixin implements _UploadState {
       this.fileSize,
       this.downloadUrl,
       this.status = UploadStatus.initial,
-      this.bytes});
+      this.bytes,
+      this.analysisSessionId});
 
   @override
   @JsonKey()
@@ -220,10 +234,12 @@ class _$UploadStateImpl with DiagnosticableTreeMixin implements _UploadState {
   final UploadStatus status;
   @override
   final Uint8List? bytes;
+  @override
+  final String? analysisSessionId;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UploadState(isUploading: $isUploading, error: $error, progress: $progress, fileName: $fileName, fileSize: $fileSize, downloadUrl: $downloadUrl, status: $status, bytes: $bytes)';
+    return 'UploadState(isUploading: $isUploading, error: $error, progress: $progress, fileName: $fileName, fileSize: $fileSize, downloadUrl: $downloadUrl, status: $status, bytes: $bytes, analysisSessionId: $analysisSessionId)';
   }
 
   @override
@@ -238,7 +254,8 @@ class _$UploadStateImpl with DiagnosticableTreeMixin implements _UploadState {
       ..add(DiagnosticsProperty('fileSize', fileSize))
       ..add(DiagnosticsProperty('downloadUrl', downloadUrl))
       ..add(DiagnosticsProperty('status', status))
-      ..add(DiagnosticsProperty('bytes', bytes));
+      ..add(DiagnosticsProperty('bytes', bytes))
+      ..add(DiagnosticsProperty('analysisSessionId', analysisSessionId));
   }
 
   @override
@@ -258,7 +275,9 @@ class _$UploadStateImpl with DiagnosticableTreeMixin implements _UploadState {
             (identical(other.downloadUrl, downloadUrl) ||
                 other.downloadUrl == downloadUrl) &&
             (identical(other.status, status) || other.status == status) &&
-            const DeepCollectionEquality().equals(other.bytes, bytes));
+            const DeepCollectionEquality().equals(other.bytes, bytes) &&
+            (identical(other.analysisSessionId, analysisSessionId) ||
+                other.analysisSessionId == analysisSessionId));
   }
 
   @override
@@ -271,7 +290,8 @@ class _$UploadStateImpl with DiagnosticableTreeMixin implements _UploadState {
       fileSize,
       downloadUrl,
       status,
-      const DeepCollectionEquality().hash(bytes));
+      const DeepCollectionEquality().hash(bytes),
+      analysisSessionId);
 
   /// Create a copy of UploadState
   /// with the given fields replaced by the non-null parameter values.
@@ -291,7 +311,8 @@ abstract class _UploadState implements UploadState {
       final int? fileSize,
       final String? downloadUrl,
       final UploadStatus status,
-      final Uint8List? bytes}) = _$UploadStateImpl;
+      final Uint8List? bytes,
+      final String? analysisSessionId}) = _$UploadStateImpl;
 
   @override
   bool get isUploading;
@@ -309,6 +330,8 @@ abstract class _UploadState implements UploadState {
   UploadStatus get status;
   @override
   Uint8List? get bytes;
+  @override
+  String? get analysisSessionId;
 
   /// Create a copy of UploadState
   /// with the given fields replaced by the non-null parameter values.

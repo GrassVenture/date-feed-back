@@ -19,11 +19,7 @@ class Sidebar extends StatelessWidget {
           SizedBox(height: 20),
 
           /// ホームアイコン（中央寄せ・白色）
-          Icon(
-            Icons.home,
-            size: 32,
-            color: Colors.white,
-          ),
+          Icon(Icons.home, size: 32, color: Colors.white),
         ],
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/app_color.dart';
+import '../../../upload/models/date_session.dart';
 import 'file_card.dart';
-import 'file_data.dart';
 import 'files_responsive_layout_helper.dart';
 
 /// レスポンシブなファイルグリッドを表示するウィジェット。
@@ -10,7 +10,7 @@ import 'files_responsive_layout_helper.dart';
 /// ファイルリストやアップロード中カードをグリッドで表示する。
 class ResponsiveFileGrid extends StatelessWidget {
   /// ファイルデータのリスト。
-  final List<FileData> files;
+  final List<DateSession> files;
 
   /// アップロード中かどうか。
   final bool isUploading;
@@ -30,8 +30,9 @@ class ResponsiveFileGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final config =
-            FilesResponsiveLayoutHelper.fromWidth(constraints.maxWidth);
+        final config = FilesResponsiveLayoutHelper.fromWidth(
+          constraints.maxWidth,
+        );
         return Padding(
           padding: EdgeInsets.all(config.horizontalPadding),
           child: GridView.builder(
@@ -59,7 +60,8 @@ class ResponsiveFileGrid extends StatelessWidget {
                             value: progress,
                             backgroundColor: Colors.grey,
                             valueColor: const AlwaysStoppedAnimation<Color>(
-                                AppColor.main),
+                              AppColor.main,
+                            ),
                           ),
                         ),
                       ),

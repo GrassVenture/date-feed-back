@@ -24,11 +24,7 @@ class CreateNewFileButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: onPressed,
-      icon: const Icon(
-        Icons.add,
-        size: 20,
-        color: AppColor.main,
-      ),
+      icon: const Icon(Icons.add, size: 20, color: AppColor.main),
       label: const Text(
         '新規作成',
         style: TextStyle(
@@ -45,9 +41,7 @@ class CreateNewFileButton extends StatelessWidget {
           horizontal: horizontalPadding * 1.5,
           vertical: 24,
         ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         shadowColor: AppColor.grayMiddle,
       ),
     );

@@ -1,103 +1,133 @@
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
+import 'dart:async';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:universal_html/html.dart' as html;
 
 import '../models/upload_state.dart';
+import '../usecases/validate_audio_file_usecase.dart';
+import '../usecases/extract_audio_segment_usecase.dart';
+import '../usecases/upload_to_storage_usecase.dart';
+import '../usecases/request_analysis_usecase.dart';
+import '../usecases/validate_audio_file_exception.dart';
+import '../usecases/extract_audio_segment_exception.dart';
+import '../usecases/upload_to_storage_exception.dart';
+import '../usecases/request_analysis_exception.dart';
 
 /// アップロード状態を管理する [NotifierProvider]。
 final uploadControllerProvider =
-    NotifierProvider<UploadController, UploadState>(() {
-  return UploadController();
-});
+    AutoDisposeNotifierProvider<UploadController, UploadState>(
+      UploadController.new,
+    );
 
 /// 音声ファイルのアップロード処理を管理する Notifier。
-class UploadController extends Notifier<UploadState> {
+///
+/// ファイルの検証、音声セグメントの抽出、クラウドストレージへのアップロード、
+/// 分析 API の呼び出しといった一連のフローを制御する。
+class UploadController extends AutoDisposeNotifier<UploadState> {
+  /// [UploadState] の初期状態を構築する。
   @override
-
-  /// アップロード状態の初期化を行う。
   UploadState build() => const UploadState();
 
-  /// ドロップまたは選択されたファイルを処理し、アップロードする。
+  /// 音声ファイルを検証する UseCase を取得する。
+  ValidateAudioFileUseCase get _validateAudioFile =>
+      ref.read(validateAudioFileUseCaseProvider);
+
+  /// 音声セグメントを抽出する UseCase を取得する。
+  ExtractAudioSegmentUseCase get _extractAudioSegment =>
+      ref.read(extractAudioSegmentUseCaseProvider);
+
+  /// ファイルをストレージにアップロードする UseCase を取得する。
+  UploadToStorageUseCase get _uploadToStorage =>
+      ref.read(uploadToStorageUseCaseProvider);
+
+  /// 音声分析をリクエストする UseCase を取得する。
+  RequestAnalysisUseCase get _requestAnalysis =>
+      ref.read(requestAnalysisUseCaseProvider);
+
+  /// ドロップされた音声ファイルを処理し、アップロードと分析要求を行う。
+  ///
+  /// このメソッドは、ファイル処理の各ステップ（検証、抽出、アップロード、分析要求）を実行する。
+  /// 各ステップでエラーが発生した場合は、[UploadState] にエラーメッセージを設定して処理を中断する。
+  ///
+  /// [file] には、ユーザーによってドロップされた音声ファイルを指定する。
   Future<void> handleDroppedFile(html.File file) async {
-    final fileName = file.name.toLowerCase();
-    if (!(fileName.endsWith('.mp3') || fileName.endsWith('.wav'))) {
-      state = const UploadState(error: 'MP3またはWAVファイルのみ対応しています');
-      return;
-    }
-
-    // 音声長取得
-    final audio = html.AudioElement();
-    audio.src = html.Url.createObjectUrl(file);
-
+    double duration;
     try {
-      await audio.onLoadedMetadata.first;
+      duration = await _validateAudioFile.call(file);
+    } on ValidateAudioFileException catch (e) {
+      state = UploadState(error: e.message);
+      return;
     } catch (e) {
-      state = const UploadState(error: '音声ファイルのメタデータ取得に失敗しました');
+      state = UploadState(error: 'ファイル検証中に予期せぬエラーが発生しました: $e');
       return;
     }
 
-    const maxDurationSec = 15 * 60; // 15分=900秒
-    if (audio.duration > maxDurationSec) {
-      // ファイルサイズとdurationから冒頭15分分のバイト数を計算
-      final maxBytes = (file.size * (maxDurationSec / audio.duration)).floor();
-      final sliced = file.slice(0, maxBytes, file.type);
-
-      state = const UploadState(isUploading: true);
-      await uploadFile(sliced, originalFileName: file.name);
-      state = const UploadState(isUploading: false);
+    html.Blob uploadBlob;
+    try {
+      uploadBlob = await _extractAudioSegment.call(file, duration);
+    } on ExtractAudioSegmentException catch (e) {
+      state = UploadState(error: e.message);
+      return;
+    } catch (e) {
+      state = UploadState(error: '音声セグメント抽出中に予期せぬエラーが発生しました: $e');
       return;
     }
 
-    // 15分以内ならそのままアップロード
     state = const UploadState(isUploading: true);
-    await uploadFile(file);
-    state = const UploadState(isUploading: false);
-  }
-
-  /// ファイルを Firebase Storage にアップロードする。
-  ///
-  /// [originalFileName] を指定した場合は拡張子に利用する。
-  Future<void> uploadFile(html.Blob file, {String? originalFileName}) async {
+    String? downloadUrl;
     try {
-      final ext = originalFileName?.split('.').last.toLowerCase() ?? 'mp3';
-      final fileName =
-          'uploads/audio_${DateTime.now().millisecondsSinceEpoch}.$ext';
-
-      final ref = FirebaseStorage.instance.ref(fileName);
-      final task = ref.putBlob(file);
-
-      task.snapshotEvents.listen((snapshot) {
-        final progress = snapshot.bytesTransferred / snapshot.totalBytes;
-        state = UploadState(isUploading: true, progress: progress);
-      });
-
-      final result = await task;
-      final downloadUrl = await result.ref.getDownloadURL();
-      debugPrint('アップロード成功: $downloadUrl');
-
-      state = const UploadState(isUploading: false, progress: 1.0);
+      downloadUrl = await _uploadToStorage.call(
+        uploadBlob,
+        originalFileName: file.name,
+        onProgress: (progress) {
+          state = UploadState(isUploading: true, progress: progress);
+        },
+      );
+    } on UploadToStorageException catch (e) {
+      state = UploadState(isUploading: false, error: e.message);
+      return;
     } catch (e) {
-      state = UploadState(isUploading: false, error: 'アップロードに失敗しました: $e');
+      state = UploadState(
+        isUploading: false,
+        error: 'アップロード中に予期せぬエラーが発生しました: $e',
+      );
+      return;
     }
-  }
 
-  /// 指定ファイル名の署名付きURLを取得する。
-  ///
-  /// バックエンドAPI経由で署名付きURLを取得する例。
-  Future<String> fetchSignedUrl(String fileName) async {
-    final response = await html.HttpRequest.request(
-      '/api/gcs-signed-url?filename=$fileName', // ←ここはバックエンドのAPI仕様に合わせて修正
-      method: 'GET',
-    );
-    if (response.status == 200) {
-      return response.responseText!;
-    } else {
-      throw Exception('署名付きURLの取得に失敗しました');
+    try {
+      unawaited(
+        _requestAnalysis.call(
+          fileUri: downloadUrl,
+          userId: '3M7z7EVShLNEAR8pQRZkgZFJti13',
+        ),
+      );
+    } on RequestAnalysisException catch (e) {
+      state = UploadState(
+        isUploading: false,
+        error: e.message,
+        downloadUrl: downloadUrl,
+      );
+      return;
+    } catch (e) {
+      state = UploadState(
+        isUploading: false,
+        error: '音声分析中に予期せぬエラーが発生しました: $e',
+        downloadUrl: downloadUrl,
+      );
+      return;
     }
+
+    state = UploadState(
+      isUploading: false,
+      progress: 1.0,
+      downloadUrl: downloadUrl,
+    );
   }
 
   /// アップロード状態を初期化する。
+  ///
+  /// 進行状況、エラーメッセージ、ダウンロード URL などをリセットし、
+  /// [UploadState] を初期状態に戻す。
   void reset() {
     state = const UploadState();
   }

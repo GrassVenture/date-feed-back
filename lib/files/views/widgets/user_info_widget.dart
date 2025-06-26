@@ -10,10 +10,7 @@ class UserInfoWidget extends StatelessWidget {
   final String userName;
 
   /// [UserInfoWidget] のインスタンスを生成する。
-  const UserInfoWidget({
-    super.key,
-    required this.userName,
-  });
+  const UserInfoWidget({super.key, required this.userName});
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +24,7 @@ class UserInfoWidget extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           child: Center(
-            child: Icon(
-              Icons.person,
-              size: 14,
-              color: AppColor.textLight,
-            ),
+            child: Icon(Icons.person, size: 14, color: AppColor.textLight),
           ),
         ),
         const SizedBox(width: 8),

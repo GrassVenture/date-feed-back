@@ -11,10 +11,14 @@ import 'firebase_options_dev.dart' as dev;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   final firebaseOptions = kReleaseMode
       ? prod.DefaultFirebaseOptions.currentPlatform
       : dev.DefaultFirebaseOptions.currentPlatform;
+
+  // Firebase 初期化（本番/開発切替）
   await Firebase.initializeApp(options: firebaseOptions);
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
