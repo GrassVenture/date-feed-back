@@ -80,9 +80,11 @@ class UploadController extends Notifier<UploadState> {
 
     // 分析API呼び出し
     try {
-      await requestAnalysis.call(
-        fileUri: downloadUrl,
-        userId: '3M7z7EVShLNEAR8pQRZkgZFJti13', // 固定値
+      unawaited(
+        requestAnalysis.call(
+          fileUri: downloadUrl,
+          userId: '3M7z7EVShLNEAR8pQRZkgZFJti13', // 固定値
+        ),
       );
     } on RequestAnalysisException catch (e) {
       state = UploadState(
