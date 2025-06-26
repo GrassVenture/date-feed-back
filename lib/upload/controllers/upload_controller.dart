@@ -18,24 +18,40 @@ final uploadControllerProvider =
     NotifierProvider<UploadController, UploadState>(UploadController.new);
 
 /// 音声ファイルのアップロード処理を管理する Notifier。
+///
+/// ファイルの検証、音声セグメントの抽出、クラウドストレージへのアップロード、
+/// 分析 API の呼び出しといった一連のフローを制御する。
 class UploadController extends Notifier<UploadState> {
+  /// [UploadState] の初期状態を構築する。
   @override
-  /// アップロード状態の初期化を行う。
-  UploadState build() {
-    return const UploadState();
-  }
+  UploadState build() => const UploadState();
 
-  /// ドロップまたは選択されたファイルを処理し、アップロードする。
+  /// 音声ファイルを検証する UseCase を取得する。
+  ValidateAudioFileUseCase get _validateAudioFile =>
+      ref.read(validateAudioFileUseCaseProvider);
+
+  /// 音声セグメントを抽出する UseCase を取得する。
+  ExtractAudioSegmentUseCase get _extractAudioSegment =>
+      ref.read(extractAudioSegmentUseCaseProvider);
+
+  /// ファイルをストレージにアップロードする UseCase を取得する。
+  UploadToStorageUseCase get _uploadToStorage =>
+      ref.read(uploadToStorageUseCaseProvider);
+
+  /// 音声分析をリクエストする UseCase を取得する。
+  RequestAnalysisUseCase get _requestAnalysis =>
+      ref.read(requestAnalysisUseCaseProvider);
+
+  /// ドロップされた音声ファイルを処理し、アップロードと分析要求を行う。
+  ///
+  /// このメソッドは、ファイル処理の各ステップ（検証、抽出、アップロード、分析要求）を実行する。
+  /// 各ステップでエラーが発生した場合は、[UploadState] にエラーメッセージを設定して処理を中断する。
+  ///
+  /// [file] には、ユーザーによってドロップされた音声ファイルを指定する。
   Future<void> handleDroppedFile(html.File file) async {
-    final validateAudioFile = ref.read(validateAudioFileUseCaseProvider);
-    final extractAudioSegment = ref.read(extractAudioSegmentUseCaseProvider);
-    final uploadToStorage = ref.read(uploadToStorageUseCaseProvider);
-    final requestAnalysis = ref.read(requestAnalysisUseCaseProvider);
-
-    // 検証＋音声長取得
     double duration;
     try {
-      duration = await validateAudioFile.call(file);
+      duration = await _validateAudioFile.call(file);
     } on ValidateAudioFileException catch (e) {
       state = UploadState(error: e.message);
       return;
@@ -44,10 +60,9 @@ class UploadController extends Notifier<UploadState> {
       return;
     }
 
-    // 15分抽出
     html.Blob uploadBlob;
     try {
-      uploadBlob = await extractAudioSegment.call(file, duration);
+      uploadBlob = await _extractAudioSegment.call(file, duration);
     } on ExtractAudioSegmentException catch (e) {
       state = UploadState(error: e.message);
       return;
@@ -56,11 +71,10 @@ class UploadController extends Notifier<UploadState> {
       return;
     }
 
-    // アップロード
     state = const UploadState(isUploading: true);
     String? downloadUrl;
     try {
-      downloadUrl = await uploadToStorage.call(
+      downloadUrl = await _uploadToStorage.call(
         uploadBlob,
         originalFileName: file.name,
         onProgress: (progress) {
@@ -78,12 +92,11 @@ class UploadController extends Notifier<UploadState> {
       return;
     }
 
-    // 分析API呼び出し
     try {
       unawaited(
-        requestAnalysis.call(
+        _requestAnalysis.call(
           fileUri: downloadUrl,
-          userId: '3M7z7EVShLNEAR8pQRZkgZFJti13', // 固定値
+          userId: '3M7z7EVShLNEAR8pQRZkgZFJti13',
         ),
       );
     } on RequestAnalysisException catch (e) {
@@ -110,6 +123,9 @@ class UploadController extends Notifier<UploadState> {
   }
 
   /// アップロード状態を初期化する。
+  ///
+  /// 進行状況、エラーメッセージ、ダウンロード URL などをリセットし、
+  /// [UploadState] を初期状態に戻す。
   void reset() {
     state = const UploadState();
   }
