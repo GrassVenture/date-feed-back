@@ -39,7 +39,7 @@
         プロジェクトのルートディレクトリに `.env` ファイルを作成し、以下の内容を記述します。
 
         ```env
-        DEV_API_URL=https://your-dev-api-url.run.app # 実際の環境変数は Kim さん (@schwarzwald0906) に確認してください！
+        DEV_API_URL=https://your-dev-api-url.run.app # 実際の環境変数はこちら参照（https://www.notion.so/masakisato/env-21ea4128da0f8062b5c2dd1bca0d7bf4?source=copy_link）
         ```
 
         > **Note:** `.env` ファイルは `.gitignore` に含まれているため、Git にコミットされません。
