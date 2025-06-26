@@ -7,8 +7,8 @@ import 'request_analysis_exception.dart';
 /// 音声分析 API を呼び出す UseCase の Provider。
 ///
 /// [RequestAnalysisUseCase] のインスタンスを提供する。
-final requestAnalysisUseCaseProvider = Provider((ref) {
-  final analysisService = ref.read(analysisServiceProvider);
+final requestAnalysisUseCaseProvider = Provider.autoDispose((ref) {
+  final analysisService = ref.watch(analysisServiceProvider);
   return RequestAnalysisUseCase(analysisService);
 });
 
