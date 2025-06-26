@@ -44,7 +44,7 @@ class AnalysisService {
 
     return await httpClient.post(
       endpoint: '/analyzeDateSession',
-      data: {'file_uri': fileUri, 'user_id': requestUserId},
+      data: {'storageUrl': fileUri, 'userId': requestUserId},
       headers: {'Authorization': 'Bearer $requestToken'},
     );
   }
