@@ -20,7 +20,7 @@ erDiagram
         string status "Non-nullable | ステータス（値: 'pending', 'completed'）"
         map conversationTranscript "Non-nullable | 文字起こしデータJSON"
         map conversationFeedback "Non-nullable | 解析データJSON"
-        map femaleEmotionGraph "Nullable | グラフデータJSON"
+        map femaleEmotionGraph "Non-nullable | グラフデータJSON"
         timestamp createdAt "Non-nullable | 作成日時"
         timestamp updatedAt "Non-nullable | 更新日時"
     }
@@ -52,10 +52,9 @@ class DateSession with _$DateSession {
     required String id, // FirestoreのドキュメントID（アプリ側で付与）
     required String storageUrl,
     required String status,
-    // 必要に応じて以下を追加（nullableなら `?` を付ける）
-    Map<String, dynamic>? conversationTranscript,
-    Map<String, dynamic>? conversationFeedback,
-    Map<String, dynamic>? femaleEmotionGraph,
+    Map<String, dynamic> conversationTranscript,
+    Map<String, dynamic> conversationFeedback,
+    Map<String, dynamic> femaleEmotionGraph,
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _DateSession;
