@@ -138,9 +138,9 @@
    ├── controllers/
    │   └── analysis_controller.dart
    └── providers/
-       ├── transcript_provider.dart  // NotifierProvider
-       ├── feedback_provider.dart  // NotifierProvider
-       └── analysis_provider.dart  // NotifierProvider
+       ├── conversation_transcript_provider.dart  // NotifierProvider
+       ├── conversation_feedback_provider.dart  // NotifierProvider
+       └── female_emotion_graph_provider.dart  // NotifierProvider
    ```
 
 ### データフロー
@@ -193,13 +193,13 @@
 - クライアントで 15 分を超える音声ファイルが選択された場合、冒頭 15 分のみを抽出してアップロードする
 - 15 分以内のファイルはそのままアップロードする
 
-#### 選択肢1: サーバー側で切り捨て
+#### 選択肢 1: サーバー側で切り捨て
 
 - クライアントはそのままファイルをアップロードし、サーバー側で 15 分以降を切り捨てる
 - メリット: クライアント実装がシンプル
 - デメリット: 大容量ファイルのアップロード失敗リスク、無駄な通信量
 
-#### 選択肢2: クライアント側で抽出（採用）
+#### 選択肢 2: クライアント側で抽出（採用）
 
 - クライアントで冒頭 15 分のみを抽出し、その部分だけをアップロード
 - メリット: 通信量・アップロード時間の最適化、失敗リスク低減
@@ -347,7 +347,7 @@ HooksRiverpod を採用することで、以下の利点を活かした実装を
 
    - Cloud Run API: `/analyzeDateSession`
      - Method: POST
-     - Parameters: storageUrl, userId（Firebase Storage のダウンロードURL）,
+     - Parameters: userId,storageUrl（Firebase Storage のダウンロード URL）,
      - Response: { session_id: string }
 
 3. **Firestore 制約**
@@ -370,4 +370,3 @@ HooksRiverpod を採用することで、以下の利点を活かした実装を
    - Firestore のクォータ制限への対応
 
 - エラーハンドリングの実装: 各種エラー発生時にエラーダイアログを表示し、ユーザーに分かりやすく通知する方法の設計。
-
