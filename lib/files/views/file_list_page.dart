@@ -10,6 +10,7 @@ import '../../upload/models/date_session.dart';
 import 'widgets/file_list_header.dart';
 import 'widgets/responsive_file_grid.dart';
 import 'widgets/file_upload_dialog.dart';
+import 'widgets/alart_dialog.dart';
 
 /// ファイル一覧画面を表示するウィジェット。
 ///
@@ -95,7 +96,14 @@ class FileListPage extends HookConsumerWidget {
                 fileName: uploadState.fileName ?? 'アップロード中のファイル',
                 progress: uploadState.progress,
                 onClose: () {
-                  ref.read(uploadControllerProvider.notifier).reset();
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlartDialog(
+                      onCancelConfirmed: () {
+                        ref.read(uploadControllerProvider.notifier).reset();
+                      },
+                    ),
+                  );
                 },
               ),
             ),
