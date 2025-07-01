@@ -16,11 +16,11 @@ erDiagram
     }
 
     dateSessions {
-        string audioUrl "Non-nullable | Firebase Storageに保存された音声ファイルURL"
+        string storageUrl "Non-nullable | Firebase Storageに保存された音声ファイルURL"
         string status "Non-nullable | ステータス（値: 'pending', 'completed'）"
-        map transcript "Non-nullable | 文字起こしデータJSON"
-        map analysis "Non-nullable | 解析データJSON"
-        map graph "Nullable | グラフデータJSON"
+        map conversationTranscript "Non-nullable | 文字起こしデータJSON"
+        map conversationFeedback "Non-nullable | 解析データJSON"
+        map femaleEmotionGraph "Non-nullable | グラフデータJSON"
         timestamp createdAt "Non-nullable | 作成日時"
         timestamp updatedAt "Non-nullable | 更新日時"
     }
@@ -50,12 +50,11 @@ Flutter アプリケーションにおける Firebase Firestore のモデルク�
 class DateSession with _$DateSession {
   const factory DateSession({
     required String id, // FirestoreのドキュメントID（アプリ側で付与）
-    required String audioUrl,
+    required String storageUrl,
     required String status,
-    // 必要に応じて以下を追加（nullableなら `?` を付ける）
-    Map<String, dynamic>? transcript,
-    Map<String, dynamic>? analysis,
-    Map<String, dynamic>? graph,
+    Map<String, dynamic> conversationTranscript,
+    Map<String, dynamic> conversationFeedback,
+    Map<String, dynamic> femaleEmotionGraph,
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _DateSession;
