@@ -28,6 +28,7 @@ class AlartDialog extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 32),
           child: Stack(
+            clipBehavior: Clip.none,
             children: [
               // 本体
               Column(
@@ -47,13 +48,12 @@ class AlartDialog extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  SizedBox(
-                    width: double.infinity,
+                  Center(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColor.alart,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
                         ),
@@ -89,13 +89,13 @@ class AlartDialog extends StatelessWidget {
               ),
               // バツボタン（右上）
               Positioned(
-                top: 0,
-                right: 0,
+                top: -16,
+                right: -16,
                 child: InkWell(
                   borderRadius: BorderRadius.circular(16),
                   onTap: () => Navigator.of(context).pop(),
-                  child:  Padding(
-                    padding: EdgeInsets.all(4.0),
+                  child: Padding(
+                    padding: EdgeInsets.all(0),
                     child: Icon(Icons.close, size: 28, color: AppColor.textBlack),
                   ),
                 ),
