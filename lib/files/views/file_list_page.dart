@@ -11,6 +11,7 @@ import 'widgets/file_list_header.dart';
 import 'widgets/responsive_file_grid.dart';
 import 'widgets/file_upload_dialog.dart';
 import 'widgets/alart_dialog.dart';
+import 'widgets/error_toast_container.dart';
 
 /// ファイル一覧画面を表示するウィジェット。
 ///
@@ -106,6 +107,14 @@ class FileListPage extends HookConsumerWidget {
                   );
                 },
               ),
+            ),
+          // アップロードエラー時のトースト表示
+          if (uploadState.error != null && uploadState.error!.isNotEmpty)
+            Positioned(
+              top: 32,
+              left: 0,
+              right: 0,
+              child: ErrorToastContainer(message: "アップロードにエラーが発生しました"),
             ),
         ],
       ),
