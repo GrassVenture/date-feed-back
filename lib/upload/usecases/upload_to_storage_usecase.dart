@@ -38,6 +38,8 @@ class UploadToStorageUseCase {
     String? originalFileName,
     void Function(double progress)? onProgress,
   }) async {
+    // ★テスト用: 強制的にアップロードエラーを発生させる
+    throw UploadToStorageException('（テスト用）アップロード処理で強制エラー発生');
     try {
       final ext = (originalFileName?.split('.').last.toLowerCase() ?? 'mp3')
           .replaceAll(RegExp(r'[^a-z0-9]'), '');
