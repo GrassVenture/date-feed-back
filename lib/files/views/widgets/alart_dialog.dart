@@ -17,16 +17,16 @@ class AlartDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      elevation: 8,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      elevation: 4,
       backgroundColor: Colors.white,
       child: ConstrainedBox(
         constraints: const BoxConstraints(
-          minWidth: 320, // 最小幅
-          maxWidth: 400, // 最大幅（画像例に近い）
+          minWidth: 320,
+          maxWidth: 400, 
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 32),
+          padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 32),
           child: Stack(
             clipBehavior: Clip.none,
             children: [
@@ -95,7 +95,7 @@ class AlartDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   onTap: () => Navigator.of(context).pop(),
                   child: Padding(
-                    padding: EdgeInsets.all(0),
+                    padding: EdgeInsets.all(4),
                     child: Icon(Icons.close, size: 28, color: AppColor.textBlack),
                   ),
                 ),
