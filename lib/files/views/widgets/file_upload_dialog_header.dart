@@ -45,7 +45,10 @@ class FileUploadDialogHeader extends StatelessWidget {
           InkWell(
             onTap: onClose,
             borderRadius: BorderRadius.circular(12),
-            child: Icon(Icons.close, size: 24, color: AppColor.textBlack),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(Icons.close, size: 24, color: AppColor.textBlack),
+            ),
           ),
         ],
       ),
