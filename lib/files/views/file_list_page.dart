@@ -2,6 +2,7 @@ import 'package:date_feed_back/files/views/widgets/files_responsive_layout_helpe
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:universal_html/html.dart' as html;
+import 'package:go_router/go_router.dart';
 
 import '../../core/app_color.dart';
 import '../../upload/controllers/upload_controller.dart';
@@ -111,10 +112,14 @@ class FileListPage extends HookConsumerWidget {
           // アップロードエラー時のトースト表示
           if (uploadState.error != null && uploadState.error!.isNotEmpty)
             Positioned(
-              top: 32,
-              left: 0,
-              right: 0,
-              child: ErrorToastContainer(message: "アップロードにエラーが発生しました"),
+              right: 32,
+              bottom: 32,
+              child: ErrorToastContainer(
+                message: "アップロードにエラーが発生しました",
+                onClose: () {
+                        ref.read(uploadControllerProvider.notifier).reset();
+                      },
+              ),
             ),
         ],
       ),
