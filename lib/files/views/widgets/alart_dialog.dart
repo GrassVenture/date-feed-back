@@ -75,7 +75,7 @@ class AlartDialog extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text(
+                    child: const Text(
                       'アップロードを続行',
                       style: TextStyle(
                         fontSize: 16,
@@ -95,7 +95,7 @@ class AlartDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   onTap: () => Navigator.of(context).pop(),
                   child: Padding(
-                    padding: EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(4),
                     child: Icon(Icons.close, size: 28, color: AppColor.textBlack),
                   ),
                 ),

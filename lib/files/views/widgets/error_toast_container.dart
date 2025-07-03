@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../../../core/app_color.dart';
 
 /// アップロードエラー時に表示するトーストコンテナ。
@@ -52,7 +51,7 @@ class ErrorToastContainer extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              Spacer(),
+              const Spacer(),
               InkWell(
                 borderRadius: BorderRadius.circular(16),
                 onTap: onClose,
