@@ -10,8 +10,8 @@ import '../../upload/models/date_session.dart';
 import 'widgets/file_list_header.dart';
 import 'widgets/responsive_file_grid.dart';
 import 'widgets/file_upload_dialog.dart';
-import 'widgets/alert_dialog.dart';
-import 'widgets/error_toast_container.dart';
+import 'package:date_feed_back/core/alert_dialog.dart';
+import 'package:date_feed_back/core/error_toast_container.dart';
 
 /// ファイル一覧画面を表示するウィジェット。
 ///
@@ -103,6 +103,9 @@ class FileListPage extends HookConsumerWidget {
                       onCancelConfirmed: () {
                         ref.read(uploadControllerProvider.notifier).reset();
                       },
+                      titleText: 'アップロードをやめますか？',
+                      cancelButtonText: 'アップロードをやめる',
+                      continueText: 'アップロードを続行',
                     ),
                   );
                 },

@@ -17,7 +17,7 @@ Model: GPT-4.1
 
 ---
 
-現在、`lib/files/views/widgets/error_toast_container.dart` の `ErrorToastContainer` ウィジェットで、  
+現在、`lib/core/error_toast_container.dart` の `ErrorToastContainer` ウィジェットで、  
 「RenderFlex children have non-zero flex but incoming width constraints are unbounded.」  
 「BoxConstraints forces an infinite width.」  
 などのエラーが発生しています。
@@ -62,7 +62,7 @@ child: ConstrainedBox(
 また、`Flexible` も `Row` の中で使われていますが、親の幅が無限大の場合は `Flexible` もエラーの原因となるため、  
 `Flexible` の使用も見直す必要がある場合があります。
 
-これらの修正を `lib/files/views/widgets/error_toast_container.dart` に適用します。
+これらの修正を `lib/core/error_toast_container.dart` に適用します。
 
 💡 provider.mdc
 

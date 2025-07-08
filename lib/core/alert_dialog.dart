@@ -1,17 +1,32 @@
 import 'package:flutter/material.dart';
 import '../../../core/app_color.dart';
 
-/// アップロードキャンセル用のカスタムアラートダイアログ。
+/// カスタムアラートダイアログ。
 ///
+/// [titleText] でタイトル、[cancelButtonText] でキャンセルボタン、[continueText] で続行テキストを指定する。
 /// Figmaデザイン（node-id=221-508）に準拠。
 class CustomAlertDialog extends StatelessWidget {
   /// キャンセル確定時のコールバック。
   final VoidCallback onCancelConfirmed;
 
+  /// ダイアログのタイトルテキスト。
+  final String titleText;
+
+  /// キャンセルボタンのテキスト。
+  final String cancelButtonText;
+
+  /// 続行テキスト。
+  final String continueText;
+
   /// [CustomAlertDialog] のコンストラクタ。
+  ///
+  /// [titleText] でタイトル、[cancelButtonText] でキャンセルボタン、[continueText] で続行テキストを指定する。
   const CustomAlertDialog({
     super.key,
     required this.onCancelConfirmed,
+    required this.titleText,
+    required this.cancelButtonText,
+    required this.continueText,
   });
 
   @override
@@ -19,7 +34,7 @@ class CustomAlertDialog extends StatelessWidget {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       elevation: 4,
-      backgroundColor: AppColor.alert,
+      backgroundColor: Colors.white,
       child: ConstrainedBox(
         constraints: const BoxConstraints(
           minWidth: 320,
@@ -38,7 +53,7 @@ class CustomAlertDialog extends StatelessWidget {
                   const SizedBox(height: 8),
                   Center(
                     child: Text(
-                      'アップロードをやめますか？',
+                      titleText,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
@@ -67,7 +82,7 @@ class CustomAlertDialog extends StatelessWidget {
                         Navigator.of(context).pop();
                         onCancelConfirmed();
                       },
-                      child: const Text('アップロードをやめる'),
+                      child: Text(cancelButtonText),
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -75,9 +90,9 @@ class CustomAlertDialog extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Text(
-                      'アップロードを続行',
-                      style: TextStyle(
+                    child: Text(
+                      continueText,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
                         color: AppColor.gray,
