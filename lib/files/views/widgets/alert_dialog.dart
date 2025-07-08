@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../../core/app_color.dart';
 
-/// アップロードキャンセルアラートダイアログ。
+/// アップロードキャンセル用のカスタムアラートダイアログ。
 ///
 /// Figmaデザイン（node-id=221-508）に準拠。
-class AlartDialog extends StatelessWidget {
+class CustomAlertDialog extends StatelessWidget {
   /// キャンセル確定時のコールバック。
   final VoidCallback onCancelConfirmed;
 
-  /// [AlartDialog] のコンストラクタ。
-  const AlartDialog({
+  /// [CustomAlertDialog] のコンストラクタ。
+  const CustomAlertDialog({
     super.key,
     required this.onCancelConfirmed,
   });
@@ -19,7 +19,7 @@ class AlartDialog extends StatelessWidget {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       elevation: 4,
-      backgroundColor: Colors.white,
+      backgroundColor: AppColor.alert,
       child: ConstrainedBox(
         constraints: const BoxConstraints(
           minWidth: 320,
@@ -51,7 +51,7 @@ class AlartDialog extends StatelessWidget {
                   Center(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColor.alart,
+                        backgroundColor: AppColor.alert,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 32),
                         shape: RoundedRectangleBorder(

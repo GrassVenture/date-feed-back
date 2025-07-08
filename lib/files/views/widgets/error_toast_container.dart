@@ -29,7 +29,7 @@ class ErrorToastContainer extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
           decoration: BoxDecoration(
-            color: AppColor.alart,
+            color: AppColor.alert,
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(

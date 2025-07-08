@@ -64,5 +64,5 @@ abstract final class AppColor {
   static Color get mainDark => main[600]!;
 
   /// アラート・エラー用の赤色。
-  static const Color alart = Color(0xFFE04F4F);
+  static const Color alert = Color(0xFFE04F4F);
 }

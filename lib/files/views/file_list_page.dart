@@ -10,7 +10,7 @@ import '../../upload/models/date_session.dart';
 import 'widgets/file_list_header.dart';
 import 'widgets/responsive_file_grid.dart';
 import 'widgets/file_upload_dialog.dart';
-import 'widgets/alart_dialog.dart';
+import 'widgets/alert_dialog.dart';
 import 'widgets/error_toast_container.dart';
 
 /// ファイル一覧画面を表示するウィジェット。
@@ -99,7 +99,7 @@ class FileListPage extends HookConsumerWidget {
                 onClose: () {
                   showDialog(
                     context: context,
-                    builder: (context) => AlartDialog(
+                    builder: (context) => CustomAlertDialog(
                       onCancelConfirmed: () {
                         ref.read(uploadControllerProvider.notifier).reset();
                       },
