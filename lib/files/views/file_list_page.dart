@@ -10,6 +10,8 @@ import '../../upload/models/date_session.dart';
 import 'widgets/file_list_header.dart';
 import 'widgets/responsive_file_grid.dart';
 import 'widgets/file_upload_dialog.dart';
+import 'package:date_feed_back/core/alert_dialog.dart';
+import 'package:date_feed_back/core/error_toast_container.dart';
 
 /// ファイル一覧画面を表示するウィジェット。
 ///
@@ -95,8 +97,30 @@ class FileListPage extends HookConsumerWidget {
                 fileName: uploadState.fileName ?? 'アップロード中のファイル',
                 progress: uploadState.progress,
                 onClose: () {
-                  ref.read(uploadControllerProvider.notifier).reset();
+                  showDialog(
+                    context: context,
+                    builder: (context) => CustomAlertDialog(
+                      onCancelConfirmed: () {
+                        ref.read(uploadControllerProvider.notifier).reset();
+                      },
+                      titleText: 'アップロードをやめますか？',
+                      cancelButtonText: 'アップロードをやめる',
+                      continueText: 'アップロードを続行',
+                    ),
+                  );
                 },
+              ),
+            ),
+          // アップロードエラー時のトースト表示
+          if (uploadState.error != null && uploadState.error!.isNotEmpty)
+            Positioned(
+              right: 32,
+              bottom: 32,
+              child: ErrorToastContainer(
+                message: "アップロードにエラーが発生しました",
+                onClose: () {
+                        ref.read(uploadControllerProvider.notifier).reset();
+                      },
               ),
             ),
         ],
